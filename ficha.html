@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Nicolas de Almeida Sousa">
+    <meta name="description" content="Ficha de RPG Ordem Paranormal, Nicolas de Almeida Sousa">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ficha 3.0</title>
+
+    <!-- Estilos -->
+    <link rel="stylesheet" href="CSS/styleFicha.css"> <!-- Ficha -->
+    <link rel="stylesheet" href="CSS/styleAtributos.css"> <!-- Atributos -->
+    <link rel="stylesheet" href="CSS/styleSaude.css"> <!-- Saude Defesa e Resistência -->
+    <link rel="stylesheet" href="CSS/styleArmas.css"> <!-- Armas -->
+    <link rel="stylesheet" href="CSS/styleInventario.css"> <!-- Inventário -->
+    <link rel="stylesheet" href="CSS/styleDetalhes.css"> <!-- detalhes -->
+    <link rel="stylesheet" href="CSS/styleSair.css"> <!-- sair -->
+
+    <script src="Js/scriptPadrao.js"></script>
+    <script src="Js/scriptFirebase.js" type="module"></script>
+    <script src="Js/scriptRegrasBasicas.js" defer></script>
+    <script src="Js/scriptFicha.js" type="module"></script>
+
+</head>
+<body>
+        <div class="boxSair">
+            <button class="sair" onclick="sair()">Sair</button>
+        </div>
+        <!-- Ficha -->
+        <form id="characterForm" autocomplete="off">
+            <div class="container-primary">
+                <div class="box-top-img">
+                    <img src="Img/logo.png" alt="">
+                    <label for="next" class="nameNext">Nivel NEXT %</label>
+                    <input type="text" id="nivelNext" name="nivelNext" class="input-overlay" maxlength="3">
+                </div>
+        
+                <div class="box-top-personagem">
+                    <div class="boxNome">
+                        <label for="nomePersonagem">Nome do Personagem:</label>
+                        <input type="text" id="nomePersonagem" name="nomePersonagem" maxlength="80">
+                    </div>
+        
+                    <div class="boxDados">
+                        <div class="boxConj">
+                            <label for="idade">Idade:</label>
+                            <input type="text" id="idade" name="idade" maxlength="3">
+                        </div>
+                        <div class="boxConj">
+                            <label for="altura">Altura:</label>
+                            <input type="text" id="altura" name="altura" maxlength="4">
+                        </div>
+                        <div class="boxConj">
+                            <label for="origem">Origem:</label>
+                            <input type="text" id="origem" name="origem" maxlength="20">
+                        </div>
+                        <div class="boxConj">
+                            <label for="classe">Classe:</label>
+                            <input type="text" id="classe" name="classe" maxlength="20">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="container-secound">
+                <div class="box-atributos">
+                    <div class="box-att-unit-for">
+                        <label for="forca">FOR</label>
+                        <p>Força</p>
+                        <input type="text" name="forca" id="forca" maxlength="3">
+                    </div>
+            
+                    <div class="box-att-unit-int">
+                        <label for="inteligencia">INT</label>
+                        <p>Inteligência</p>
+                        <input type="text" name="inteligencia" id="inteligencia" maxlength="3">
+                    </div>
+            
+                    <div class="box-att-unit-pre">
+                        <label for="presenca">PRE</label>
+                        <p>Presença</p>
+                        <input type="text" name="presenca" id="presenca" maxlength="3">
+                    </div>
+            
+                    <div class="box-att-unit-agi">
+                        <label for="agilidade">AGI</label>
+                        <p>Agilidade</p>
+                        <input type="text" name="agilidade" id="agilidade" maxlength="3">
+                    </div>
+            
+                    <div class="box-att-unit-vig">
+                        <label for="vigor">VIG</label>
+                        <p>Vigor</p>
+                        <input type="text" name="vigor" id="vigor" maxlength="3">
+                    </div>
+                </div>
+            
+                <!-- Saúde, Defesas, Resistências -->
+                <div class="saudeDefesaResistencia">
+                    <!-- Saúde -->
+                    <div class="boxSaude">
+                        <h4>Saúde</h4>
+                        <div class="boxGeralPV">
+                            <div class="infoSaude">
+                                <p class="pvSaude">PV</p>
+                                <p class="detailsSaude">Pontos de Vida</p>
+                            </div>
+                            <div class="boxVidas">
+                                <input type="text" maxlength="3" name="pv_atual" placeholder="Valor atual..." _>
+                                <input type="text" maxlength="3" name="pv_total" placeholder="Valor MAX" _>
+                            </div>
+                        </div>
+            
+                        <div class="boxGeralSan">
+                            <div class="infoSaude">
+                                <p class="pvSaude">SAN</p>
+                                <p class="detailsSaude">Sanidade</p>
+                            </div>
+                            <div class="boxSan">
+                                <input type="text" maxlength="3" name="san_atual" id="san_atual" placeholder="Valor atual...">
+                                <input type="text" maxlength="3" name="san_total" id="san_total" placeholder="Valor MAX">
+                            </div>
+                        </div>
+            
+                        <div class="boxGeralPE">
+                            <div class="infoSaude">
+                                <p class="pvSaude">PE</p>
+                                <p class="detailsSaude">Ponto de Esforço</p>
+                            </div>
+                            <div class="boxPE">
+                                <input type="text" maxlength="3" name="pe_atual" id="pe_atual" placeholder="Valor atual...">
+                                <input type="text" maxlength="3" name="pe_total" id="pe_total" placeholder="Valor MAX">
+                            </div>
+                        </div>
+                 </div>
+            
+                    <!-- Defesas -->
+                    <div class="boxDefesas">
+                        <h4>Defesas</h4>
+                        <div class="boxGeralDefesas">
+                            <div class="infoDefesa">
+                                <p class="passiva">Passiva</p>
+                            </div>
+                            <div class="boxDef">
+                                <input type="text" maxlength="3" name="defesa_passiva" id="defesa_passiva" placeholder="Valor...">
+                            </div>
+                        </div>
+            
+                        <div class="boxGeralDefesas">
+                            <div class="infoDefesa">
+                                <p class="passiva">Esquiva</p>
+                            </div>
+                            <div class="boxDef">
+                                <input type="text" maxlength="3" name="defesa_esquiva" id="defesa_esquiva" placeholder="Valor...">
+                            </div>
+                        </div>
+            
+                        <div class="boxGeralDefesas">
+                            <div class="infoDefesa">
+                                <p class="passiva">Bloquear</p>
+                            </div>
+                            <div class="boxDef">
+                                <input type="text" maxlength="3" name="defesa_bloquear" id="defesa_bloquear" placeholder="Valor...">
+                            </div>
+                        </div>
+                    </div>
+            
+                    <!-- Resistências -->
+                    <div class="boxResistencia">
+                        <h4>Resistência a Dano</h4>
+                        <div class="boxGeralResist">
+                            <div class="infoResist">
+                                <p class="fisica">Física</p>
+                            </div>
+                            <div class="boxResist">
+                                <input type="text" maxlength="3" name="resistenciaFisica" id="resistenciaFisica" placeholder="Valor...">
+                            </div>
+                        </div>
+            
+                        <div class="boxGeralResist">
+                            <div class="infoResist">
+                                <p class="balistica">Balística</p>
+                            </div>
+                            <div class="boxResist">
+                                <input type="text" maxlength="3" name="resistenciaBalistica" id="resistenciaBalistica" placeholder="Valor...">
+                            </div>
+                        </div>
+            
+                        <div class="boxGeralResist">
+                            <div class="infoResist">
+                                <p class="resistSan">Sanidade</p>
+                            </div>
+                            <div class="boxResist">
+                                <input type="text" maxlength="3" name="resistenciaSanidade" id="resistenciaSanidade" placeholder="Valor...">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="boxPericiasEsconder" onclick="abrirPericias()">
+                <p class="txtBlackPericia2">PERÍCIAS</p>
+            </div>
+
+                <script>
+                        document.addEventListener('DOMContentLoaded', () => {
+                            const box = document.querySelector('.boxPericias');
+                            const esconder = document.querySelector('.boxPericiasEsconder');
+                        
+                            // Ao clicar no botão de abrir
+                            esconder.addEventListener('click', () => {
+                                esconder.style.display = 'none';
+                                box.style.display = 'block';
+                                setTimeout(() => {
+                                    box.classList.add('aberta');
+                                }, 10);
+                            });
+                        
+                            // Ao clicar fora do boxPericias, fecha
+                            document.addEventListener('click', (event) => {
+                                const isClickInsideBox = box.contains(event.target);
+                                const isClickOnToggle = esconder.contains(event.target);
+                        
+                                if (!isClickInsideBox && !isClickOnToggle && box.classList.contains('aberta')) {
+                                    box.classList.remove('aberta');
+                                    setTimeout(() => {
+                                        box.style.display = 'none';
+                                        esconder.style.display = 'block';
+                                    }, 500); // espera a animação de saída
+                                }
+                            });
+                        });
+                </script>
+
+            <div class="boxPericias">
+                <p class="txtBlackPericia">PERÍCIAS</p>
+                <div class="pericia">
+                    <div class="linhaPericia">
+                        <p class="nomePericia">Adestramento: <span class="nomeDado">[ PRE ]</span></p>
+                        <input type="text" id="adestramento" name="adestramento" class="teste perAdes" maxlength="3">
+                    </div>
+                    
+                    <div class="linhaPericia">
+                        <p class="nomePericia">Artes: <span class="nomeDado">[ PRE ]</span></p>
+                        <input type="text" id="artes" name="artes" class="teste perArte" maxlength="3">
+                    </div>
+
+                    <div class="linhaPericia">
+                        <p class="nomePericia">Atletismo: <span class="nomeDado">[ FOR ]</span></p>
+                        <input type="text" id="atletismo" name="atletismo" class="teste perAtle" maxlength="3">
+                    </div>
+
+                    <div class="linhaPericia">
+                        <p class="nomePericia">Atualidades: <span class="nomeDado">[ INT ]</span></p>
+                        <input type="text" id="atualidades" name="atualidades" class="teste perAtua" maxlength="3">
+                    </div>
+
+                    <div class="linhaPericia">
+                        <p class="nomePericia">Ciências: <span class="nomeDado">[ INT ]</span></p>
+                        <input type="text" id="ciencias" name="ciencias" class="teste perCien" maxlength="3">
+                    </div>
+
+                    <div class="linhaPericia">
+                        <p class="nomePericia">Crime: <span class="nomeDado">[ AGI ]</span></p>
+                        <input type="text" id="crime" name="crime" class="teste perCrim" maxlength="3">
+                    </div>
+
+                    <div class="linhaPericia">
+                        <p class="nomePericia">Diplomacia: <span class="nomeDado">[ PRE ]</span></p>
+                        <input type="text" id="diplomacia" name="diplomacia" class="teste perDipl" maxlength="3">
+                    </div>
+
+                    <div class="linhaPericia">
+                        <p class="nomePericia">Enganação: <span class="nomeDado">[ PRE ]</span></p>
+                        <input type="text" id="enganacao" name="enganacao" class="teste perEnga" maxlength="3">
+                    </div>
+
+                    <div class="linhaPericia">
+                        <p class="nomePericia">Fortitude: <span class="nomeDado">[ VIG ]</span></p>
+                        <input type="text" id="fortitude" name="fortitude" class="teste perFort" maxlength="3">
+                    </div>
+
+                    <div class="linhaPericia">
+                        <p class="nomePericia">Furtividade: <span class="nomeDado">[ AGI ]</span></p>
+                        <input type="text" id="furtividade" name="furtividade" class="teste perFurt" maxlength="3">
+                    </div>
+
+                    <div class="linhaPericia">
+                        <p class="nomePericia">História: <span class="nomeDado">[ INT ]</span></p>
+                        <input type="text" id="historia" name="historia" class="teste perHist" maxlength="3">
+                    </div>
+
+                    <div class="linhaPericia">
+                        <p class="nomePericia">Iniciativa: <span class="nomeDado">[ AGI ]</span></p>
+                        <input type="text" id="iniciativa" name="iniciativa" class="teste perInic" maxlength="3">
+                    </div>
+
+                    <div class="linhaPericia">
+                        <p class="nomePericia">Intimidação: <span class="nomeDado">[ PRE ]</span></p>
+                        <input type="text" id="intimidacao" name="intimidacao" class="teste perInti" maxlength="3">
+                    </div>
+
+                    <div class="linhaPericia">
+                        <p class="nomePericia">Intuição: <span class="nomeDado">[ PRE ]</span></p>
+                        <input type="text" id="intuicao" name="intuicao" class="teste perIntui" maxlength="3">
+                    </div>
+
+                    <div class="linhaPericia">
+                        <p class="nomePericia">Investigação: <span class="nomeDado">[ INT ]</span></p>
+                        <input type="text" id="investigacao" name="investigacao" class="teste perInve" maxlength="3">
+                    </div>
+
+                    <div class="linhaPericia">
+                        <p class="nomePericia">Luta: <span class="nomeDado">[ FOR ]</span></p>
+                        <input type="text" id="luta" name="luta" class="teste perLuta" maxlength="3">
+                    </div>
+
+                    <div class="linhaPericia">
+                        <p class="nomePericia">Mecânica: <span class="nomeDado">[ INT ]</span></p>
+                        <input type="text" id="mecanica" name="mecanica" class="teste perMeca" maxlength="3">
+                    </div>
+
+                    <div class="linhaPericia">
+                        <p class="nomePericia">Medicina: <span class="nomeDado">[ INT ]</span></p>
+                        <input type="text" id="medicina" name="medicina" class="teste perMedi" maxlength="3">
+                    </div>
+
+                    <div class="linhaPericia">
+                        <p class="nomePericia">Ocultismo: <span class="nomeDado">[ INT ]</span></p>
+                        <input type="text" id="ocultismo" name="ocultismo" class="teste perOcul" maxlength="3">
+                    </div>
+
+                    <div class="linhaPericia">
+                        <p class="nomePericia">Percepção: <span class="nomeDado">[ PRE ]</span></p>
+                        <input type="text" id="percepcao" name="percepcao" class="teste perPerc" maxlength="3">
+                    </div>
+
+                    <div class="linhaPericia">
+                        <p class="nomePericia">Pilotagem: <span class="nomeDado">[ AGI ]</span></p>
+                        <input type="text" id="pilotagem" name="pilotagem" class="teste perPilo" maxlength="3">
+                    </div>
+
+                    <div class="linhaPericia">
+                        <p class="nomePericia">Psicologia: <span class="nomeDado">[ INT ]</span></p>
+                        <input type="text" id="psicologia" name="psicologia" class="teste perPsic" maxlength="3">
+                    </div>
+
+                    <div class="linhaPericia">
+                        <p class="nomePericia">Pontaria: <span class="nomeDado">[ AGI ]</span></p>
+                        <input type="text" id="pontaria" name="pontaria" class="teste perPont" maxlength="3">
+                    </div>
+
+                    <div class="linhaPericia">
+                        <p class="nomePericia">Prestidigitação: <span class="nomeDado">[ AGI ]</span></p>
+                        <input type="text" id="prestidigitacao" name="prestidigitacao" class="teste perPrest" maxlength="3">
+                    </div>
+
+                    <div class="linhaPericia">
+                        <p class="nomePericia">Profissão: <span class="nomeDado">[ INT ]</span></p>
+                        <input type="text" id="profissao" name="profissao" class="teste perProf" maxlength="3">
+                    </div>
+
+                    <div class="linhaPericia">
+                        <p class="nomePericia">Reflexos: <span class="nomeDado">[ AGI ]</span></p>
+                        <input type="text" id="reflexos" name="reflexos" class="teste perRefl" maxlength="3">
+                    </div>
+
+                    <div class="linhaPericia">
+                        <p class="nomePericia">Religião: <span class="nomeDado">[ PRE ]</span></p>
+                        <input type="text" id="religiao" name="religiao" class="teste perReli" maxlength="3">
+                    </div>
+
+                    <div class="linhaPericia">
+                        <p class="nomePericia">Sobrevivência: <span class="nomeDado">[ INT ]</span></p>
+                        <input type="text" id="sobrevivencia" name="sobrevivencia" class="teste perSobr" maxlength="3">
+                    </div>
+
+                    <div class="linhaPericia">
+                        <p class="nomePericia">Tática: <span class="nomeDado">[ INT ]</span></p>
+                        <input type="text" id="tatica" name="tatica" class="teste perTati" maxlength="3">
+                    </div>
+
+                    <div class="linhaPericia">
+                        <p class="nomePericia">Tecnologia: <span class="nomeDado">[ INT ]</span></p>
+                        <input type="text" id="tecnologia" name="tecnologia" class="teste perTecn" maxlength="3">
+                    </div>
+
+                    <div class="linhaPericia">
+                        <p class="nomePericia">Vontade: <span class="nomeDado">[ PRE ]</span></p>
+                        <input type="text" id="vontade" name="vontade" class="teste perVont" maxlength="3">
+                    </div>
+
+                    <div class="linhaPericia">
+                        <p class="nomePericia">Sorte: <span class="nomeDado">[ PRE ]</span></p>
+                        <input type="text" id="sorte" name="sorte" class="teste perSort" maxlength="3">
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-third">
+                <div class="boxArmaHab">
+                    <!-- Seção de Armas -->
+                    <div class="boxArma">
+                        <h4>Armas</h4>
+                        <p>Arma --- Tipo --- Ataque --- Alcance --- Dano --- Crítico --- Recarga --- Especial</p>
+                        <div class="titleArmas">
+                            <input type="text" name="arma1" id="arma1" maxlength="100" placeholder="Arma 1">
+                            <input type="text" name="arma2" id="arma2" maxlength="100" placeholder="Arma 2">
+                            <input type="text" name="arma3" id="arma3" maxlength="100" placeholder="Arma 3">
+                            <input type="text" name="arma4" id="arma4" maxlength="100" placeholder="Arma 4">
+                            <input type="text" name="arma5" id="arma5" maxlength="100" placeholder="Arma 5">
+                        </div>
+                    </div>
+            
+                    <!-- Seção de Habilidades -->
+                    <div class="boxHabilidades">
+                        <h4>Habilidades</h4>
+                        <textarea name="habilidades" id="habilidades" maxlength="800" placeholder="Descreva as habilidades aqui..."></textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="container-fourth">
+                <div class="titleInventario">
+                    <p class="txtInventario"> Inventário </p>
+                </div>
+                <div class="boxInventario">
+                    <!-- Seção de Itens -->
+                    <div class="titleDetalhe">
+                        <p class="txtItem">Item</p>
+                        <input type="text" id="item1" name="item1" maxlength="70" class="bxI boxItem1"><br>
+                        <input type="text" id="item2" name="item2" maxlength="70" class="bxI boxItem2"><br>
+                        <input type="text" id="item3" name="item3" maxlength="70" class="bxI boxItem3"><br>
+                        <input type="text" id="item4" name="item4" maxlength="70" class="bxI boxItem4"><br>
+                        <input type="text" id="item5" name="item5" maxlength="70" class="bxI boxItem5"><br> 
+                        <input type="text" id="item6" name="item6" maxlength="70" class="bxI boxItem6"><br>   
+                        <input type="text" id="item7" name="item7" maxlength="70" class="bxI boxItem7"><br> 
+                        <input type="text" id="item8" name="item8" maxlength="70" class="bxI boxItem8"><br>
+                    </div>
+            
+                    <!-- Seção de Detalhes -->
+                    <div class="titleDeta">
+                        <p class="txtDeta">Detalhes</p>
+                        <input type="text" id="info1" name="info1" maxlength="70" class="bxD boxDeta1"><br>
+                        <input type="text" id="info2" name="info2" maxlength="70" class="bxD boxDeta2"><br>
+                        <input type="text" id="info3" name="info3" maxlength="70" class="bxD boxDeta3"><br>
+                        <input type="text" id="info4" name="info4" maxlength="70" class="bxD boxDeta4"><br>
+                        <input type="text" id="info5" name="info5" maxlength="70" class="bxD boxDeta5"><br>
+                        <input type="text" id="info6" name="info6" maxlength="70" class="bxD boxDeta6"><br> 
+                        <input type="text" id="info7" name="info7" maxlength="70" class="bxD boxDeta7"><br>
+                        <input type="text" id="info8" name="info8" maxlength="70" class="bxD boxDeta8"><br>
+                    </div>
+            
+                    <!-- Seção de Espaço -->
+                    <div class="titleEspaco">
+                        <p class="txtEspa">Espaço</p>
+                        <input type="text" maxlength="4" id="espaco1" name="espaco1" class="bxE boxEspa1" oninput="calcularEspacoTotal()"><br>
+                        <input type="text" maxlength="4" id="espaco2" name="espaco2" class="bxE boxEspa2" oninput="calcularEspacoTotal()"><br>
+                        <input type="text" maxlength="4" id="espaco3" name="espaco3" class="bxE boxEspa3" oninput="calcularEspacoTotal()"><br> 
+                        <input type="text" maxlength="4" id="espaco4" name="espaco4" class="bxE boxEspa4" oninput="calcularEspacoTotal()"><br>
+                        <input type="text" maxlength="4" id="espaco5" name="espaco5" class="bxE boxEspa5" oninput="calcularEspacoTotal()"><br>
+                        <input type="text" maxlength="4" id="espaco6" name="espaco6" class="bxE boxEspa6" oninput="calcularEspacoTotal()"><br> 
+                        <input type="text" maxlength="4" id="espaco7" name="espaco7" class="bxE boxEspa7" oninput="calcularEspacoTotal()"><br>
+                        <input type="text" maxlength="4" id="espaco8" name="espaco8" class="bxE boxEspa8" oninput="calcularEspacoTotal()"><br>
+                        <input type="text" maxlength="4" id="espacoTotal" name="espacoTotal" class="bxE boxEspa9" disabled><br>
+                    </div>
+
+            
+                    <!-- Seção de Peso -->
+                    <div class="titlePeso">
+                        <p class="txtPeso">Peso</p>
+                        <input type="text" maxlength="4" id="peso1" name="peso1" class="bxP boxPeso1" oninput="calcularPesoTotal()"><br>
+                        <input type="text" maxlength="4" id="peso2" name="peso2" class="bxP boxPeso2" oninput="calcularPesoTotal()"><br>
+                        <input type="text" maxlength="4" id="peso3" name="peso3" class="bxP boxPeso3" oninput="calcularPesoTotal()"><br> 
+                        <input type="text" maxlength="4" id="peso4" name="peso4" class="bxP boxPeso4" oninput="calcularPesoTotal()"><br>
+                        <input type="text" maxlength="4" id="peso5" name="peso5" class="bxP boxPeso5" oninput="calcularPesoTotal()"><br>
+                        <input type="text" maxlength="4" id="peso6" name="peso6" class="bxP boxPeso6" oninput="calcularPesoTotal()"><br> 
+                        <input type="text" maxlength="4" id="peso7" name="peso7" class="bxP boxPeso7" oninput="calcularPesoTotal()"><br>
+                        <input type="text" maxlength="4" id="peso8" name="peso8" class="bxP boxPeso8" oninput="calcularPesoTotal()"><br>
+                        <input type="text" maxlength="4" id="pesoTotal" name="pesoTotal" class="bxP boxPeso9" disabled><br>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="container-fifth">
+                <div class="boxDetails">
+                    <!-- Seção de Características -->
+                    <div class="boxCarac">
+                        <h4> <img src="Img/char.png" alt="" srcset="">Características</h4>
+                        <textarea maxlength="500" name="caracteristicas" id="caracteristicas" class="caracteristicas" placeholder="Descreva as Características do seu personagem..."></textarea>
+                    </div>
+            
+                    <!-- Seção de Upgrades -->
+                    <div class="boxUp">
+                        <h4> <img src="Img/upgrades.png" alt="" srcset=""> Up Grade</h4>
+                        <textarea maxlength="500" name="upgrade" id="upgrade" class="upgrade" placeholder="Registre seus Up grades..."></textarea>
+                    </div>
+            
+                    <!-- Seção de Dano Sofrido -->
+                    <div class="boxDano">
+                        <h4> <img src="Img/damage.png" alt="">Dano Sofrido</h4>
+                        <textarea maxlength="500" name="dano_sofrido" id="dano_sofrido" class="danoSofrido" placeholder="Informe qualquer dano sofrido..."></textarea>
+                    </div>
+                </div>
+            
+                <!-- Seção de Informações Adicionais -->
+                <div class="boxDetails2">
+                    <div class="boxInfoAdicional">
+                        <h4> Informações Adicionais</h4>
+                        <textarea maxlength="1800" name="info_adicional" id="info_adicional" class="infoAdicional" placeholder="Descreva informações..."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="boxButtom">
+                <button type="submit">Salvar</button>
+                <button type="button" onclick="voltar()">Voltar</button>
+                <button type="button" class="excluir">Excluir</button>
+            </div>
+        </form>
+
+</body>
+</html>

@@ -1,0 +1,86 @@
+.container-fourth {
+    width: 100%;
+    max-width: 1400px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: var(--color-box-bg);
+    box-shadow: 0 8px 16px var(--color-box-shadow);
+    border-radius: 12px;
+    font-family: var(--font-primary);
+    overflow-x: auto;
+    margin-top: 100px;
+}
+
+.titleInventario {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.txtInventario {
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--color-input-focus);
+}
+
+.boxInventario {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto auto;
+    gap: 16px;
+}
+
+.boxInventario > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.boxInventario p {
+    font-weight: bold;
+    font-size: 18px;
+    color: var(--color-light-gray);
+    margin-bottom: 10px;
+}
+
+.boxInventario input {
+    padding: 10px;
+    border: 1px solid var(--color-input-border);
+    background-color: var(--color-input-bg);
+    color: var(--color-white);
+    border-radius: 8px;
+    box-sizing: border-box;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+/* Campos maiores: Item e Detalhes */
+.bxI, .bxD {
+    width: 100%;
+}
+
+/* Campos menores: Espaço e Peso */
+.bxE, .bxP {
+    width: 70px;
+    text-align: center;
+    font-family: monospace;
+    font-size: 16px;
+}
+
+.boxInventario input:focus {
+    outline: none;
+    border-color: var(--color-input-focus);
+    box-shadow: 0 0 5px var(--color-input-focus);
+}
+
+#espacoTotal, #pesoTotal{
+    border: 1px solid #f74949;
+    background-color: var(--color-input-bg);
+    color: #f74949;
+}
+
+
+/* Responsividade */
+@media (max-width: 992px) {
+    .boxInventario {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+

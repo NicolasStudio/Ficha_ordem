@@ -1,0 +1,190 @@
+@import url('https://fonts.googleapis.com/css2?family=Winky+Rough:ital,wght@0,300..900;1,300..900&family=Yatra+One&display=swap');
+
+/* Definição de Variáveis */
+:root {
+    --font-primary: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --font-secondary: 'Yatra One', system-ui;
+    --color-background: linear-gradient(120deg, #0f2027, #203a43, #2c5364);
+    --color-white: #ffffff;
+    --color-light-gray: #cccccc;
+    --color-input-border: #444;
+    --color-input-bg: #2a2a2a;
+    --color-input-focus: #6dd5fa;
+    --color-button-bg: #6dd5fa;
+    --color-button-hover: #4db8d6;
+    --color-button-text: #1e1e1e;
+    --color-link: #6dd5fa;
+    --color-box-bg: #1e1e1e;
+    --color-box-shadow: rgba(0, 0, 0, 0.5);
+
+    --input-img-top: 45%;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: var(--font-secondary);
+}
+
+body {
+    font-family: var(--font-primary);
+    background: var(--color-background);
+    min-height: 100vh;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.container-primary {
+    display: flex; /* Flexbox para alinhar a imagem e o conteúdo ao lado */
+    width: 100%;
+    height: auto;
+}
+
+/* Só a Imagem */
+.box-top-img {
+    width: 280px; /* Tamanho fixo para a imagem */
+    height: auto;
+    margin-top: 3%; 
+    margin-left: 3%; 
+}
+
+.box-top-img img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+
+/* Estilo do container do label e input */
+.nameNext {
+    display: block;
+    font-size: 1.2rem; /* Tamanho de fonte do label */
+    color: #FF9F00; /* Cor do texto do label */
+    margin-bottom: 5px; /* Espaço entre o label e o input */
+    margin-top: 15px;
+    text-align: center; /* Alinha o texto do label ao centro */
+}
+
+/* Input */
+.input-overlay {
+    position: relative; /* Permite ajustes de posicionamento */
+    display: block; /* Faz o input ocupar toda a largura possível */
+    width: 60%; /* Largura do input */
+    max-width: 100px; /* Largura máxima */
+    margin: 0 auto; /* Centraliza o input */
+    padding: 10px; /* Espaçamento interno */
+    font-size: 1.2rem; /* Tamanho da fonte */
+    text-align: center; /* Centraliza o texto digitado */
+    background-color: var(--color-input-bg);
+    border: 2px solid var(--color-box-bg); /* Borda do input */
+    color: #FF9F00; /* Cor do texto do input */
+    outline: none; /* Remove o contorno de foco */
+    border-radius: 5px; /* Bordas arredondadas */
+    transition: border-color 0.3s; /* Transição suave na cor da borda */
+}
+
+/* Foco no input */
+.input-overlay:focus {
+    border-color: #FF9F00; /* Cor da borda quando o input está em foco */
+}
+
+/* Para o layout responsivo */
+@media (max-width: 767px) {
+    .input-overlay {
+        width: 80%; /* Largura maior do input em telas pequenas */
+        max-width: 120px; /* Largura máxima maior */
+    }
+}
+
+
+
+/* Nome do Personagem */
+.box-top-personagem {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Alinhamento superior */
+    align-items: center; /* Alinhamento à esquerda */
+    color: var(--color-white);
+    gap: 8px;
+    width: 100%; /* Ocupar o restante da largura */
+    margin-top: 5%;
+}
+
+/* Nome do Personagem */
+.boxNome {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Alinhado à esquerda */
+    gap: 5px;
+}
+
+.boxNome label {
+    font-weight: bold;
+    font-size: clamp(16px, 4vw, 22px);
+}
+
+.boxNome input{
+    padding: 8px;
+    border: 1px solid var(--color-input-border);
+    border-radius: 8px;
+    background-color: var(--color-input-bg);
+    color: var(--color-white);
+    width: 500px;
+    max-width: 90vw;
+    font-size: clamp(8px, 4vw, 18px);
+}
+
+/* Demais Dados */
+.boxDados {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-top: 20px;
+    width: 100%; /* Ocupa toda a largura disponível */
+}
+
+.boxDados label {
+    font-weight: bold;
+    color: var(--color-white);
+    font-size: clamp(12px, vw, 18px);
+    padding: 8px;
+    width: 100px;
+}
+
+.boxDados input {
+    padding: 8px;
+    border: 1px solid var(--color-input-border);
+    border-radius: 8px;
+    background-color: var(--color-input-bg);
+    color: var(--color-white);
+    width: 150px;
+    font-size: clamp(8px, 4vw, 18px);
+    text-align: center;
+}
+
+.boxDados input:focus, .nome:focus {
+    outline: none;
+    border-color: var(--color-input-focus);
+    box-shadow: 0 0 5px var(--color-input-focus);
+}
+
+@media (max-width: 768px) {
+    .container-primary {
+        flex-direction: column; /* Deixa a imagem em cima e os campos embaixo */
+        align-items: center; /* Opcional: centraliza horizontalmente se quiser */
+    }
+
+    .box-top-img {
+        margin-left: 0; /* Zera a margem esquerda no mobile */
+        margin-top: 20px; /* Mantém um pequeno espaço acima */
+    }
+
+    .box-top-personagem {
+        margin-top: 20px;
+        padding-left: 0; /* Remove o espaçamento lateral */
+        align-items: center; /* Alinha ao centro para telas menores */
+    }
+}

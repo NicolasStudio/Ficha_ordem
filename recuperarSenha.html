@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Nicolas de Almeida Sousa">
+    <meta name="description" content="Ficha de RPG Ordem Paranormal, Nicolas de Almeida Sousa">
+    <title>Ficha 3.0</title>
+
+    <!-- Estilos -->
+    <link rel="stylesheet" href="CSS/stylePadrao.css"> <!-- Básico -->
+
+    <!-- Script -->
+    <script src="Js/scriptPadrao.js"></script>
+
+</head>
+<body>
+<!-- Recuperação de senha -->
+<div class="containerInitial">
+
+    <div class="boxRecuperar" id="boxRecuperar">
+        <h2>Recuperar senha</h2>
+
+        <label for="emailCad">Email: </label>
+        <input type="email" id="emailCad" required>
+
+        <button class="btnValidar" id="btnEnviar">Enviar e-mail</button>
+        <button class="btnShowLogin" onclick="irLogin2()">Voltar</button>
+    </div>
+</div>
+
+<script type="module">
+    import { auth } from "./Js/scriptFirebase.js";
+    import { sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+    // O Firebase envia um e-mail com o link para criar uma nova senha
+    document.getElementById('btnEnviar').addEventListener('click', async () => {
+        const email = document.getElementById('emailCad').value;
+
+        if (!email) {
+            alert("Informe o seu e-mail.");
+            return;
+        }
+
+        try {
+            await sendPasswordResetEmail(auth, email);
+            alert("Se este e-mail estiver cadastrado, você receberá um link para alterar a senha.");
+            window.location.href = 'index.html';
+        } catch (error) {
+            console.error(error);
+            alert("E-mail inválido.");
+        }
+    });
+</script>
+
+</body>
+</html>

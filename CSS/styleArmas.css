@@ -1,0 +1,128 @@
+.container-third {
+    width: 100%;
+    padding: 0 20px; /* Adiciona distância das laterais */
+}
+
+.boxArmaHab {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap; /* Garante que os itens se ajustem em telas menores */
+}
+
+/* Responsivo */
+@media (max-width: 767px) {
+    .boxArmaHab {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .boxArma,
+    .boxHabilidades {
+        width: 100%; /* Garante que os contêineres ocupem 100% da largura */
+        margin-left: 0;
+    }
+
+    .boxArma h4,
+    .boxArma p,
+    .titleArmas input {
+        width: 90%; /* Ajusta a largura para 90% */
+        margin-left: 0;
+    }
+
+    .boxHabilidades textarea {
+        width: 90%; /* Ajusta a largura do textarea */
+    }
+
+    .boxArma h4,
+    .boxArma p {
+        font-size: clamp(14px, 5vw, 20px); /* Ajusta o tamanho do texto para telas menores */
+    }
+}
+
+.boxArma h4 {
+    width: 100%;
+    height: 50px;
+    background-color: var(--color-box-bg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: clamp(18px, 4vw, 24px);
+    font-weight: 500;
+    color: var(--color-white);
+    margin-bottom: 30px;
+}
+
+.boxArma p {
+    text-align: center;
+    width: 100%;
+    font-size: clamp(18px, 4vw, 20px);
+    font-weight: 500;
+    color: var(--color-input-focus);
+    margin-bottom: 30px;
+}
+
+.boxArma {
+    width: 60%;
+    padding: 0 10px; /* Adiciona espaçamento nas laterais */
+    min-width: 280px; /* Garante uma largura mínima */
+}
+
+.boxHabilidades {
+    width: 35%;
+    padding: 0 10px; /* Adiciona espaçamento nas laterais */
+    min-width: 280px; /* Garante uma largura mínima */
+}
+
+.titleArmas input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid var(--color-input-border);
+    border-radius: 8px;
+    background-color: var(--color-input-bg);
+    color: var(--color-white);
+    font-size: clamp(8px, 4vw, 18px);
+    text-align: center;
+    margin-bottom: 10px;
+    box-sizing: border-box; /* Garante que padding e border não somem à largura */
+}
+
+.titleArmas input:focus {
+    outline: none;
+    border-color: var(--color-input-focus);
+    box-shadow: 0 0 5px var(--color-input-focus);
+}
+
+.boxHabilidades h4 {
+    width: 100%;
+    height: 50px;
+    background-color: var(--color-box-bg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: clamp(18px, 4vw, 24px);
+    font-weight: 500;
+    color: var(--color-white);
+    margin-bottom: 30px;
+}
+
+.boxHabilidades textarea {
+    width: 100%;
+    height: 325px;
+    padding: 8px;
+    border: 1px solid var(--color-input-border);
+    background-color: var(--color-input-bg);
+    color: var(--color-white);
+    font-size: clamp(8px, 4vw, 18px);
+    resize: none;
+    box-sizing: border-box; /* Garante que padding e border não somem à largura */
+    overflow: auto; /* Evita quebra visual */
+}
+
+.boxHabilidades textarea:focus {
+    outline: none;
+    border-color: var(--color-input-focus);
+    box-shadow: 0 0 5px var(--color-input-focus);
+}
