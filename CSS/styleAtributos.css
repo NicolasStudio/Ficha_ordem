@@ -1,0 +1,311 @@
+
+/* Atributos */
+.container-secound {
+    width: 100%;
+    height: auto;
+    margin-top: 5%;
+    display: flex;
+    flex-wrap: wrap; /* Permite que as caixas se movam para a linha de baixo quando não houver espaço suficiente */
+    justify-content: space-between; /* Alinha as caixas à esquerda na primeira linha */
+}
+
+.box-atributos {
+    width: 500px; /* Largura fixa */
+    height: 500px; /* Altura fixa */
+    position: relative;
+}
+
+/* Estilos gerais dos atributos */
+.box-att-unit-for, 
+.box-att-unit-int, 
+.box-att-unit-pre, 
+.box-att-unit-agi, 
+.box-att-unit-vig, 
+.box-att-unit-atts {
+    width: 100px; /* largura fixa */
+    height: 100px; /* altura fixa */
+    text-align: center;
+    position: absolute;
+}
+
+@media screen and (max-width: 1860px) {
+    .box-atributos {
+        margin: 0 auto;
+    }
+}
+
+/* Posições no formato de pentágono */
+.box-att-unit-for {
+    top: 0%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.box-att-unit-int {
+    top: 30%;
+    left: 80%;
+    transform: translate(-50%, -50%);
+}
+
+.box-att-unit-pre {
+    top: 65%;
+    left: 70%;
+    transform: translate(-50%, -50%);
+}
+
+.box-att-unit-agi {
+    top: 65%;
+    left: 30%;
+    transform: translate(-50%, -50%);
+}
+
+.box-att-unit-vig {
+    top: 30%;
+    left: 20%;
+    transform: translate(-50%, -50%);
+}
+
+.box-att-unit-atts {
+    top: 48%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.box-atributos label{
+    font-size: clamp(18px, 4vw, 24px);
+    font-weight: 600;
+    width: auto;
+    cursor: pointer;
+    transition: opacity 0.8s ease;
+}
+
+.box-atributos p{
+    font-size: clamp(12px, 4vw, 16px);
+    color: var(--color-input-focus);
+    width: auto;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+}
+
+.box-atributos input:focus {
+    outline: none;
+    border-color: var(--color-input-focus);
+    box-shadow: 0 0 5px var(--color-input-focus);
+}
+
+.box-att-unit-for label:hover + p,
+.box-att-unit-int label:hover + p,
+.box-att-unit-vig label:hover + p,
+.box-att-unit-agi label:hover + p,
+.box-att-unit-pre label:hover + p{
+    display: block;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+.box-att-unit-atts label:hover{
+    transition: opacity 0.8s ease;
+    color: var(--color-input-focus);
+}
+
+.box-atributos input{
+    padding: 8px;
+    border: 2px solid var(--color-input-border);
+    border-radius: 50%;
+    background-color: var(--color-input-bg);
+    color: var(--color-white);
+    width: 10vh; /* largura dos inputs */
+    height: 10vh;
+    text-align: center;
+    font-size: clamp(16px, 4vw, 26px);
+}
+
+/* Estilo para a seção de Perícias */
+/* Estilo principal da boxPericias */
+.boxPericias {
+    position: fixed;
+    top: 0;
+    right: -600px; /* Começa fora da tela */
+    width: 500px;
+    height: 100%;
+    transition: right 0.5s ease;
+    z-index: 1000;
+    overflow-y: auto;
+    background: var(--color-box-bg);
+    box-shadow: 0 4px 8px var(--color-box-shadow);
+    border-radius: 10px 0 0 10px;
+    padding: 20px;
+    font-family: var(--font-primary);
+    color: var(--color-white);
+    display: none;
+}
+
+.boxPericias.aberta {
+    display: block;
+    right: 0;
+}
+
+/* Responsividade para telas menores (máximo 1149px) */
+@media screen and (max-width: 1149px) {
+    .boxPericias {
+        order: 2; /* Faz com que a boxPericias seja centralizada no mobile */
+        width: 100%; /* Ajusta a largura da box para 100% */
+        max-width: 400px; /* Limita a largura máxima para telas menores */
+        right: 0; /* Garante que ela apareça na tela à direita */
+        transition: right 0.5s ease;
+    }
+
+    .txtBlackPericia {
+        font-size: 1.5rem; /* Ajusta o tamanho da fonte para telas menores */
+    }
+
+    .boxPericiasEsconder {
+        top: 20%; /* Posiciona o botão mais para cima no mobile */
+        right: 10px; /* Garante que o botão não encoste na borda */
+        padding: 10px; /* Menos padding para economizar espaço */
+        font-size: 1rem; /* Ajusta o tamanho da fonte do botão */
+    }
+}
+
+/* Responsividade para telas muito pequenas (máximo 767px) */
+@media screen and (max-width: 767px) {
+    .boxPericias {
+        width: 100%;
+        max-width: 300px; /* Ajusta ainda mais a largura para dispositivos menores */
+    }
+
+    .txtBlackPericia {
+        font-size: 1.2rem; /* Diminui o tamanho da fonte */
+    }
+
+    .boxPericiasEsconder {
+        top: 15%; /* Alinha o botão mais acima em telas muito pequenas */
+        font-size: 0.9rem; /* Reduz ainda mais o tamanho do texto */
+    }
+}
+
+/* Estilo do botão boxPericiasEsconder */
+.boxPericiasEsconder {
+    position: fixed;
+    top: 25%;
+    right: 0;
+    background: var(--color-box-bg);
+    box-shadow: 0 4px 8px var(--color-box-shadow);
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    padding: 20px;
+    width: auto;
+    font-family: var(--font-primary);
+    color: var(--color-white);
+    cursor: pointer;
+    z-index: 1001;
+    text-align: center;
+    transition: background 0.3s;
+}
+
+/* Efeito de hover para boxPericiasEsconder */
+.boxPericiasEsconder:hover {
+    background: var(--color-input-border);
+}
+
+.txtBlackPericia, .txtBlackPericia2{
+    font-family: var(--font-secondary);
+    font-size: clamp(16px, 4vw, 30px);
+    text-align: center;
+    color: var(--color-link);
+    cursor: pointer;
+}
+
+.boxPericiasEsconder:hover{
+    background: var(--color-input-border);
+}
+
+.pericia {
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* Espaço entre as linhas */
+}
+
+.linhaPericia {
+    display: flex;
+    align-items: center;
+}
+
+.pericia-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.nomePericia {
+    width: 100%;
+    margin: 0;
+    font-size: 16px;
+}
+
+.nomePericia .nomeDado {
+    font-weight: normal;
+    font-size: 1.2rem;
+    color: var(--color-link);
+    margin-left: 5px;
+}
+
+.teste {
+    width: 20%;
+    padding: 6px 12px;
+    font-size: 1rem;
+    font-family: var(--font-primary);
+    background-color: var(--color-input-bg);
+    border: 1px solid var(--color-input-border);
+    border-radius: 5px;
+    color: var(--color-white);
+    transition: border-color 0.3s, box-shadow 0.3s;
+    flex-shrink: 0;
+}
+
+.profissao{
+    width: 20%;
+    padding: 6px 12px;
+    font-size: 1rem;
+    font-family: var(--font-primary);
+    background-color: var(--color-input-bg);
+    border: 1px solid var(--color-input-border);
+    border-radius: 5px;
+    color: var(--color-white);
+    transition: border-color 0.3s, box-shadow 0.3s;
+    flex-shrink: 0;
+
+}
+
+.teste:focus, .profissao:focus {
+    outline: none;
+    border-color: var(--color-input-focus);
+    box-shadow: 0 0 5px var(--color-input-focus);
+}
+
+/* Ajuste especial para input de profissão */
+.nomePericia input.profissao {
+    width: 38.5%;
+    margin: 0px 5px;
+    display: inline-block;
+}
+
+/* Responsividade */
+@media (max-width: 600px) {
+    .boxPericias {
+        padding: 15px;
+        margin: 15px;
+    }
+
+    .txtBlackPericia {
+        font-size: 1.5rem;
+    }
+
+    .nomePericia {
+        font-size: 1rem;
+    }
+}
+
+

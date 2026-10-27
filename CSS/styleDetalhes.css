@@ -1,0 +1,217 @@
+.container-fifth {
+    margin-top: 5%;
+}
+
+.boxDetails {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    width: 100%;
+    max-width: 1400px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: var(--color-box-bg);
+    box-shadow: 0 8px 16px var(--color-box-shadow);
+    border-radius: 12px;
+    font-family: var(--font-primary);
+}
+
+.boxDetails div {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Ícones ajustados */
+.boxDano img,
+.boxCarac img,
+.boxUp img {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+}
+
+/* Título com possível ícone ao lado */
+.boxDetails h4 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--color-input-focus);
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+/* Área de texto base */
+.boxDetails textarea {
+    resize: vertical;
+    min-height: 100px;
+    padding: 12px;
+    font-size: 16px;
+    color: var(--color-white);
+    background-color: var(--color-input-bg);
+    border: 1px solid var(--color-input-border);
+    border-radius: 8px;
+    box-sizing: border-box;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    height: 325px;
+    resize: none;
+}
+
+/* Destaque ao focar */
+.boxDetails textarea:focus {
+    outline: none;
+    border-color: var(--color-input-focus);
+    box-shadow: 0 0 5px var(--color-input-focus);
+}
+
+/* Estilo especial para Dano Sofrido */
+.boxDano textarea {
+    border: 1px solid var(--color-input-border);
+    background-color: var(--color-input-bg);
+    color: #f74949;
+    font-weight: bold;
+}
+
+/* Foco com destaque em vermelho */
+.boxDano textarea:focus {
+    outline: none;
+    border-color: #f74949;
+    box-shadow: 0 0 5px #f74949;
+}
+
+/* Responsividade */
+@media (max-width: 992px) {
+    .boxDetails {
+        grid-template-columns: 1fr;
+    }
+}
+
+.boxDetails2 {
+    width: 100%;
+    max-width: 1400px;
+    margin: 40px auto;
+    padding: 30px 20px;
+    background-color: var(--color-box-bg);
+    box-shadow: 0 8px 16px var(--color-box-shadow);
+    border-radius: 12px;
+    font-family: var(--font-primary);
+    box-sizing: border-box;
+}
+
+.boxInfoAdicional {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.boxInfoAdicional h4 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 22px;
+    font-weight: bold;
+    color: var(--color-input-focus);
+    text-align: center;
+    margin: 0;
+}
+
+.boxInfoAdicional textarea {
+    width: 100%;
+    height: 325px;
+    resize: none;
+    padding: 14px;
+    font-size: 16px;
+    color: var(--color-white);
+    background-color: var(--color-input-bg);
+    border: 1px solid var(--color-input-border);
+    border-radius: 10px;
+    box-sizing: border-box;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+/* Destaque ao focar */
+.boxInfoAdicional textarea:focus {
+    outline: none;
+    border-color: var(--color-input-focus);
+    box-shadow: 0 0 5px var(--color-input-focus);
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    .boxInfoAdicional textarea {
+        width: 100%;
+        height: 250px;
+    }
+}
+
+.boxButtom {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 5%;
+    flex-wrap: wrap;
+    margin-bottom: 5%;
+}
+
+.boxButtom button {
+    padding: 12px 28px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+}
+
+/* Salvar - Verde */
+.boxButtom button:nth-child(1) {
+    background-color: #28a745;
+    color: var(--color-white);
+}
+
+.boxButtom button:nth-child(1):hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Voltar - Azul */
+.boxButtom button:nth-child(2) {
+    background-color: #007bff;
+    color: var(--color-white);
+}
+
+.boxButtom button:nth-child(2):hover {
+    background-color: #0069d9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Excluir - Vermelho */
+.boxButtom button:nth-child(3) {
+    background-color: #dc3545;
+    color: var(--color-white);
+}
+
+.boxButtom button:nth-child(3):hover {
+    background-color: #c82333;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsivo */
+@media (max-width: 500px) {
+    .boxButtom {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .boxButtom button {
+        width: 100%;
+        max-width: 300px;
+    }
+}

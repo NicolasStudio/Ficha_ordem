@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Nicolas de Almeida Sousa">
+    <meta name="description" content="Ficha de RPG Ordem Paranormal, Nicolas de Almeida Sousa">
+    <title>Ficha 3.0</title>
+
+    <!-- Estilos -->
+    <link rel="stylesheet" href="CSS/stylePadrao.css"> <!-- Básico -->
+    <link rel="stylesheet" href="CSS/styleErro.css"> <!-- erros -->
+    <!-- Script -->
+    <script src="Js/scriptPadrao.js"></script>
+
+</head>
+<body>
+
+    <div class="containerInitial">
+        <!-- Login -->
+        <form id="formLogin">
+            <div class="boxLogin" id="boxLogin">
+                <h2>Login</h2>
+
+                <label for="emailLogin">Login: </label>
+                <input type="email" id="emailLogin" name="email" required>
+
+                <label for="senhaLogin">Senha: </label>
+                <input type="password" id="senhaLogin" name="senha" required>
+                <b class="erro erroLogin">Erro: * <span>Senha Incorreta</span></b>
+
+                <button class="btnLogin" type="submit">Entrar</button>
+                <button class="btnShowCadastro" type="button" onclick="irCadastro()">Cadastrar</button>
+
+                <a href="recuperarSenha.html">Esqueci a minha senha...</a>
+            </div>
+        </form>
+
+        <!-- Cadastro -->
+        <form id="formCadastro">
+            <div class="boxCadastro" id="boxCadastro">
+                <h2>Cadastro</h2>
+
+                <label for="nome">Nome completo: </label>
+                <input type="text" id="nome" name="nome" required>
+
+                <label for="tell">Telefone: </label>
+                <input type="tel" id="tell" name="tell" oninput="mascararTelefone(this)" required>
+
+                <label for="datNasc">Data de Nascimento: </label>
+                <input type="date" id="datNasc" name="datNasc" required>
+
+                <label for="emailCad">Email: </label>
+                <input type="email" id="emailCad" name="emailCad" required>
+                <b class="erro erroCadastro">Erro: * <span></span></b>
+
+                <label for="palavraPasse">Palavra Passe: </label>
+                <input type="text" id="palavraPasse" name="palavraPasse" required>
+
+                <label for="senhaRec">Senha: </label>
+                <input type="password" id="senhaRec" name="senhaRec" required>
+
+                <label for="senhaRec2">Repita a senha: </label>
+                <input type="password" id="senhaRec2" required>
+                <b class="erroSenha">Erro: * <span>As senhas não coincidem. Por favor, digite novamente.</span></b>
+                <b class="erroCampos">Erro: * <span>Por favor, preencha todos os campos.</span></b>
+
+                <button type="submit" class="btnCadastrarConfirmar">Cadastrar</button>
+                <button type="button" class="btnShowLogin" onclick="irLogin()">Voltar</button>
+            </div>
+        </form>
+
+    </div>
+
+    <script type="module">
+        import { auth, db } from "./Js/scriptFirebase.js";
+        import { signInWithEmailAndPassword, createUserWithEmailAndPassword }
+            from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+        import { doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+        // Traduz os erros do Firebase para mensagens em português
+        function mensagemErro(error) {
+            switch (error.code) {
+                case 'auth/email-already-in-use': return 'Este e-mail já está em uso. Por favor, cadastre-se com outro e-mail.';
+                case 'auth/invalid-email': return 'E-mail inválido.';
+                case 'auth/weak-password': return 'A senha precisa ter pelo menos 6 caracteres.';
+                default: return 'Erro ao cadastrar usuário.';
+            }
+        }
+
+        document.getElementById("formLogin").addEventListener("submit", async function(e) {
+            e.preventDefault();
+
+            try {
+                await signInWithEmailAndPassword(auth, this.email.value, this.senha.value);
+                window.location.href = "home.html"; // Redireciona após login
+            } catch (error) {
+                mostrarErro('.erroLogin');
+            }
+        });
+
+        document.getElementById("formCadastro").addEventListener("submit", async function(e) {
+            e.preventDefault();
+            if (!validarSenha()) return;
+
+            const dados = Object.fromEntries(new FormData(this));
+
+            try {
+                const credencial = await createUserWithEmailAndPassword(auth, dados.emailCad, dados.senhaRec);
+
+                // Dados extras do usuário (a senha fica só no Firebase Auth)
+                await setDoc(doc(db, 'usuarios', credencial.user.uid), {
+                    nome: dados.nome,
+                    telefone: dados.tell,
+                    data_nascimento: dados.datNasc,
+                    email: dados.emailCad,
+                    palavra_passe: dados.palavraPasse
+                });
+
+                window.location.href = "home.html";
+            } catch (error) {
+                console.error(error);
+                mostrarErro('.erroCadastro', mensagemErro(error));
+            }
+        });
+    </script>
+
+</body>
+</html>

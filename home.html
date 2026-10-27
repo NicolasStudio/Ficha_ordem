@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Nicolas de Almeida Sousa">
+    <meta name="description" content="Ficha de RPG Ordem Paranormal, Nicolas de Almeida Sousa">
+    <title>Ficha 3.0</title>
+
+    <!-- Estilos -->
+    <link rel="stylesheet" href="CSS/stylePadrao.css"> <!-- Básico -->
+    <link rel="stylesheet" href="CSS/styleSair.css"> <!-- sair -->
+    <link rel="stylesheet" href="CSS/styleErro.css"> <!-- erros -->
+    <!-- Scripts -->
+    <script src="Js/scriptPadrao.js"></script>
+</head>
+<body>
+    <div class="boxSair">
+        <button class="sair" onclick="sair()">Sair</button>
+    </div>
+    <div class="containerFichas">
+        <!-- Título das fichas -->
+        <div class="boxTitle">
+            <div class="ficha-titulo2">
+                <span>Nome</span>
+                <span>Nível de NEX</span>
+                <span>Origem</span>
+                <span>Classe</span>
+            </div>
+        </div>
+
+        <!-- Fichas puxadas do servidor -->
+        <div class="boxFichas"></div>
+
+        <!-- Botão de adicionar nova ficha -->
+        <div class="imgWrapper">
+            <img src="Img/add.png" alt="Ícone" onclick="criarFicha()" />
+        </div>
+    </div>
+
+    <script type="module">
+        import { db, exigirLogin } from "./Js/scriptFirebase.js";
+        import { collection, query, where, getDocs, doc, deleteDoc }
+            from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+        const usuario = await exigirLogin();
+
+        function criarSpan(classe, texto) {
+            const span = document.createElement('span');
+            span.className = classe;
+            span.textContent = texto ?? '';
+            return span;
+        }
+
+        async function carregarFichas() {
+            // Só as fichas do usuário logado
+            const snap = await getDocs(query(collection(db, 'fichas'), where('uid', '==', usuario.uid)));
+            const fichas = snap.docs.map(d => ({ id_ficha: d.id, ...d.data() }));
+
+            const box = document.querySelector('.boxFichas');
+            box.innerHTML = '';
+
+            if (fichas.length === 0) {
+                box.innerHTML = "<center><p style='color: white; margin-top: 30px'>Você ainda não tem fichas cadastradas. </p></center>";
+                return;
+            }
+
+            fichas.forEach(ficha => {
+                const div = document.createElement('div');
+                div.className = 'ficha';
+                div.style.cursor = 'pointer';
+                div.onclick = () => window.location.href = 'ficha.html?id=' + encodeURIComponent(ficha.id_ficha);
+
+                div.appendChild(criarSpan('nomePersonagem', ficha.nomePersonagem));
+                div.appendChild(criarSpan('nextPersonagem', (ficha.nivelNext || '') + '%'));
+                div.appendChild(criarSpan('origemPersonagem', ficha.origem));
+                div.appendChild(criarSpan('classePersonagem', ficha.classe));
+
+                // Botão de excluir
+                const botao = document.createElement('button');
+                botao.className = 'excluirLinha';
+                botao.textContent = 'X';
+                botao.addEventListener('click', async (event) => {
+                    event.stopPropagation(); // não abre a ficha ao clicar no X
+
+                    if (confirm("Você tem certeza que deseja excluir esta ficha?")) {
+                        try {
+                            await deleteDoc(doc(db, 'fichas', ficha.id_ficha));
+                            alert('Ficha excluída com sucesso!');
+                            carregarFichas();
+                        } catch (error) {
+                            console.error(error);
+                            alert('Ocorreu um erro ao excluir a ficha.');
+                        }
+                    }
+                });
+                const spanBotao = document.createElement('span');
+                spanBotao.appendChild(botao);
+                div.appendChild(spanBotao);
+
+                box.appendChild(div);
+            });
+        }
+
+        carregarFichas();
+    </script>
+</body>
+</html>
