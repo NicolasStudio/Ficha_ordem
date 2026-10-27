@@ -74,7 +74,7 @@
 
     <script type="module">
         import { auth, db } from "./Js/scriptFirebase.js";
-        import { signInWithEmailAndPassword, createUserWithEmailAndPassword }
+        import { signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged }
             from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
         import { doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
@@ -84,18 +84,33 @@
                 case 'auth/email-already-in-use': return 'Este e-mail já está em uso. Por favor, cadastre-se com outro e-mail.';
                 case 'auth/invalid-email': return 'E-mail inválido.';
                 case 'auth/weak-password': return 'A senha precisa ter pelo menos 6 caracteres.';
-                default: return 'Erro ao cadastrar usuário.';
+                case 'auth/invalid-credential':
+                case 'auth/wrong-password':
+                case 'auth/user-not-found': return 'E-mail ou senha incorretos.';
+                case 'auth/too-many-requests': return 'Muitas tentativas. Aguarde alguns minutos e tente novamente.';
+                case 'auth/network-request-failed': return 'Sem conexão com a internet.';
+                default: return 'Ocorreu um erro. Tente novamente.';
             }
         }
 
+        // Quem já está logado vai direto para as fichas
+        const pararObservar = onAuthStateChanged(auth, usuario => {
+            pararObservar();
+            if (usuario) window.location.replace("home.html");
+        });
+
         document.getElementById("formLogin").addEventListener("submit", async function(e) {
             e.preventDefault();
+
+            const botao = this.querySelector('.btnLogin');
+            botao.disabled = true;
 
             try {
                 await signInWithEmailAndPassword(auth, this.email.value, this.senha.value);
                 window.location.href = "home.html"; // Redireciona após login
             } catch (error) {
-                mostrarErro('.erroLogin');
+                mostrarErro('.erroLogin', mensagemErro(error));
+                botao.disabled = false;
             }
         });
 
@@ -103,12 +118,25 @@
             e.preventDefault();
             if (!validarSenha()) return;
 
+            // Trava o botão para um clique duplo não tentar cadastrar duas vezes
+            const botao = this.querySelector('.btnCadastrarConfirmar');
+            botao.disabled = true;
+
             const dados = Object.fromEntries(new FormData(this));
 
+            let credencial;
             try {
-                const credencial = await createUserWithEmailAndPassword(auth, dados.emailCad, dados.senhaRec);
+                credencial = await createUserWithEmailAndPassword(auth, dados.emailCad, dados.senhaRec);
+            } catch (error) {
+                console.error(error);
+                mostrarErro('.erroCadastro', mensagemErro(error));
+                botao.disabled = false;
+                return;
+            }
 
-                // Dados extras do usuário (a senha fica só no Firebase Auth)
+            // Dados extras do usuário (a senha fica só no Firebase Auth).
+            // A conta já foi criada, então uma falha aqui não impede de entrar.
+            try {
                 await setDoc(doc(db, 'usuarios', credencial.user.uid), {
                     nome: dados.nome,
                     telefone: dados.tell,
@@ -116,12 +144,11 @@
                     email: dados.emailCad,
                     palavra_passe: dados.palavraPasse
                 });
-
-                window.location.href = "home.html";
             } catch (error) {
-                console.error(error);
-                mostrarErro('.erroCadastro', mensagemErro(error));
+                console.error('Erro ao salvar os dados do usuário:', error);
             }
+
+            window.location.href = "home.html";
         });
     </script>
 

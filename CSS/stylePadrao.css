@@ -30,10 +30,19 @@ body {
     padding: 0;
     font-family: var(--font-primary);
     background: var(--color-background);
-    height: 100vh;
+    min-height: 100vh; /* min-height: com muitas fichas a página cresce em vez de cortar o topo */
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+/* Home: o "Sair" fica numa linha própria acima da lista, para não cobrir as fichas */
+body > .boxSair {
+    position: static;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto -30px;
 }
 
 .containerInitial {
@@ -250,6 +259,11 @@ a:hover {
     .ficha-titulo,
     .boxFichas .ficha {
         grid-template-columns: 2fr 2fr;
+    }
+
+    /* O título tem 4 colunas e não alinha mais com as fichas empilhadas */
+    .boxTitle {
+        display: none;
     }
 }
 

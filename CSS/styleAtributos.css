@@ -74,6 +74,7 @@
 .box-atributos label{
     font-size: clamp(18px, 4vw, 24px);
     font-weight: 600;
+    color: var(--color-white);
     width: auto;
     cursor: pointer;
     transition: opacity 0.8s ease;
@@ -211,10 +212,18 @@
 
 .txtBlackPericia, .txtBlackPericia2{
     font-family: var(--font-secondary);
-    font-size: clamp(16px, 4vw, 30px);
+    font-size: clamp(16px, 2vw, 24px);
+    line-height: 1;
+    /* A Yatra One reserva muito espaço para letras que descem (g, p, q);
+       corta a caixa do texto na altura das maiúsculas e na linha de base */
+    text-box: trim-both cap alphabetic;
     text-align: center;
     color: var(--color-link);
     cursor: pointer;
+}
+.txtBlackPericia{
+    margin-top: 10px;
+    margin-bottom: 30px;
 }
 
 .boxPericiasEsconder:hover{

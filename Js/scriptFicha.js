@@ -38,6 +38,11 @@ if (idFicha) {
 form.addEventListener('submit', async function (event) {
     event.preventDefault();
 
+    // Trava o botão para um clique duplo não criar a mesma ficha duas vezes
+    const botao = form.querySelector('button[type="submit"]');
+    if (botao.disabled) return;
+    botao.disabled = true;
+
     const dados = Object.fromEntries(new FormData(form));
     dados.uid = usuario.uid;
     dados.atualizadoEm = serverTimestamp();
@@ -52,6 +57,7 @@ form.addEventListener('submit', async function (event) {
     } catch (error) {
         console.error('Erro ao salvar a ficha:', error);
         alert('Erro ao salvar a ficha!');
+        botao.disabled = false;
     }
 });
 

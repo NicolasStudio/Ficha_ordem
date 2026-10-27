@@ -61,7 +61,9 @@ function mostrarErro(seletor, mensagem) {
     }
     erro.style.display = 'block';
 
-    setTimeout(() => {
+    // Reinicia o tempo se o erro aparecer de novo antes de sumir
+    clearTimeout(erro.timer);
+    erro.timer = setTimeout(() => {
         erro.style.display = 'none';
     }, 2000);
 }

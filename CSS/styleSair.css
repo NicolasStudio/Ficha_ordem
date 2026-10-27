@@ -11,6 +11,7 @@
 }
 
 .sair {
+    width: auto; /* stylePadrao.css deixa todo button com 100% */
     background-color: #ff0000;
     color: var(--color-white);
     font-family: var(--font-primary);
@@ -26,4 +27,13 @@
 
 .sair:hover {
     background-color: #c20101;
+}
+
+/* Em telas menores o botão flutuante cobria o conteúdo: passa a ocupar uma linha no topo */
+@media (max-width: 768px) {
+    .boxSair {
+        position: static;
+        width: 100%;
+        margin-top: 0;
+    }
 }

@@ -53,11 +53,23 @@
         }
 
         async function carregarFichas() {
-            // Só as fichas do usuário logado
-            const snap = await getDocs(query(collection(db, 'fichas'), where('uid', '==', usuario.uid)));
-            const fichas = snap.docs.map(d => ({ id_ficha: d.id, ...d.data() }));
-
             const box = document.querySelector('.boxFichas');
+
+            // Só as fichas do usuário logado
+            let snap;
+            try {
+                snap = await getDocs(query(collection(db, 'fichas'), where('uid', '==', usuario.uid)));
+            } catch (error) {
+                console.error(error);
+                box.innerHTML = "<center><p style='color: white; margin-top: 30px'>Não foi possível carregar as fichas. Recarregue a página.</p></center>";
+                return;
+            }
+
+            // O Firestore não garante ordem: ordena pelo nome do personagem
+            const fichas = snap.docs
+                .map(d => ({ id_ficha: d.id, ...d.data() }))
+                .sort((a, b) => (a.nomePersonagem || '').localeCompare(b.nomePersonagem || '', 'pt-BR'));
+
             box.innerHTML = '';
 
             if (fichas.length === 0) {
