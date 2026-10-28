@@ -82,6 +82,24 @@ export function confirmarModal(titulo, texto) {
     });
 }
 
+// ================= Peças do conteúdo do modal de informação =================
+export function paragrafo(texto, classe) {
+    const p = document.createElement('p');
+    if (classe) p.className = classe;
+    p.textContent = texto;
+    return p;
+}
+
+// Rótulo em destaque seguido do texto, como no livro: "Perícias Treinadas. Pontaria e Tática."
+export function linhaComRotulo(rotulo, texto) {
+    const p = document.createElement('p');
+    const destaque = document.createElement('strong');
+    destaque.className = 'rotuloDestaque';
+    destaque.textContent = rotulo;
+    p.append(destaque, ' ' + texto);
+    return p;
+}
+
 // ================= Modal de informação =================
 // Mostra um conteúdo só para leitura. Fecha em "Fechar", Esc ou clique fora da caixa.
 // Uso: modalInformacao('Título', elementoComOConteudo)

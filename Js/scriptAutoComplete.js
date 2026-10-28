@@ -7,7 +7,8 @@
 //       campo: document.getElementById('origem'),
 //       itens: origensInfo,              // objetos com "name"
 //       tipo: 'origem',                  // usado no texto de acessibilidade do "i"
-//       detalhes: item => elementoDOM    // conteúdo do modal
+//       detalhes: item => elementoDOM,   // conteúdo do modal
+//       aoEscolher: item => { ... }      // opcional: o jogador escolheu um item da lista
 //   });
 import { modalInformacao } from "./scriptModal.js";
 
@@ -21,7 +22,7 @@ function combina(nome, busca) {
     return texto.startsWith(busca) || texto.split(/[\s.]+/).some(palavra => palavra.startsWith(busca));
 }
 
-export function autoComplete({ campo, itens, tipo, detalhes }) {
+export function autoComplete({ campo, itens, tipo, detalhes, aoEscolher = () => {} }) {
     // Envolve o campo: a lista e o "i" ficam presos a ele pelo CSS e acompanham
     // qualquer mudança de layout (fonte carregando, tela redimensionada...)
     const envoltorio = document.createElement('span');
@@ -100,6 +101,7 @@ export function autoComplete({ campo, itens, tipo, detalhes }) {
         // Avisa a ficha que houve alteração (para o aviso de "dados não salvos")
         campo.dispatchEvent(new Event('input', { bubbles: true }));
         fechar();
+        aoEscolher(itens.find(item => item.name === nome));
     }
 
     // ================= Botão "i" com os detalhes =================
@@ -129,6 +131,12 @@ export function autoComplete({ campo, itens, tipo, detalhes }) {
     });
 
     campo.addEventListener('input', atualizarBotaoInfo);
+
+    // Digitou o nome exato e saiu do campo, sem usar a lista: também conta como escolha
+    campo.addEventListener('change', () => {
+        const item = itemDoCampo();
+        if (item) aoEscolher(item);
+    });
     // A ficha preenche os campos sem disparar "input"; ela avisa quando terminou de carregar
     document.addEventListener('fichaCarregada', atualizarBotaoInfo);
     atualizarBotaoInfo();
