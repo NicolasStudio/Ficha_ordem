@@ -14,16 +14,6 @@ function irLogin2() {
     window.location.replace("index.html");
 }
 
-function abrirPericias() {
-    const bloco = document.getElementById("blocoPericias");
-    if (!bloco) return;
-    if (bloco.style.display === "none" || bloco.style.display === "") {
-      bloco.style.display = "block";
-    } else {
-      bloco.style.display = "none";
-    }
-}
-
 function criarFicha(){
   window.location.href = "ficha.html";
 }

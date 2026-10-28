@@ -20,8 +20,7 @@
 .box-att-unit-int, 
 .box-att-unit-pre, 
 .box-att-unit-agi, 
-.box-att-unit-vig, 
-.box-att-unit-atts {
+.box-att-unit-vig {
     width: 100px; /* largura fixa */
     height: 100px; /* altura fixa */
     text-align: center;
@@ -65,12 +64,6 @@
     transform: translate(-50%, -50%);
 }
 
-.box-att-unit-atts {
-    top: 48%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
 .box-atributos label{
     font-size: clamp(18px, 4vw, 24px);
     font-weight: 600;
@@ -103,11 +96,6 @@
     display: block;
     opacity: 1;
     transition: opacity 0.3s ease;
-}
-
-.box-att-unit-atts label:hover{
-    transition: opacity 0.8s ease;
-    color: var(--color-input-focus);
 }
 
 .box-atributos input{
@@ -226,10 +214,6 @@
     margin-bottom: 30px;
 }
 
-.boxPericiasEsconder:hover{
-    background: var(--color-input-border);
-}
-
 .pericia {
     display: flex;
     flex-direction: column;
@@ -239,13 +223,6 @@
 .linhaPericia {
     display: flex;
     align-items: center;
-}
-
-.pericia-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
 }
 
 .nomePericia {
@@ -274,31 +251,10 @@
     flex-shrink: 0;
 }
 
-.profissao{
-    width: 20%;
-    padding: 6px 12px;
-    font-size: 1rem;
-    font-family: var(--font-primary);
-    background-color: var(--color-input-bg);
-    border: 1px solid var(--color-input-border);
-    border-radius: 5px;
-    color: var(--color-white);
-    transition: border-color 0.3s, box-shadow 0.3s;
-    flex-shrink: 0;
-
-}
-
-.teste:focus, .profissao:focus {
+.teste:focus {
     outline: none;
     border-color: var(--color-input-focus);
     box-shadow: 0 0 5px var(--color-input-focus);
-}
-
-/* Ajuste especial para input de profissão */
-.nomePericia input.profissao {
-    width: 38.5%;
-    margin: 0px 5px;
-    display: inline-block;
 }
 
 /* Responsividade */

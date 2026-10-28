@@ -1,11 +1,11 @@
-.erro, .erroSenha, .erroCampos{
+.erro, .erroSenha{
     color: #ff0000;
     font-size: clamp(8px, 4vw, 12px);
     margin-top: 2px;
     font-weight: 300;
 }
 
-.erro span, .erroSenha span, .erroCampos span{
+.erro span, .erroSenha span{
     color: #ff0000;
     font-size: clamp(8px, 4vw, 12px);
 }
@@ -15,8 +15,5 @@
 }
 
 .erroSenha{
-    display: none;
-}
-.erroCampos{
     display: none;
 }
