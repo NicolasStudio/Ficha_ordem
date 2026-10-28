@@ -1,16 +1,17 @@
 // Ficha: sem ?id na URL cria uma nova, com ?id=... edita a existente
 import { db, exigirLogin } from "./scriptFirebase.js";
 import { confirmarModal, avisar, avisarNaProximaPagina } from "./scriptModal.js";
-import { collection, doc, getDoc, addDoc, setDoc, deleteDoc, serverTimestamp }
+import { collection, doc, getDoc, addDoc, setDoc, deleteDoc, writeBatch, serverTimestamp }
     from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const form = document.getElementById('characterForm');
-const idFicha = new URLSearchParams(window.location.search).get('id');
+export const idFicha = new URLSearchParams(window.location.search).get('id');
 
 // ================= Alterações não salvas =================
 // Qualquer coisa digitada marca a ficha como alterada até ser salva
 let alterado = false;
 form.addEventListener('input', () => alterado = true);
+export const temAlteracoes = () => alterado;
 
 async function podeSair() {
     if (!alterado) return true;
@@ -30,7 +31,7 @@ window.addEventListener('beforeunload', event => {
     if (alterado) event.preventDefault();
 });
 
-const usuario = await exigirLogin();
+export const usuario = await exigirLogin();
 
 // Preenche os campos do formulário com os dados salvos
 function preencherFicha(ficha) {
@@ -47,7 +48,7 @@ function preencherFicha(ficha) {
 
 // ================= Somente leitura =================
 // O mestre pode abrir a ficha de outro jogador, mas não alterar (as regras do Firestore também impedem)
-let somenteLeitura = false;
+export let somenteLeitura = false;
 
 async function ativarSomenteLeitura(uidDono) {
     somenteLeitura = true;
@@ -90,6 +91,24 @@ if (idFicha) {
     }
 }
 
+// Dados de todos os campos da ficha, prontos para gravar
+function dadosDaFicha() {
+    const dados = Object.fromEntries(new FormData(form));
+    dados.uid = usuario.uid;
+    dados.atualizadoEm = serverTimestamp();
+    return dados;
+}
+
+// Grava a ficha aberta sem sair dela (usado ao receber algo do mestre: scriptRecebimentos.js).
+// apagarJunto: documento apagado na mesma operação (o envio já recebido), para o item não entrar duas vezes
+export async function salvarFichaAberta(apagarJunto) {
+    const lote = writeBatch(db);
+    lote.set(doc(db, 'fichas', idFicha), dadosDaFicha());
+    if (apagarJunto) lote.delete(apagarJunto);
+    await lote.commit();
+    alterado = false;
+}
+
 form.addEventListener('submit', async function (event) {
     event.preventDefault();
     if (somenteLeitura) return; // ex.: Enter num campo da ficha de outro jogador
@@ -99,9 +118,7 @@ form.addEventListener('submit', async function (event) {
     if (botao.disabled) return;
     botao.disabled = true;
 
-    const dados = Object.fromEntries(new FormData(form));
-    dados.uid = usuario.uid;
-    dados.atualizadoEm = serverTimestamp();
+    const dados = dadosDaFicha();
 
     try {
         if (idFicha) {

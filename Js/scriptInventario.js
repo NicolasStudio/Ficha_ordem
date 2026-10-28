@@ -6,6 +6,7 @@
 // Sobrecarregado: –5 em Defesa (aplicado nas defesas pelo scriptRegrasBasicas.js),
 // –5 nos testes de perícia afetados por carga e –3m de deslocamento (só aviso)
 import { avisar } from "./scriptModal.js";
+import { capacidadeDeCarga, numero } from "./regrasInventario.js";
 
 const LIMITE_AMARELO = 0.75;
 const MENSAGEM_SOBREPESO = 'Você está sobrecarregado: –5 em Defesa e nos testes de perícia afetados por carga, e seu deslocamento é reduzido em –3m.';
@@ -17,10 +18,7 @@ const avisoSobrepeso = document.querySelector('.avisoSobrepeso');
 
 let estavaComSobrepeso = false;
 
-const capacidade = () => 10 + 5 * (parseInt(forca.value, 10) || 0); // FOR vazia conta como 0
-
-// Os totais vêm no formato "1,50"
-const numero = texto => parseFloat((texto || '0').replace(',', '.')) || 0;
+const capacidade = () => capacidadeDeCarga(forca.value);
 
 function estadoDaCarga(total, limite) {
     if (total > limite) return 'cargaExcesso';
