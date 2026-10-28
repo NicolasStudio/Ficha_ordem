@@ -38,3 +38,44 @@ function calcularPesoTotal() {
     // Atualiza o campo total
     document.getElementById('pesoTotal').value = total.toFixed(2).replace('.', ',');
 }
+
+
+// ================= Defesas =================
+// Passiva = 10 + AGI | Esquiva = 10 + Reflexos | Bloquear = 10 + Fortitude
+// Quando o valor de origem muda:
+//  - defesa vazia: preenche com 10 + valor
+//  - defesa com valor (inclusive editado pelo jogador): sobe ou desce a mesma diferença,
+//    mantendo qualquer ajuste que o jogador tenha feito
+{
+    const regrasDefesa = [
+        ['defesa_passiva', 'agilidade'],
+        ['defesa_esquiva', 'reflexos'],
+        ['defesa_bloquear', 'fortitude']
+    ];
+    const numero = campo => parseInt(campo.value, 10) || 0; // vazio conta como 0
+
+    for (const [nomeDefesa, nomeOrigem] of regrasDefesa) {
+        const defesa = document.querySelector(`[name="${nomeDefesa}"]`);
+        const origem = document.querySelector(`[name="${nomeOrigem}"]`);
+        let anterior = numero(origem);
+
+        // Ao abrir uma ficha salva, a diferença passa a ser contada a partir do valor carregado
+        document.addEventListener('fichaCarregada', () => anterior = numero(origem));
+
+        origem.addEventListener('input', () => {
+            const novo = numero(origem);
+            const diferenca = novo - anterior;
+            anterior = novo;
+
+            const atual = parseInt(defesa.value, 10);
+            if (defesa.value.trim() === '') {
+                defesa.value = 10 + novo;
+            } else if (!isNaN(atual) && diferenca !== 0) {
+                defesa.value = atual + diferenca;
+            } else {
+                return;
+            }
+            defesa.dispatchEvent(new Event('input', { bubbles: true })); // conta como alteração não salva
+        });
+    }
+}

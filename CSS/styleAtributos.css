@@ -20,8 +20,7 @@
 .box-att-unit-int, 
 .box-att-unit-pre, 
 .box-att-unit-agi, 
-.box-att-unit-vig, 
-.box-att-unit-atts {
+.box-att-unit-vig {
     width: 100px; /* largura fixa */
     height: 100px; /* altura fixa */
     text-align: center;
@@ -65,15 +64,10 @@
     transform: translate(-50%, -50%);
 }
 
-.box-att-unit-atts {
-    top: 48%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
 .box-atributos label{
     font-size: clamp(18px, 4vw, 24px);
     font-weight: 600;
+    color: var(--color-white);
     width: auto;
     cursor: pointer;
     transition: opacity 0.8s ease;
@@ -104,11 +98,6 @@
     transition: opacity 0.3s ease;
 }
 
-.box-att-unit-atts label:hover{
-    transition: opacity 0.8s ease;
-    color: var(--color-input-focus);
-}
-
 .box-atributos input{
     padding: 8px;
     border: 2px solid var(--color-input-border);
@@ -122,6 +111,23 @@
 }
 
 /* Estilo para a seção de Perícias */
+/* Fundo escuro e desfocado atrás do painel aberto (igual ao dos modais) */
+.fundoPericias {
+    position: fixed;
+    inset: 0;
+    z-index: 999; /* logo abaixo do painel de Perícias */
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(3px);
+    opacity: 0;
+    pointer-events: none; /* fechado, não bloqueia cliques na ficha */
+    transition: opacity 0.5s ease;
+}
+
+.fundoPericias.aberto {
+    opacity: 1;
+    pointer-events: auto; /* clicar no fundo fecha o painel */
+}
+
 /* Estilo principal da boxPericias */
 .boxPericias {
     position: fixed;
@@ -199,7 +205,7 @@
     font-family: var(--font-primary);
     color: var(--color-white);
     cursor: pointer;
-    z-index: 1001;
+    z-index: 997; /* abaixo dos "i" dos campos (998); some quando o painel abre */
     text-align: center;
     transition: background 0.3s;
 }
@@ -211,14 +217,18 @@
 
 .txtBlackPericia, .txtBlackPericia2{
     font-family: var(--font-secondary);
-    font-size: clamp(16px, 4vw, 30px);
+    font-size: clamp(16px, 2vw, 24px);
+    line-height: 1;
+    /* A Yatra One reserva muito espaço para letras que descem (g, p, q);
+       corta a caixa do texto na altura das maiúsculas e na linha de base */
+    text-box: trim-both cap alphabetic;
     text-align: center;
     color: var(--color-link);
     cursor: pointer;
 }
-
-.boxPericiasEsconder:hover{
-    background: var(--color-input-border);
+.txtBlackPericia{
+    margin-top: 10px;
+    margin-bottom: 30px;
 }
 
 .pericia {
@@ -230,13 +240,6 @@
 .linhaPericia {
     display: flex;
     align-items: center;
-}
-
-.pericia-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
 }
 
 .nomePericia {
@@ -265,31 +268,10 @@
     flex-shrink: 0;
 }
 
-.profissao{
-    width: 20%;
-    padding: 6px 12px;
-    font-size: 1rem;
-    font-family: var(--font-primary);
-    background-color: var(--color-input-bg);
-    border: 1px solid var(--color-input-border);
-    border-radius: 5px;
-    color: var(--color-white);
-    transition: border-color 0.3s, box-shadow 0.3s;
-    flex-shrink: 0;
-
-}
-
-.teste:focus, .profissao:focus {
+.teste:focus {
     outline: none;
     border-color: var(--color-input-focus);
     box-shadow: 0 0 5px var(--color-input-focus);
-}
-
-/* Ajuste especial para input de profissão */
-.nomePericia input.profissao {
-    width: 38.5%;
-    margin: 0px 5px;
-    display: inline-block;
 }
 
 /* Responsividade */

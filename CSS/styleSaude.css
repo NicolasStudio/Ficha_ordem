@@ -14,7 +14,8 @@
     }
 }
 
-@media (max-width: 767px) {
+/* Tablet: três colunas de 30% ficam apertadas e os nomes encostam nos campos */
+@media (max-width: 1023px) {
     .saudeDefesaResistencia {
         flex-direction: column;
         align-items: center;
@@ -104,21 +105,19 @@
     margin-bottom: 10px;
 }
 
-/* Remover setas dos inputs type="number" */
-input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-
-input[type="number"] {
-    -moz-appearance: textfield;
-}
-
 input:focus {
     outline: none;
     border-color: var(--color-input-focus);
     box-shadow: 0 0 5px var(--color-input-focus);
+}
+
+/* RESPONSIVO PARA TABLETS (uma caixa por linha) */
+@media (max-width: 1023px) {
+    .boxSaude,
+    .boxDefesas,
+    .boxResistencia {
+        width: 95%;
+    }
 }
 
 /* RESPONSIVO PARA TELAS MENORES QUE 768px */

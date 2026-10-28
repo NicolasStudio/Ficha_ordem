@@ -14,16 +14,6 @@ function irLogin2() {
     window.location.replace("index.html");
 }
 
-function abrirPericias() {
-    const bloco = document.getElementById("blocoPericias");
-    if (!bloco) return;
-    if (bloco.style.display === "none" || bloco.style.display === "") {
-      bloco.style.display = "block";
-    } else {
-      bloco.style.display = "none";
-    }
-}
-
 function criarFicha(){
   window.location.href = "ficha.html";
 }
@@ -61,7 +51,9 @@ function mostrarErro(seletor, mensagem) {
     }
     erro.style.display = 'block';
 
-    setTimeout(() => {
+    // Reinicia o tempo se o erro aparecer de novo antes de sumir
+    clearTimeout(erro.timer);
+    erro.timer = setTimeout(() => {
         erro.style.display = 'none';
     }, 2000);
 }
