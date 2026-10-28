@@ -19,7 +19,7 @@
 .txtInventario {
     font-size: 28px;
     font-weight: bold;
-    color: var(--color-input-focus);
+    color: var(--color-link);
 }
 
 .boxInventario {
@@ -72,20 +72,20 @@
 
 /* Totais: a cor mostra quanto da capacidade de carga está ocupada (scriptInventario.js) */
 #espacoTotal, #pesoTotal{
-    border: 1px solid #3ecf6a;
+    border: 1px solid var(--color-success);
     background-color: var(--color-input-bg);
-    color: #3ecf6a;
+    color: var(--color-success);
     transition: color 0.3s, border-color 0.3s;
 }
 
 #espacoTotal.cargaAlerta, #pesoTotal.cargaAlerta {
-    border-color: #f5c542;
-    color: #f5c542;
+    border-color: var(--color-warning);
+    color: var(--color-warning);
 }
 
 #espacoTotal.cargaExcesso, #pesoTotal.cargaExcesso {
-    border-color: #f74949;
-    color: #f74949;
+    border-color: var(--color-danger);
+    color: var(--color-danger);
 }
 
 /* Capacidade e alerta de sobrepeso, abaixo do inventário */
@@ -108,7 +108,7 @@
     margin-top: 6px;
     font-size: 16px;
     font-weight: bold;
-    color: #f74949;
+    color: var(--color-danger);
 }
 
 

@@ -47,6 +47,8 @@ export function autoComplete({ campo, itens, tipo, detalhes, aoEscolher = () => 
     let ativa = -1;   // índice destacado pelas setas
 
     function abrir() {
+        if (campo.readOnly) return; // ficha em somente leitura: não deixa trocar pela lista
+
         const busca = semAcento(campo.value.trim());
         opcoes = nomes.filter(nome => combina(nome, busca));
 

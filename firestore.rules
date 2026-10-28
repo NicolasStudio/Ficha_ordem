@@ -1,16 +1,27 @@
 rules_version = '2';
 
-// Cada usuário só lê e altera os próprios dados e as próprias fichas
+// Cada usuário só lê e altera os próprios dados e as próprias fichas.
+// O mestre também pode LER as fichas e os cadastros de todos (sem alterar nem excluir).
 service cloud.firestore {
   match /databases/{database}/documents {
 
+    // Contas de mestre (UID do Firebase Authentication).
+    // A mesma lista fica em Js/mestres.js, que só muda a interface.
+    function ehMestre() {
+      return request.auth != null
+          && request.auth.uid in ['YSf9WSBKHIUH5nwnECRSZPlGqf33'];
+    }
+
     match /usuarios/{uid} {
-      allow read, write: if request.auth != null && request.auth.uid == uid;
+      allow read: if (request.auth != null && request.auth.uid == uid) || ehMestre();
+      allow write: if request.auth != null && request.auth.uid == uid;
     }
 
     match /fichas/{id} {
-      allow read, delete: if request.auth != null
-                          && resource.data.uid == request.auth.uid;
+      allow read: if (request.auth != null && resource.data.uid == request.auth.uid)
+                  || ehMestre();
+      allow delete: if request.auth != null
+                    && resource.data.uid == request.auth.uid;
       allow create: if request.auth != null
                     && request.resource.data.uid == request.auth.uid;
       allow update: if request.auth != null

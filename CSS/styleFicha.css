@@ -1,22 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Winky+Rough:ital,wght@0,300..900;1,300..900&family=Yatra+One&display=swap');
 
-/* Definição de Variáveis */
-:root {
-    --font-primary: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    --font-secondary: 'Yatra One', system-ui;
-    --color-background: linear-gradient(120deg, #0f2027, #203a43, #2c5364);
-    --color-white: #ffffff;
-    --color-light-gray: #cccccc;
-    --color-input-border: #444;
-    --color-input-bg: #2a2a2a;
-    --color-input-focus: #6dd5fa;
-    --color-button-bg: #6dd5fa;
-    --color-button-hover: #4db8d6;
-    --color-button-text: #1e1e1e;
-    --color-link: #6dd5fa;
-    --color-box-bg: #1e1e1e;
-    --color-box-shadow: rgba(0, 0, 0, 0.5);
-}
+/* Cores e fontes: CSS/styleTema.css */
 
 * {
     margin: 0;
@@ -58,7 +42,7 @@ body {
 .nameNext {
     display: block;
     font-size: 1.2rem; /* Tamanho de fonte do label */
-    color: #FF9F00; /* Cor do texto do label */
+    color: var(--color-nex); /* Cor do texto do label */
     margin-bottom: 5px; /* Espaço entre o label e o input */
     margin-top: 15px;
     text-align: center; /* Alinha o texto do label ao centro */
@@ -76,7 +60,7 @@ body {
     text-align: center; /* Centraliza o texto digitado */
     background-color: var(--color-input-bg);
     border: 2px solid var(--color-box-bg); /* Borda do input */
-    color: #FF9F00; /* Cor do texto do input */
+    color: var(--color-nex); /* Cor do texto do input */
     outline: none; /* Remove o contorno de foco */
     border-radius: 5px; /* Bordas arredondadas */
     transition: border-color 0.3s; /* Transição suave na cor da borda */
@@ -84,7 +68,7 @@ body {
 
 /* Foco no input */
 .input-overlay:focus {
-    border-color: #FF9F00; /* Cor da borda quando o input está em foco */
+    border-color: var(--color-nex); /* Cor da borda quando o input está em foco */
 }
 
 /* Para o layout responsivo */
@@ -279,7 +263,7 @@ body {
     border: 1.5px solid var(--color-input-focus);
     border-radius: 50%;
     background: transparent;
-    color: var(--color-input-focus);
+    color: var(--color-link);
     font-family: Georgia, 'Times New Roman', serif;
     font-size: 14px;
     font-style: italic;

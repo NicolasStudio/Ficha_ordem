@@ -7,6 +7,10 @@
     <meta name="description" content="Ficha de RPG Ordem Paranormal, Nicolas de Almeida Sousa">
     <title>Ficha Ordem Paranormal</title>
 
+    <!-- Tema de cores (antes dos outros estilos) -->
+    <script src="Js/scriptTemaInicial.js"></script>
+    <link rel="stylesheet" href="CSS/styleTema.css">
+
     <!-- Estilos -->
     <link rel="stylesheet" href="CSS/stylePadrao.css"> <!-- Básico -->
     <link rel="stylesheet" href="CSS/styleErro.css"> <!-- erros -->
@@ -75,6 +79,7 @@
     <script type="module">
         import { auth, db } from "./Js/scriptFirebase.js";
         import "./Js/scriptModal.js"; // mostra o aviso vindo da recuperação de senha
+        import { paginaInicial } from "./Js/mestres.js";
         import { signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged }
             from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
         import { doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
@@ -94,10 +99,10 @@
             }
         }
 
-        // Quem já está logado vai direto para as fichas
+        // Quem já está logado vai direto para as fichas (o mestre, para o menu dele)
         const pararObservar = onAuthStateChanged(auth, usuario => {
             pararObservar();
-            if (usuario) window.location.replace("home.html");
+            if (usuario) window.location.replace(paginaInicial(usuario));
         });
 
         document.getElementById("formLogin").addEventListener("submit", async function(e) {
@@ -107,8 +112,8 @@
             botao.disabled = true;
 
             try {
-                await signInWithEmailAndPassword(auth, this.email.value, this.senha.value);
-                window.location.href = "home.html"; // Redireciona após login
+                const credencial = await signInWithEmailAndPassword(auth, this.email.value, this.senha.value);
+                window.location.href = paginaInicial(credencial.user); // jogador: home | mestre: menu
             } catch (error) {
                 mostrarErro('.erroLogin', mensagemErro(error));
                 botao.disabled = false;

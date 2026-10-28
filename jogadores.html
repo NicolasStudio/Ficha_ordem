@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Nicolas de Almeida Sousa">
+    <meta name="description" content="Ficha de RPG Ordem Paranormal, Nicolas de Almeida Sousa">
+    <title>Ficha Ordem Paranormal</title>
+
+    <!-- Tema de cores (antes dos outros estilos) -->
+    <script src="Js/scriptTemaInicial.js"></script>
+    <link rel="stylesheet" href="CSS/styleTema.css">
+
+    <!-- Estilos -->
+    <link rel="stylesheet" href="CSS/stylePadrao.css"> <!-- Básico -->
+    <link rel="stylesheet" href="CSS/styleSair.css"> <!-- sair -->
+    <link rel="stylesheet" href="CSS/styleModal.css"> <!-- avisos -->
+    <link rel="stylesheet" href="CSS/styleMestre.css"> <!-- área do mestre -->
+</head>
+<body style="visibility: hidden"> <!-- aparece depois de confirmar que é o mestre -->
+    <div class="boxSair"></div> <!-- menu ☰ (Js/scriptMenu.js) -->
+    <div class="containerFichas">
+        <h1 class="tituloPagina">Fichas dos jogadores</h1>
+
+        <div class="boxTitle">
+            <div class="ficha-titulo2 colunasJogadores">
+                <span>Jogador</span>
+                <span>Personagem</span>
+                <span>Nível de NEX</span>
+                <span>Origem</span>
+                <span>Classe</span>
+            </div>
+        </div>
+
+        <!-- Fichas de todos os jogadores (só leitura) -->
+        <div class="boxFichas"></div>
+    </div>
+
+    <script type="module">
+        import { db } from "./Js/scriptFirebase.js";
+        import { exigirMestre } from "./Js/mestres.js";
+        import "./Js/scriptModal.js"; // avisos vindos de outras páginas
+        import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+        const mestre = await exigirMestre();
+        document.body.style.visibility = '';
+
+        function criarSpan(classe, texto) {
+            const span = document.createElement('span');
+            span.className = classe;
+            span.textContent = texto ?? '';
+            return span;
+        }
+
+        function mensagem(texto) {
+            document.querySelector('.boxFichas').innerHTML =
+                `<center><p style='color: white; margin-top: 30px'>${texto}</p></center>`;
+        }
+
+        async function carregarFichas() {
+            let fichasSnap, usuariosSnap;
+            try {
+                // As regras do Firestore só deixam o mestre ler as fichas e cadastros de todos
+                [fichasSnap, usuariosSnap] = await Promise.all([
+                    getDocs(collection(db, 'fichas')),
+                    getDocs(collection(db, 'usuarios'))
+                ]);
+            } catch (error) {
+                console.error(error);
+                mensagem('Não foi possível carregar as fichas dos jogadores. Recarregue a página.');
+                return;
+            }
+
+            // Nome de cada jogador pelo uid (cadastro em "usuarios")
+            const nomes = Object.fromEntries(usuariosSnap.docs.map(d => [d.id, d.data().nome || d.data().email || '']));
+
+            const fichas = fichasSnap.docs
+                .map(d => ({ id_ficha: d.id, ...d.data() }))
+                .filter(ficha => ficha.uid !== mestre.uid) // as do mestre ficam em "Suas fichas"
+                .map(ficha => ({ ...ficha, jogador: nomes[ficha.uid] || 'Jogador sem cadastro' }))
+                .sort((a, b) => a.jogador.localeCompare(b.jogador, 'pt-BR')
+                    || (a.nomePersonagem || '').localeCompare(b.nomePersonagem || '', 'pt-BR'));
+
+            if (fichas.length === 0) {
+                mensagem('Nenhum jogador tem fichas cadastradas ainda.');
+                return;
+            }
+
+            const box = document.querySelector('.boxFichas');
+            box.innerHTML = '';
+            for (const ficha of fichas) {
+                const div = document.createElement('div');
+                div.className = 'ficha colunasJogadores';
+                div.style.cursor = 'pointer';
+                div.title = 'Abrir ficha (somente leitura)';
+                div.onclick = () => window.location.href = 'ficha.html?id=' + encodeURIComponent(ficha.id_ficha);
+
+                div.append(
+                    criarSpan('nomeJogador', ficha.jogador),
+                    criarSpan('nomePersonagem', ficha.nomePersonagem),
+                    criarSpan('nextPersonagem', ficha.nivelNext ? ficha.nivelNext + '%' : ''),
+                    criarSpan('origemPersonagem', ficha.origem),
+                    criarSpan('classePersonagem', ficha.classe)
+                );
+                box.appendChild(div);
+            }
+        }
+
+        carregarFichas();
+    </script>
+    <script src="Js/scriptMenu.js" type="module"></script>
+</body>
+</html>

@@ -1,12 +1,12 @@
 .erro, .erroSenha{
-    color: #ff0000;
+    color: var(--color-danger);
     font-size: clamp(8px, 4vw, 12px);
     margin-top: 2px;
     font-weight: 300;
 }
 
 .erro span, .erroSenha span{
-    color: #ff0000;
+    color: var(--color-danger);
     font-size: clamp(8px, 4vw, 12px);
 }
 
