@@ -88,6 +88,33 @@
     }
 }
 
+/* ---------- Fichas das criaturas (criaturas.html) ---------- */
+/* Colunas: Criatura, Elementos, PV, PE (+ botão de excluir) */
+.ficha-titulo2.colunasCriaturas,
+.boxFichas .ficha.colunasCriaturas {
+    grid-template-columns: 2fr 2fr 1fr 1fr auto;
+}
+
+.elementoCriatura {
+    color: var(--color-link);
+}
+
+.ficha:hover .elementoCriatura {
+    color: inherit;
+}
+
+@media (max-width: 768px) {
+    .boxFichas .ficha.colunasCriaturas {
+        grid-template-columns: 2fr 2fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .boxFichas .ficha.colunasCriaturas {
+        grid-template-columns: 2fr;
+    }
+}
+
 /* ---------- Ficha aberta pelo mestre (somente leitura) ---------- */
 .avisoLeitura {
     position: sticky;

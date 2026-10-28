@@ -73,41 +73,15 @@
     transition: opacity 0.8s ease;
 }
 
-.box-atributos p{
-    font-size: clamp(12px, 4vw, 16px);
-    color: var(--color-link);
-    width: auto;
-    display: none;
-    opacity: 0;
-    transition: opacity 0.8s ease;
+/* Campos em hexágono e tooltip com o nome do atributo: CSS/styleHexagono.css */
+.box-atributos .hexagono {
+    --hex-largura: 90px;
+    --hex-altura: 80px;
+    margin: 4px auto 0;
 }
 
-.box-atributos input:focus {
-    outline: none;
-    border-color: var(--color-input-focus);
-    box-shadow: 0 0 5px var(--color-input-focus);
-}
-
-.box-att-unit-for label:hover + p,
-.box-att-unit-int label:hover + p,
-.box-att-unit-vig label:hover + p,
-.box-att-unit-agi label:hover + p,
-.box-att-unit-pre label:hover + p{
-    display: block;
-    opacity: 1;
-    transition: opacity 0.3s ease;
-}
-
-.box-atributos input{
-    padding: 8px;
-    border: 2px solid var(--color-input-border);
-    border-radius: 50%;
-    background-color: var(--color-input-bg);
-    color: var(--color-white);
-    width: 10vh; /* largura dos inputs */
-    height: 10vh;
-    text-align: center;
-    font-size: clamp(16px, 4vw, 26px);
+.box-atributos .hexagono input {
+    font-size: clamp(18px, 4vw, 26px);
 }
 
 /* Estilo para a seção de Perícias */
