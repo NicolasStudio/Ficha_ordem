@@ -167,40 +167,51 @@
     transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
 }
 
+.boxButtom button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Cores por classe (e não pela posição), para poder incluir botões sem trocar as cores */
+
 /* Salvar - Verde */
-.boxButtom button:nth-child(1) {
+.boxButtom .btnSalvar {
     background-color: #28a745;
     color: var(--color-white);
 }
 
-.boxButtom button:nth-child(1):hover {
+.boxButtom .btnSalvar:hover {
     background-color: #218838;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 /* Voltar - Azul */
-.boxButtom button:nth-child(2) {
+.boxButtom .btnVoltar {
     background-color: #007bff;
     color: var(--color-white);
 }
 
-.boxButtom button:nth-child(2):hover {
+.boxButtom .btnVoltar:hover {
     background-color: #0069d9;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Limpar - Amarelo */
+.boxButtom .btnLimpar {
+    background-color: #f5c542;
+    color: var(--color-white);
+}
+
+.boxButtom .btnLimpar:hover {
+    background-color: #e0ad22;
 }
 
 /* Excluir - Vermelho */
-.boxButtom button:nth-child(3) {
+.boxButtom .excluir {
     background-color: #dc3545;
     color: var(--color-white);
 }
 
-.boxButtom button:nth-child(3):hover {
+.boxButtom .excluir:hover {
     background-color: #c82333;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 /* Responsivo */

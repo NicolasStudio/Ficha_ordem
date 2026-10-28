@@ -6,7 +6,7 @@
     <meta name="author" content="Nicolas de Almeida Sousa">
     <meta name="description" content="Ficha de RPG Ordem Paranormal, Nicolas de Almeida Sousa">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ficha 3.0</title>
+    <title>Ficha Ordem Paranormal</title>
 
     <!-- Estilos -->
     <link rel="stylesheet" href="CSS/styleFicha.css"> <!-- Ficha -->
@@ -24,6 +24,7 @@
     <script src="Js/scriptFicha.js" type="module"></script>
     <script src="Js/scriptOrigensClasses.js" type="module"></script>
     <script src="Js/scriptInfoGeral.js" type="module"></script>
+    <script src="Js/scriptInventario.js" type="module"></script>
 
 </head>
 <body>
@@ -246,6 +247,11 @@
             <div class="boxPericias">
                 <p class="txtBlackPericia">PERÍCIAS</p>
                 <div class="pericia">
+                    <div class="linhaPericia">
+                        <p class="nomePericia">Acrobacia: <span class="nomeDado">[ AGI ]</span></p>
+                        <input type="text" id="acrobacia" name="acrobacia" class="teste" maxlength="3">
+                    </div>
+
                     <div class="linhaPericia">
                         <p class="nomePericia">Adestramento: <span class="nomeDado">[ PRE ]</span></p>
                         <input type="text" id="adestramento" name="adestramento" class="teste" maxlength="3">
@@ -491,6 +497,12 @@
                         <input type="text" maxlength="4" id="pesoTotal" name="pesoTotal" class="bxP" disabled><br>
                     </div>
                 </div>
+
+                <!-- Carga: preenchido pelo scriptInventario.js -->
+                <div class="boxCarga">
+                    <p class="capacidadeCarga"></p>
+                    <p class="avisoSobrepeso" role="alert" hidden></p>
+                </div>
             </div>
             
             <div class="container-fifth">
@@ -524,8 +536,9 @@
             </div>
 
             <div class="boxButtom">
-                <button type="submit">Salvar</button>
-                <button type="button" onclick="voltar()">Voltar</button>
+                <button type="submit" class="btnSalvar">Salvar</button>
+                <button type="button" class="btnVoltar" onclick="voltar()">Voltar</button>
+                <button type="button" class="btnLimpar">Limpar</button>
                 <button type="button" class="excluir">Excluir</button>
             </div>
         </form>
