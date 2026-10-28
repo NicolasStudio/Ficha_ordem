@@ -207,3 +207,10 @@
 .box-top-img img {
     filter: var(--logo-filtro);
 }
+
+/* ================= Barra de rolagem =================
+   Nas cores do tema, em todas as páginas e nas áreas com rolagem
+   (painel de Perícias, modais, listas do auto-complete, campos de texto). */
+* {
+    scrollbar-color: var(--color-input-focus) var(--color-box-bg); /* barra e trilho */
+}

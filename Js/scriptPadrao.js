@@ -24,25 +24,6 @@ function voltar(){
 
 // sair() fica em scriptFirebase.js, pois precisa do Firebase Auth
 
-// MASCARA DE TELEFONE
-function mascararTelefone(input) {
-    // Remover todos os caracteres que não sejam dígitos
-    var digitos = input.value.replace(/\D/g, '');
-
-    // Aplicar a máscara: (XX) XXXXX-XXXX
-    if (digitos.length > 0) {
-        if (digitos.length <= 2) {
-            input.value = '(' + digitos;
-        } else if (digitos.length <= 7) {
-            input.value = '(' + digitos.substring(0, 2) + ') ' + digitos.substring(2);
-        } else if (digitos.length <= 11) {
-            input.value = '(' + digitos.substring(0, 2) + ') ' + digitos.substring(2, 7) + '-' + digitos.substring(7);
-        } else {
-            input.value = '(' + digitos.substring(0, 2) + ') ' + digitos.substring(2, 7) + '-' + digitos.substring(7, 11);
-        }
-    }
-}
-
 // Mostra uma mensagem de erro por 2 segundos
 function mostrarErro(seletor, mensagem) {
     const erro = document.querySelector(seletor);

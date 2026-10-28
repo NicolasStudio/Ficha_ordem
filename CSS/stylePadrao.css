@@ -145,6 +145,21 @@ a:hover {
     margin-bottom: 24px;
 }
 
+/* Ilustração acima do título das páginas (Img/imgMenu).
+   Os arquivos têm o dobro desta altura: ficam nítidos em telas de alta resolução */
+.imgLogoMenu {
+    display: block;
+    width: auto;
+    height: 80px;
+    margin: 0 auto 12px;
+}
+
+@media (max-width: 600px) {
+    .imgLogoMenu {
+        height: 110px;
+    }
+}
+
 /* Fichas do jogador */
 .containerFichas {
     width: 100%;
