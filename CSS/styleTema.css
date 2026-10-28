@@ -1,0 +1,209 @@
+/* ================= Temas de cores =================
+   Todas as cores do site vêm daqui. O tema escolhido pelo jogador fica em
+   <html data-tema="...">; sem data-tema vale o Clássico.
+   Os seletores [data-tema] também valem para qualquer elemento: a escolha de tema
+   usa isso para mostrar cada opção com as próprias cores.
+   Carregar este arquivo ANTES dos outros CSS. */
+
+:root,
+[data-tema="classico"] {
+    --font-primary: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --font-secondary: 'Yatra One', system-ui;
+
+    /* ---------- Clássico (padrão) ---------- */
+    --color-background: linear-gradient(120deg, #0f2027, #203a43, #2c5364);
+    --color-box-bg: #1e1e1e;               /* caixas */
+    --color-input-bg: #2a2a2a;             /* campos */
+    --color-input-border: #444444;
+    --color-box-shadow: rgba(0, 0, 0, 0.5);
+    --color-overlay: rgba(0, 0, 0, 0.6);   /* fundo atrás de modais e do painel de Perícias */
+    --color-white: #ffffff;                /* texto principal (no tema claro é escuro) */
+    --color-light-gray: #cccccc;           /* texto secundário */
+    --color-muted: #999999;                /* texto apagado */
+
+    /* Destaque do tema */
+    --color-input-focus: #6dd5fa;          /* foco, bordas e detalhes */
+    --color-link: #6dd5fa;                 /* textos em destaque (títulos, rótulos) */
+    --color-button-bg: #6dd5fa;            /* botões principais (Entrar, Não do modal...) */
+    --color-button-hover: #4db8d6;
+    --color-button-text: #1e1e1e;          /* texto sobre --color-button-bg */
+    --color-nex: #ff9f00;                  /* Nível NEX */
+    --logo-filtro: none;                   /* o logo é branco: o tema claro escurece */
+
+    /* Estados: textos/bordas e botões (fundo + texto) */
+    --color-success: #3ecf6a;
+    --color-success-btn: #28a745;          /* Salvar */
+    --color-success-btn-hover: #218838;
+    --color-success-btn-text: #ffffff;
+    --color-warning: #f5c542;
+    --color-warning-btn: #f5c542;          /* Limpar, faixa de somente leitura */
+    --color-warning-btn-hover: #e0ad22;
+    --color-warning-btn-text: #ffffff;
+    --color-danger: #f74949;
+    --color-danger-btn: #dc3545;           /* Excluir, Sim no modal */
+    --color-danger-btn-hover: #c82333;
+    --color-danger-btn-text: #ffffff;
+    --color-info-btn: #007bff;             /* Voltar */
+    --color-info-btn-hover: #0069d9;
+    --color-info-btn-text: #ffffff;
+}
+
+/* ---------- Sangue: vermelho-sangue, preto e branco ---------- */
+[data-tema="sangue"] {
+    /* linhas finas por cima de um preto que puxa para o vermelho */
+    --color-background:
+        repeating-linear-gradient(0deg,
+            rgba(255, 255, 255, .02),
+            rgba(255, 255, 255, .02) 1px,
+            transparent 1px,
+            transparent 3px),
+        linear-gradient(135deg, #000000, #120000 55%, #2a0000);
+    --color-box-bg: #0b0b0b;
+    --color-input-bg: #151010;
+    --color-input-border: #3d1010;
+    --color-box-shadow: rgba(0, 0, 0, 0.7);
+    --color-overlay: rgba(0, 0, 0, 0.7);
+    --color-white: #ffffff;
+    --color-light-gray: #cfcfcf;
+    --color-muted: #8f8f8f;
+
+    --color-input-focus: #c00000;
+    --color-link: #f21b1b;                 /* #c00000 é escuro demais para texto pequeno no preto */
+    --color-button-bg: #c00000;
+    --color-button-hover: #a00000;
+    --color-button-text: #ffffff;
+    --color-nex: #ff3333;                  /* um pouco mais claro: fica sobre o campo, não sobre o preto */
+
+    --color-success: #4cc78a;
+    --color-success-btn: #f2f2f2;          /* Salvar branco */
+    --color-success-btn-hover: #d6d6d6;
+    --color-success-btn-text: #000000;
+    --color-warning: #f0b14e;
+    --color-warning-btn: #6b0000;          /* Limpar: sangue escuro */
+    --color-warning-btn-hover: #520000;
+    --color-warning-btn-text: #ffffff;
+    --color-danger: #f21b1b;
+    --color-danger-btn: #c00000;
+    --color-danger-btn-hover: #a00000;
+    --color-danger-btn-text: #ffffff;
+    --color-info-btn: #2b2b2b;             /* Voltar preto */
+    --color-info-btn-hover: #3d3d3d;
+    --color-info-btn-text: #ffffff;
+}
+
+/* ---------- Energia: escuro puxado para o roxo, branco no contraste ---------- */
+[data-tema="energia"] {
+    --color-background: linear-gradient(135deg, #0b0a10, #17121f 55%, #221a2e);
+    --color-box-bg: #17141e;
+    --color-input-bg: #221e2b;
+    --color-input-border: #3b3447;
+    --color-box-shadow: rgba(0, 0, 0, 0.5);
+    --color-overlay: rgba(0, 0, 0, 0.6);
+    --color-white: #ffffff;
+    --color-light-gray: #c4bdd1;
+    --color-muted: #8a8396;
+
+    --color-input-focus: #a98bff;
+    --color-link: #a98bff;
+    --color-button-bg: #a98bff;
+    --color-button-hover: #9070f0;
+    --color-button-text: #16141c;
+    --color-nex: #d8b25a;
+
+    --color-success: #4cc78a;
+    --color-success-btn: #237a52;
+    --color-success-btn-hover: #1c6343;
+    --color-success-btn-text: #ffffff;
+    --color-warning: #f0b14e;
+    --color-warning-btn: #e8a33d;
+    --color-warning-btn-hover: #cf8d2b;
+    --color-warning-btn-text: #16141c;
+    --color-danger: #ef5b62;
+    --color-danger-btn: #b8323a;
+    --color-danger-btn-hover: #9c2930;
+    --color-danger-btn-text: #ffffff;
+    --color-info-btn: #6c4fd1;
+    --color-info-btn-hover: #5a3fbb;
+    --color-info-btn-text: #ffffff;
+}
+
+/* ---------- Conhecimento: claro, branco com dourado predominante ---------- */
+/* Fundo claro, caixas/títulos dourados, campos brancos; texto escuro serve
+   tanto no fundo claro quanto no dourado. Destaques e botões em bronze escuro. */
+[data-tema="conhecimento"] {
+    --color-background: linear-gradient(135deg, #faf7f0, #f1e9d8 60%, #e9dcc0); /* pergaminho */
+    --color-box-bg: #d9b04a;               /* caixas, títulos e modais em dourado */
+    --color-input-bg: #ffffff;             /* campos brancos */
+    --color-input-border: #a8862e;
+    --color-box-shadow: rgba(90, 70, 20, 0.25);
+    --color-overlay: rgba(40, 30, 0, 0.5);
+    --color-white: #2b2110;                /* texto principal escuro */
+    --color-light-gray: #3f3318;
+    --color-muted: #4f4123;
+
+    --color-input-focus: #8a6400;          /* foco e bordas de destaque */
+    --color-link: #4a3300;                 /* bronze escuro: legível no dourado e no claro */
+    --color-button-bg: #4a3300;            /* botões principais em bronze */
+    --color-button-hover: #2e2000;
+    --color-button-text: #ffffff;
+    --color-nex: #4a3300;
+    --logo-filtro: brightness(0) opacity(0.85); /* logo branco vira escuro */
+
+    --color-success: #1a7a43;
+    --color-success-btn: #1a7a43;
+    --color-success-btn-hover: #146236;
+    --color-success-btn-text: #ffffff;
+    --color-warning: #8a5500;
+    --color-warning-btn: #9a6100;          /* Limpar em âmbar, texto branco como os outros */
+    --color-warning-btn-hover: #7d4f00;
+    --color-warning-btn-text: #ffffff;
+    --color-danger: #7a1015;               /* vermelho escuro: legível também no dourado */
+    --color-danger-btn: #b3232a;
+    --color-danger-btn-hover: #921c22;
+    --color-danger-btn-text: #ffffff;
+    --color-info-btn: #4a3300;
+    --color-info-btn-hover: #2e2000;
+    --color-info-btn-text: #ffffff;
+}
+
+/* ---------- Morte: preto e branco ---------- */
+[data-tema="morte"] {
+    --color-background: linear-gradient(135deg, #000000, #0d0d0d 60%, #1a1a1a);
+    --color-box-bg: #0a0a0a;
+    --color-input-bg: #151515;
+    --color-input-border: #3a3a3a;
+    --color-box-shadow: rgba(0, 0, 0, 0.7);
+    --color-overlay: rgba(0, 0, 0, 0.7);
+    --color-white: #ffffff;
+    --color-light-gray: #c2c2c2;
+    --color-muted: #8a8a8a;
+
+    --color-input-focus: #ffffff;
+    --color-link: #ffffff;
+    --color-button-bg: #ffffff;
+    --color-button-hover: #d6d6d6;
+    --color-button-text: #000000;
+    --color-nex: #ffffff;
+
+    /* sucesso/alerta/perigo continuam coloridos: dizem algo (carga, erros, avisos) */
+    --color-success: #4cc78a;
+    --color-success-btn: #f2f2f2;          /* Salvar branco */
+    --color-success-btn-hover: #d6d6d6;
+    --color-success-btn-text: #000000;
+    --color-warning: #f0b14e;
+    --color-warning-btn: #bdbdbd;          /* Limpar cinza */
+    --color-warning-btn-hover: #a3a3a3;
+    --color-warning-btn-text: #000000;
+    --color-danger: #ef5b62;
+    --color-danger-btn: #8f1d22;           /* Excluir: o único botão com cor */
+    --color-danger-btn-hover: #761419;
+    --color-danger-btn-text: #ffffff;
+    --color-info-btn: #2a2a2a;             /* Voltar preto */
+    --color-info-btn-hover: #3a3a3a;
+    --color-info-btn-text: #ffffff;
+}
+
+/* Logo branco (Ordo Realitas): no tema claro fica escuro */
+.box-top-img img {
+    filter: var(--logo-filtro);
+}

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Nicolas de Almeida Sousa">
+    <meta name="description" content="Ficha de RPG Ordem Paranormal, Nicolas de Almeida Sousa">
+    <title>Ficha Ordem Paranormal</title>
+
+    <!-- Tema de cores (antes dos outros estilos) -->
+    <script src="Js/scriptTemaInicial.js"></script>
+    <link rel="stylesheet" href="CSS/styleTema.css">
+
+    <!-- Estilos -->
+    <link rel="stylesheet" href="CSS/stylePadrao.css"> <!-- Básico -->
+    <link rel="stylesheet" href="CSS/styleSair.css"> <!-- sair -->
+    <link rel="stylesheet" href="CSS/styleModal.css"> <!-- avisos -->
+    <link rel="stylesheet" href="CSS/styleMestre.css"> <!-- área do mestre -->
+</head>
+<body style="visibility: hidden"> <!-- aparece depois de confirmar que é o mestre -->
+    <div class="boxSair"></div> <!-- menu ☰ (Js/scriptMenu.js) -->
+    <div class="containerFichas">
+        <h1 class="tituloPagina">Menu do Mestre</h1>
+
+        <nav class="menuMestre">
+            <a class="opcaoMestre" href="home.html">
+                <strong>Suas fichas</strong>
+                <span>Ver, criar e editar as suas fichas.</span>
+            </a>
+            <a class="opcaoMestre" href="jogadores.html">
+                <strong>Fichas dos jogadores</strong>
+                <span>Consultar as fichas de todos os jogadores.</span>
+            </a>
+            <a class="opcaoMestre bloqueada" aria-disabled="true" title="Em breve">
+                <strong>🔒 Fichas das criaturas</strong>
+                <span>Em breve.</span>
+            </a>
+            <a class="opcaoMestre bloqueada" aria-disabled="true" title="Em breve">
+                <strong>🔒 Enviar itens</strong>
+                <span>Em breve.</span>
+            </a>
+        </nav>
+    </div>
+
+    <script type="module">
+        import { exigirMestre } from "./Js/mestres.js";
+        import "./Js/scriptModal.js"; // avisos vindos de outras páginas
+        await exigirMestre();
+        document.body.style.visibility = '';
+    </script>
+    <script src="Js/scriptMenu.js" type="module"></script>
+</body>
+</html>

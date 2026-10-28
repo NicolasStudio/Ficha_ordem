@@ -8,6 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ficha Ordem Paranormal</title>
 
+    <!-- Tema de cores (antes dos outros estilos) -->
+    <script src="Js/scriptTemaInicial.js"></script>
+    <link rel="stylesheet" href="CSS/styleTema.css">
+
     <!-- Estilos -->
     <link rel="stylesheet" href="CSS/styleFicha.css"> <!-- Ficha -->
     <link rel="stylesheet" href="CSS/styleAtributos.css"> <!-- Atributos -->
@@ -17,6 +21,7 @@
     <link rel="stylesheet" href="CSS/styleDetalhes.css"> <!-- detalhes -->
     <link rel="stylesheet" href="CSS/styleSair.css"> <!-- sair -->
     <link rel="stylesheet" href="CSS/styleModal.css"> <!-- modal de confirmação -->
+    <link rel="stylesheet" href="CSS/styleMestre.css"> <!-- aviso de somente leitura (mestre) -->
 
     <script src="Js/scriptPadrao.js"></script>
     <script src="Js/scriptFirebase.js" type="module"></script>
@@ -25,12 +30,11 @@
     <script src="Js/scriptOrigensClasses.js" type="module"></script>
     <script src="Js/scriptInfoGeral.js" type="module"></script>
     <script src="Js/scriptInventario.js" type="module"></script>
+    <script src="Js/scriptMenu.js" type="module"></script>
 
 </head>
 <body>
-        <div class="boxSair">
-            <button class="sair" onclick="sair()">Sair</button>
-        </div>
+        <div class="boxSair"></div> <!-- menu ☰ (Js/scriptMenu.js) -->
         <!-- Ficha -->
         <form id="characterForm" autocomplete="off">
             <div class="container-primary">

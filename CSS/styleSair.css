@@ -1,36 +1,172 @@
-
+/* ------------------ Menu do topo (☰): Menu do mestre, Tema, Sair ------------------ */
 
 .boxSair {
     position: absolute;
     right: 3%;
     top: 3%;
+    z-index: 998; /* na frente da aba de Perícias (997); atrás do painel de Perícias aberto (999/1000) */
     display: flex;
     justify-content: flex-end;
     padding: 10px;
     margin-top: 20px;
 }
 
-.sair {
-    width: auto;   /* stylePadrao.css deixa todo button com 100%... */
-    margin-top: 0; /* ...e com margem em cima: o botão ficaria mais baixo na home */
-    background-color: #ff0000;
+.menuTopo {
+    position: relative;
+}
+
+/* Botão ☰ (três barras) */
+.botaoMenu {
+    width: 46px;   /* stylePadrao.css deixa todo button com 100%... */
+    height: 42px;
+    margin: 0;     /* ...e com margem em cima */
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    background-color: var(--color-box-bg);
+    border: 1px solid var(--color-input-border);
+    border-radius: 8px;
+    box-shadow: 0 4px 10px var(--color-box-shadow);
+    cursor: pointer;
+    transition: border-color 0.2s;
+}
+
+.botaoMenu span {
+    display: block;
+    width: 20px;
+    height: 2px;
+    border-radius: 2px;
+    background-color: var(--color-link);
+}
+
+.botaoMenu:hover,
+.botaoMenu:focus-visible,
+.botaoMenu[aria-expanded="true"] {
+    border-color: var(--color-input-focus);
+    outline: none;
+}
+
+/* Lista que abre embaixo do botão */
+.menuSuspenso {
+    position: absolute;
+    z-index: 998; /* no celular o .boxSair não flutua: a lista precisa da própria camada */
+    top: calc(100% + 6px);
+    right: 0;
+    min-width: 190px;
+    padding: 6px 0;
+    background-color: var(--color-box-bg);
+    border: 1px solid var(--color-input-border);
+    border-radius: 8px;
+    box-shadow: 0 8px 16px var(--color-box-shadow);
+}
+
+.menuSuspenso[hidden] {
+    display: none;
+}
+
+.itemMenu {
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 10px 16px;
+    background: none;
+    border: none;
+    border-radius: 0;
     color: var(--color-white);
     font-family: var(--font-primary);
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 500;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 8px;
+    text-align: left;
     cursor: pointer;
-    box-shadow: 0 1px 5px #ff4d4d;
-    transition: background-color 0.3s ease;
 }
 
-.sair:hover {
-    background-color: #c20101;
+.itemMenu:hover,
+.itemMenu:focus-visible {
+    background-color: var(--color-input-bg);
+    color: var(--color-link);
+    outline: none;
 }
 
-/* Em telas menores o botão flutuante cobria o conteúdo: passa a ocupar uma linha no topo */
+.itemMenu.itemSair {
+    color: var(--color-danger);
+    border-top: 1px solid var(--color-input-border);
+}
+
+/* ------------------ Escolha de tema (dentro do modal) ------------------ */
+.listaTemas {
+    display: grid;
+    gap: 10px;
+}
+
+.opcaoTema {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+    margin: 0;
+    padding: 10px 12px;
+    background-color: var(--color-input-bg);
+    border: 2px solid var(--color-input-border);
+    border-radius: 10px;
+    text-align: left;
+    cursor: pointer;
+    transition: border-color 0.2s;
+}
+
+.opcaoTema:hover,
+.opcaoTema:focus-visible {
+    border-color: var(--color-light-gray);
+    outline: none;
+}
+
+.opcaoTema[aria-pressed="true"] {
+    border-color: var(--color-link);
+}
+
+/* Miniatura com as cores do tema (as variáveis vêm do data-tema do próprio elemento) */
+.amostraTema {
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    width: 64px;
+    height: 44px;
+    border-radius: 8px;
+    background: var(--color-background);
+}
+
+.amostraCaixa {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 24px;
+    border-radius: 5px;
+    background-color: var(--color-box-bg);
+}
+
+.amostraDestaque {
+    width: 22px;
+    height: 6px;
+    border-radius: 3px;
+    background-color: var(--color-link);
+}
+
+.textoTema strong {
+    display: block;
+    font-family: var(--font-secondary);
+    font-size: 17px;
+    color: var(--color-white);
+}
+
+.textoTema small {
+    font-family: var(--font-primary);
+    font-size: 14px;
+    color: var(--color-light-gray);
+}
+
+/* Em telas menores o menu deixa de flutuar e ocupa uma linha no topo */
 @media (max-width: 768px) {
     .boxSair {
         position: static;

@@ -45,11 +45,39 @@ function preencherFicha(ficha) {
     document.dispatchEvent(new Event('fichaCarregada'));
 }
 
+// ================= Somente leitura =================
+// O mestre pode abrir a ficha de outro jogador, mas não alterar (as regras do Firestore também impedem)
+let somenteLeitura = false;
+
+async function ativarSomenteLeitura(uidDono) {
+    somenteLeitura = true;
+
+    for (const campo of form.elements) {
+        if (campo.tagName === 'INPUT' || campo.tagName === 'TEXTAREA') campo.readOnly = true;
+    }
+    for (const botao of form.querySelectorAll('.btnSalvar, .btnLimpar, .excluir')) botao.hidden = true;
+    window.voltar = () => window.location.href = 'jogadores.html';
+
+    let nomeJogador = 'outro jogador';
+    try {
+        const cadastro = await getDoc(doc(db, 'usuarios', uidDono));
+        if (cadastro.exists()) nomeJogador = cadastro.data().nome || cadastro.data().email || nomeJogador;
+    } catch (error) {
+        console.error('Erro ao buscar o jogador:', error);
+    }
+
+    const aviso = document.createElement('div');
+    aviso.className = 'avisoLeitura';
+    aviso.textContent = `Ficha de ${nomeJogador} — somente leitura`;
+    document.body.prepend(aviso);
+}
+
 if (idFicha) {
     try {
         const snap = await getDoc(doc(db, 'fichas', idFicha));
         if (snap.exists()) {
             preencherFicha(snap.data());
+            if (snap.data().uid !== usuario.uid) await ativarSomenteLeitura(snap.data().uid);
         } else {
             avisarNaProximaPagina('Ficha não encontrada.', 'erro');
             window.location.replace('home.html');
@@ -64,6 +92,7 @@ if (idFicha) {
 
 form.addEventListener('submit', async function (event) {
     event.preventDefault();
+    if (somenteLeitura) return; // ex.: Enter num campo da ficha de outro jogador
 
     // Trava o botão para um clique duplo não criar a mesma ficha duas vezes
     const botao = form.querySelector('button[type="submit"]');
