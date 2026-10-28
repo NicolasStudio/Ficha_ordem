@@ -1,0 +1,236 @@
+@import url('https://fonts.googleapis.com/css2?family=Yatra+One&display=swap');
+
+/* ------------------ Ficha de criatura (criatura.html) ------------------
+   Cores e fontes: CSS/styleTema.css */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    padding: 90px 20px 40px; /* espaço para o menu ☰ no topo */
+    background: var(--color-background);
+    color: var(--color-white);
+    font-family: var(--font-primary);
+}
+
+.containerCriatura {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 28px;
+    background-color: var(--color-box-bg);
+    border-radius: 12px;
+    box-shadow: 0 8px 16px var(--color-box-shadow);
+}
+
+.tituloCriatura {
+    font-family: var(--font-secondary);
+    font-size: clamp(24px, 5vw, 32px);
+    color: var(--color-link);
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+/* Títulos de seção e rótulos */
+.secaoCriatura h2 {
+    font-family: var(--font-secondary);
+    font-size: 22px;
+    color: var(--color-link);
+    margin-bottom: 12px;
+    text-align: center;
+}
+
+.rotuloCriatura {
+    display: block;
+    font-family: var(--font-secondary);
+    font-size: 17px;
+    color: var(--color-white);
+    margin-bottom: 6px;
+    text-align: center;
+}
+
+.rotuloPequeno {
+    display: block;
+    font-size: 14px;
+    color: var(--color-light-gray);
+    margin-bottom: 4px;
+    text-align: center;
+}
+
+/* Campos */
+.campoCriatura,
+.containerCriatura select,
+.containerCriatura textarea {
+    width: 100%;
+    padding: 10px 12px;
+    background-color: var(--color-input-bg);
+    border: 1px solid var(--color-input-border);
+    border-radius: 10px;
+    color: var(--color-white);
+    font-family: var(--font-secondary);
+    font-size: 16px;
+}
+
+.containerCriatura select {
+    cursor: pointer;
+}
+
+.containerCriatura select option {
+    background-color: var(--color-input-bg);
+    color: var(--color-white);
+}
+
+.campoCriatura:focus,
+.containerCriatura select:focus,
+.containerCriatura textarea:focus {
+    outline: none;
+    border-color: var(--color-input-focus);
+    box-shadow: 0 0 5px var(--color-input-focus);
+}
+
+.campoNumero {
+    text-align: center;
+}
+
+/* ---------- Topo: nome, elementos e atributos | história ---------- */
+.topoCriatura {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    margin-bottom: 32px;
+}
+
+.grupoCampo {
+    margin-bottom: 18px;
+}
+
+.elementosCriatura {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.historiaCriatura {
+    display: flex;
+    flex-direction: column;
+}
+
+.historiaCriatura textarea {
+    flex: 1;
+    min-height: 320px;
+    resize: vertical;
+    border-style: dashed;
+    border-width: 2px;
+    font-family: var(--font-primary);
+    line-height: 1.5;
+}
+
+/* ---------- Atributos em hexágonos (INT em cima; FOR e AGI; VIG e PRE) ---------- */
+.atributosCriatura {
+    position: relative;
+    width: 300px;
+    height: 310px;
+    margin: 0 auto;
+}
+
+.atributoCriatura {
+    position: absolute;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.atributoCriatura label {
+    font-family: var(--font-secondary);
+    font-size: 18px;
+    color: var(--color-white);
+    margin-bottom: 4px;
+}
+
+.atributoInt { left: 50%; top: 0; }
+.atributoFor { left: 18%; top: 88px; }
+.atributoAgi { left: 82%; top: 88px; }
+.atributoVig { left: 32%; top: 200px; }
+.atributoPre { left: 68%; top: 200px; }
+
+/* O hexágono e o tooltip ficam em CSS/styleHexagono.css (compartilhado com a ficha de jogador) */
+
+/* ---------- Defesas | Resistência | Vida ---------- */
+.blocosCriatura {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-bottom: 32px;
+}
+
+.blocosCriatura .grupoCampo {
+    margin-bottom: 12px;
+}
+
+/* PV e PE: atual / máximo lado a lado */
+.parPontos {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 8px;
+}
+
+.parPontos span {
+    color: var(--color-light-gray);
+    font-size: 18px;
+}
+
+/* ---------- Ataques: área com linhas ---------- */
+.ataquesCriatura textarea {
+    min-height: 190px;
+    padding: 6px 14px;
+    resize: vertical;
+    border-style: dashed;
+    border-width: 2px;
+    font-family: var(--font-primary);
+    font-size: 16px;
+    line-height: 36px;
+    /* linhas de caderno alinhadas com o texto */
+    background-image: repeating-linear-gradient(
+        transparent,
+        transparent 35px,
+        var(--color-input-border) 35px,
+        var(--color-input-border) 36px);
+    background-attachment: local;
+}
+
+/* ---------- Responsivo ---------- */
+@media (max-width: 860px) {
+    .topoCriatura {
+        grid-template-columns: 1fr;
+    }
+
+    .historiaCriatura textarea {
+        min-height: 200px;
+    }
+}
+
+@media (max-width: 700px) {
+    body {
+        padding: 10px 12px 30px;
+    }
+
+    .containerCriatura {
+        padding: 18px;
+    }
+
+    .blocosCriatura {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 360px) {
+    .atributosCriatura {
+        transform: scale(0.9);
+        transform-origin: top center;
+    }
+}
