@@ -15,6 +15,7 @@
     <!-- Estilos -->
     <link rel="stylesheet" href="CSS/styleFicha.css"> <!-- Ficha -->
     <link rel="stylesheet" href="CSS/styleAtributos.css"> <!-- Atributos -->
+    <link rel="stylesheet" href="CSS/styleHexagono.css"> <!-- atributos em hexágono e tooltip -->
     <link rel="stylesheet" href="CSS/styleSaude.css"> <!-- Saude Defesa e Resistência -->
     <link rel="stylesheet" href="CSS/styleArmas.css"> <!-- Armas -->
     <link rel="stylesheet" href="CSS/styleInventario.css"> <!-- Inventário -->
@@ -73,34 +74,34 @@
         
             <div class="container-secound">
                 <div class="box-atributos">
-                    <div class="box-att-unit-for">
+                    <div class="box-att-unit-for temDica">
                         <label for="forca">FOR</label>
-                        <p>Força</p>
-                        <input type="text" name="forca" id="forca" maxlength="3">
+                        <p class="dicaAtributo" role="tooltip" id="dica-forca">Força</p>
+                        <div class="hexagono"><input type="text" name="forca" id="forca" maxlength="3" aria-describedby="dica-forca"></div>
                     </div>
             
-                    <div class="box-att-unit-int">
+                    <div class="box-att-unit-int temDica">
                         <label for="inteligencia">INT</label>
-                        <p>Inteligência</p>
-                        <input type="text" name="inteligencia" id="inteligencia" maxlength="3">
+                        <p class="dicaAtributo" role="tooltip" id="dica-inteligencia">Inteligência</p>
+                        <div class="hexagono"><input type="text" name="inteligencia" id="inteligencia" maxlength="3" aria-describedby="dica-inteligencia"></div>
                     </div>
             
-                    <div class="box-att-unit-pre">
+                    <div class="box-att-unit-pre temDica">
                         <label for="presenca">PRE</label>
-                        <p>Presença</p>
-                        <input type="text" name="presenca" id="presenca" maxlength="3">
+                        <p class="dicaAtributo" role="tooltip" id="dica-presenca">Presença</p>
+                        <div class="hexagono"><input type="text" name="presenca" id="presenca" maxlength="3" aria-describedby="dica-presenca"></div>
                     </div>
             
-                    <div class="box-att-unit-agi">
+                    <div class="box-att-unit-agi temDica">
                         <label for="agilidade">AGI</label>
-                        <p>Agilidade</p>
-                        <input type="text" name="agilidade" id="agilidade" maxlength="3">
+                        <p class="dicaAtributo" role="tooltip" id="dica-agilidade">Agilidade</p>
+                        <div class="hexagono"><input type="text" name="agilidade" id="agilidade" maxlength="3" aria-describedby="dica-agilidade"></div>
                     </div>
             
-                    <div class="box-att-unit-vig">
+                    <div class="box-att-unit-vig temDica">
                         <label for="vigor">VIG</label>
-                        <p>Vigor</p>
-                        <input type="text" name="vigor" id="vigor" maxlength="3">
+                        <p class="dicaAtributo" role="tooltip" id="dica-vigor">Vigor</p>
+                        <div class="hexagono"><input type="text" name="vigor" id="vigor" maxlength="3" aria-describedby="dica-vigor"></div>
                     </div>
                 </div>
             
