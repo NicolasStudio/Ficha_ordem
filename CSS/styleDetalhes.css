@@ -38,7 +38,7 @@
     gap: 8px;
     font-size: 20px;
     font-weight: bold;
-    color: var(--color-input-focus);
+    color: var(--color-link);
     margin-bottom: 10px;
     text-align: center;
 }
@@ -70,15 +70,15 @@
 .boxDano textarea {
     border: 1px solid var(--color-input-border);
     background-color: var(--color-input-bg);
-    color: #f74949;
+    color: var(--color-danger);
     font-weight: bold;
 }
 
 /* Foco com destaque em vermelho */
 .boxDano textarea:focus {
     outline: none;
-    border-color: #f74949;
-    box-shadow: 0 0 5px #f74949;
+    border-color: var(--color-danger);
+    box-shadow: 0 0 5px var(--color-danger);
 }
 
 /* Responsividade */
@@ -114,7 +114,7 @@
     gap: 8px;
     font-size: 22px;
     font-weight: bold;
-    color: var(--color-input-focus);
+    color: var(--color-link);
     text-align: center;
     margin: 0;
 }
@@ -169,49 +169,49 @@
 
 .boxButtom button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 10px var(--color-box-shadow);
 }
 
 /* Cores por classe (e não pela posição), para poder incluir botões sem trocar as cores */
 
 /* Salvar - Verde */
 .boxButtom .btnSalvar {
-    background-color: #28a745;
-    color: var(--color-white);
+    background-color: var(--color-success-btn);
+    color: var(--color-success-btn-text);
 }
 
 .boxButtom .btnSalvar:hover {
-    background-color: #218838;
+    background-color: var(--color-success-btn-hover);
 }
 
 /* Voltar - Azul */
 .boxButtom .btnVoltar {
-    background-color: #007bff;
-    color: var(--color-white);
+    background-color: var(--color-info-btn);
+    color: var(--color-info-btn-text);
 }
 
 .boxButtom .btnVoltar:hover {
-    background-color: #0069d9;
+    background-color: var(--color-info-btn-hover);
 }
 
 /* Limpar - Amarelo */
 .boxButtom .btnLimpar {
-    background-color: #f5c542;
-    color: var(--color-white);
+    background-color: var(--color-warning-btn);
+    color: var(--color-warning-btn-text);
 }
 
 .boxButtom .btnLimpar:hover {
-    background-color: #e0ad22;
+    background-color: var(--color-warning-btn-hover);
 }
 
 /* Excluir - Vermelho */
 .boxButtom .excluir {
-    background-color: #dc3545;
-    color: var(--color-white);
+    background-color: var(--color-danger-btn);
+    color: var(--color-danger-btn-text);
 }
 
 .boxButtom .excluir:hover {
-    background-color: #c82333;
+    background-color: var(--color-danger-btn-hover);
 }
 
 /* Responsivo */

@@ -7,6 +7,10 @@
     <meta name="description" content="Ficha de RPG Ordem Paranormal, Nicolas de Almeida Sousa">
     <title>Ficha Ordem Paranormal</title>
 
+    <!-- Tema de cores (antes dos outros estilos) -->
+    <script src="Js/scriptTemaInicial.js"></script>
+    <link rel="stylesheet" href="CSS/styleTema.css">
+
     <!-- Estilos -->
     <link rel="stylesheet" href="CSS/stylePadrao.css"> <!-- Básico -->
     <link rel="stylesheet" href="CSS/styleSair.css"> <!-- sair -->
@@ -15,10 +19,10 @@
     <script src="Js/scriptPadrao.js"></script>
 </head>
 <body>
-    <div class="boxSair">
-        <button class="sair" onclick="sair()">Sair</button>
-    </div>
+    <div class="boxSair"></div> <!-- menu ☰ (Js/scriptMenu.js) -->
     <div class="containerFichas">
+        <h1 class="tituloPagina">Suas fichas</h1>
+
         <!-- Título das fichas -->
         <div class="boxTitle">
             <div class="ficha-titulo2">
@@ -85,7 +89,7 @@
                 div.onclick = () => window.location.href = 'ficha.html?id=' + encodeURIComponent(ficha.id_ficha);
 
                 div.appendChild(criarSpan('nomePersonagem', ficha.nomePersonagem));
-                div.appendChild(criarSpan('nextPersonagem', (ficha.nivelNext || '') + '%'));
+                div.appendChild(criarSpan('nextPersonagem', ficha.nivelNext ? ficha.nivelNext + '%' : ''));
                 div.appendChild(criarSpan('origemPersonagem', ficha.origem));
                 div.appendChild(criarSpan('classePersonagem', ficha.classe));
 
@@ -117,5 +121,6 @@
 
         carregarFichas();
     </script>
+    <script src="Js/scriptMenu.js" type="module"></script>
 </body>
 </html>

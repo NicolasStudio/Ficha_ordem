@@ -75,7 +75,7 @@
 
 .box-atributos p{
     font-size: clamp(12px, 4vw, 16px);
-    color: var(--color-input-focus);
+    color: var(--color-link);
     width: auto;
     display: none;
     opacity: 0;
@@ -116,7 +116,7 @@
     position: fixed;
     inset: 0;
     z-index: 999; /* logo abaixo do painel de Perícias */
-    background: rgba(0, 0, 0, 0.6);
+    background: var(--color-overlay);
     backdrop-filter: blur(3px);
     opacity: 0;
     pointer-events: none; /* fechado, não bloqueia cliques na ficha */

@@ -72,7 +72,7 @@
 .resistSan {
     font-size: clamp(12px, 4vw, 22px);
     font-weight: 500;
-    color: var(--color-input-focus);
+    color: var(--color-link);
 }
 
 .detailsSaude {
