@@ -90,6 +90,18 @@
     border-color: var(--color-danger-btn-hover);
 }
 
+/* "Confirmar": botão principal do tema */
+.modalConfirmar {
+    background: var(--color-button-bg);
+    border: 2px solid var(--color-button-bg);
+    color: var(--color-button-text);
+}
+
+.modalConfirmar:hover {
+    background: var(--color-button-hover);
+    border-color: var(--color-button-hover);
+}
+
 .modalBotoes button:focus-visible {
     outline: 2px solid var(--color-white);
     outline-offset: 2px;
@@ -191,6 +203,22 @@
 .detalhePontos {
     display: block;
     font-family: var(--font-primary); /* a ficha aplica a fonte decorativa em todo elemento */
+    font-size: 14px;
+    color: var(--color-muted);
+}
+
+/* ------------------ Recebido do mestre (Js/scriptRecebimentos.js) ------------------ */
+.modalInfoConteudo .textoRecebido {
+    padding: 12px 14px;
+    background-color: var(--color-input-bg);
+    border: 1px solid var(--color-input-border);
+    border-radius: 8px;
+    color: var(--color-white);
+    white-space: pre-wrap; /* mantém as quebras de linha que o mestre escreveu */
+    overflow-wrap: anywhere;
+}
+
+.modalInfoConteudo .notaRecebido {
     font-size: 14px;
     color: var(--color-muted);
 }

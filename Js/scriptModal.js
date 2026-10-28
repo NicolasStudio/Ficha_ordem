@@ -6,6 +6,12 @@ export function avisar(mensagem, tipo = 'sucesso') {
     aviso.className = `aviso aviso-${tipo}`;
     aviso.setAttribute('role', tipo === 'erro' ? 'alert' : 'status');
     aviso.textContent = mensagem;
+
+    // Com outro aviso já na tela, este aparece logo abaixo em vez de por cima
+    let topo = 20;
+    for (const outro of document.querySelectorAll('.aviso')) topo += outro.offsetHeight + 10;
+    aviso.style.top = topo + 'px';
+
     document.body.appendChild(aviso);
 
     // Textos maiores ficam mais tempo na tela; erros também, para dar tempo de ler
@@ -139,4 +145,36 @@ export function modalInformacao(titulo, conteudo) {
     document.body.appendChild(fundo);
     requestAnimationFrame(() => fundo.classList.add('aberto'));
     fundo.querySelector('.modalNao').focus();
+}
+
+// ================= Modal que só fecha confirmando =================
+// Para avisos que o jogador precisa ver (ex.: algo enviado pelo mestre).
+// Não fecha com Esc nem clicando fora. Uso: await modalConfirmar('Título', elementoComOConteudo)
+export function modalConfirmar(titulo, conteudo, textoBotao = 'Confirmar') {
+    return new Promise(resolve => {
+        const fundo = document.createElement('div');
+        fundo.className = 'modalFundo';
+        fundo.innerHTML = `
+            <div class="modalCaixa modalInfo" role="alertdialog" aria-modal="true" aria-labelledby="modalTitulo">
+                <p class="modalInfoTitulo" id="modalTitulo"></p>
+                <div class="modalInfoConteudo"></div>
+                <div class="modalBotoes">
+                    <button type="button" class="modalConfirmar"></button>
+                </div>
+            </div>`;
+        fundo.querySelector('.modalInfoTitulo').textContent = titulo;
+        fundo.querySelector('.modalInfoConteudo').appendChild(conteudo);
+
+        const botao = fundo.querySelector('.modalConfirmar');
+        botao.textContent = textoBotao;
+        botao.addEventListener('click', () => {
+            fundo.classList.remove('aberto');
+            setTimeout(() => fundo.remove(), 200); // espera a animação de saída
+            resolve();
+        });
+
+        document.body.appendChild(fundo);
+        requestAnimationFrame(() => fundo.classList.add('aberto'));
+        botao.focus();
+    });
 }

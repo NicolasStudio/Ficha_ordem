@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Nicolas de Almeida Sousa">
+    <meta name="description" content="Ficha de RPG Ordem Paranormal, Nicolas de Almeida Sousa">
+    <title>Ficha Ordem Paranormal</title>
+
+    <!-- Tema de cores (antes dos outros estilos) -->
+    <script src="Js/scriptTemaInicial.js"></script>
+    <link rel="stylesheet" href="CSS/styleTema.css">
+
+    <!-- Estilos -->
+    <link rel="stylesheet" href="CSS/stylePadrao.css"> <!-- Básico -->
+    <link rel="stylesheet" href="CSS/styleSair.css"> <!-- menu ☰ -->
+    <link rel="stylesheet" href="CSS/styleModal.css"> <!-- avisos e confirmação -->
+    <link rel="stylesheet" href="CSS/styleDetalhes.css"> <!-- botões Enviar/Limpar -->
+    <link rel="stylesheet" href="CSS/styleAutoComplete.css"> <!-- lista de jogadores -->
+    <link rel="stylesheet" href="CSS/styleEnviar.css"> <!-- enviar itens -->
+</head>
+<body style="visibility: hidden"> <!-- aparece depois de confirmar que é o mestre -->
+    <div class="boxSair"></div> <!-- menu ☰ (Js/scriptMenu.js) -->
+    <div class="containerFichas">
+        <h1 class="tituloPagina">Enviar itens</h1>
+
+        <!-- 1. Jogador -->
+        <section class="passoEnviar">
+            <h2 class="tituloPasso"><span class="numeroPasso">1</span> Jogador</h2>
+            <!-- Auto-complete com todos os jogadores, inclusive o mestre (ex.: fichas de NPC) -->
+            <input type="text" id="filtroJogador" class="campoEnviar" placeholder="Digite o nome do jogador..."
+                aria-label="Nome do jogador" autocomplete="off">
+            <p class="mensagemLista" id="mensagemJogadores" hidden></p>
+        </section>
+
+        <!-- 2. Personagem -->
+        <section class="passoEnviar" id="passoPersonagem" hidden>
+            <h2 class="tituloPasso"><span class="numeroPasso">2</span> Personagem de <span id="nomeJogador"></span></h2>
+            <div class="listaEscolha" id="listaPersonagens"></div>
+        </section>
+
+        <!-- 3. O que enviar -->
+        <section class="passoEnviar" id="passoEnvio" hidden>
+            <h2 class="tituloPasso"><span class="numeroPasso">3</span> Enviar para <span id="nomePersonagem"></span></h2>
+
+            <!-- Situação do inventário do personagem: preenchido pelo scriptEnviar.js -->
+            <div class="resumoInventario" id="resumoInventario" aria-live="polite"></div>
+
+            <div class="abasEnvio" role="tablist" aria-label="O que enviar">
+                <button type="button" role="tab" class="abaEnvio" data-tipo="item" aria-selected="true" aria-controls="painelItem">Enviar Itens</button>
+                <button type="button" role="tab" class="abaEnvio" data-tipo="upgrade" aria-selected="false" aria-controls="painelTexto">UpGrade</button>
+                <button type="button" role="tab" class="abaEnvio" data-tipo="habilidade" aria-selected="false" aria-controls="painelTexto">Habilidades</button>
+            </div>
+
+            <form id="formEnvio" autocomplete="off" novalidate>
+                <!-- Item: as mesmas colunas do inventário da ficha -->
+                <div id="painelItem" role="tabpanel" class="camposItem">
+                    <div class="campoItemNome">
+                        <label for="envioItem">Item</label>
+                        <input type="text" id="envioItem" class="campoEnviar" maxlength="70">
+                    </div>
+                    <div class="campoItemDetalhes">
+                        <label for="envioDetalhes">Detalhes</label>
+                        <input type="text" id="envioDetalhes" class="campoEnviar" maxlength="70">
+                    </div>
+                    <div>
+                        <label for="envioEspaco">Espaço</label>
+                        <input type="text" id="envioEspaco" class="campoEnviar campoNumero" maxlength="4" inputmode="decimal">
+                    </div>
+                    <div>
+                        <label for="envioPeso">Peso</label>
+                        <input type="text" id="envioPeso" class="campoEnviar campoNumero" maxlength="4" inputmode="decimal">
+                    </div>
+                </div>
+
+                <!-- UpGrade e Habilidade: o texto entra no campo da ficha, abaixo do que já houver -->
+                <div id="painelTexto" role="tabpanel" hidden>
+                    <label for="envioTexto" id="rotuloTexto">O que o personagem ganhou</label>
+                    <textarea id="envioTexto" class="campoEnviar" maxlength="500"></textarea>
+                    <p class="notaEnvio" id="notaTexto"></p>
+                </div>
+
+                <div class="boxButtom">
+                    <button type="submit" class="btnSalvar">Enviar</button>
+                    <button type="button" class="btnLimpar">Limpar</button>
+                </div>
+            </form>
+        </section>
+    </div>
+
+    <script src="Js/scriptEnviar.js" type="module"></script>
+    <script src="Js/scriptMenu.js" type="module"></script>
+</body>
+</html>

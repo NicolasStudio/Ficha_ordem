@@ -1,0 +1,263 @@
+/* ------------------ Enviar itens (enviar.html) ------------------
+   Cores: CSS/styleTema.css */
+
+/* A página cresce conforme os passos aparecem: começa no topo em vez de centralizada */
+body {
+    justify-content: flex-start;
+}
+
+.passoEnviar + .passoEnviar {
+    margin-top: 28px;
+    padding-top: 24px;
+    border-top: 1px solid var(--color-input-border);
+}
+
+.tituloPasso {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+    font-family: var(--font-secondary);
+    font-size: 20px;
+    color: var(--color-white);
+}
+
+.tituloPasso > span:not(.numeroPasso) {
+    color: var(--color-link);
+}
+
+.numeroPasso {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: var(--color-button-bg);
+    color: var(--color-button-text);
+    font-size: 16px;
+}
+
+/* Campos */
+.campoEnviar {
+    width: 100%;
+    padding: 10px 12px;
+    margin-top: 0;
+    background-color: var(--color-input-bg);
+    border: 1px solid var(--color-input-border);
+    border-radius: 8px;
+    color: var(--color-white);
+    font-family: var(--font-primary);
+    font-size: 16px;
+}
+
+.campoEnviar:focus {
+    outline: none;
+    border-color: var(--color-input-focus);
+    box-shadow: 0 0 5px var(--color-input-focus);
+}
+
+.campoNumero {
+    text-align: center;
+}
+
+#formEnvio label {
+    margin: 0 0 6px;
+    text-align: center;
+}
+
+/* Campo do jogador: o auto-complete ocupa a largura toda */
+.passoEnviar .campoComLista {
+    display: block;
+}
+
+.passoEnviar .listaOpcoes {
+    width: 100%;
+}
+
+/* ---------- Lista de personagens ---------- */
+.listaEscolha {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.opcaoEscolha {
+    margin: 0;
+    padding: 12px 14px;
+    background-color: var(--color-input-bg);
+    border: 1px solid var(--color-input-border);
+    border-radius: 8px;
+    color: var(--color-white);
+    font-weight: normal;
+    text-align: left;
+    transition: border-color 0.2s, background-color 0.2s, transform 0.2s;
+}
+
+.opcaoEscolha:hover,
+.opcaoEscolha:focus-visible {
+    border-color: var(--color-input-focus);
+    outline: none;
+    transform: translateY(-2px);
+}
+
+.opcaoEscolha[aria-pressed="true"] {
+    background-color: var(--color-input-focus);
+    border-color: var(--color-input-focus);
+    color: var(--color-button-text);
+}
+
+.opcaoEscolha strong {
+    display: block;
+    font-family: var(--font-secondary);
+    font-size: 17px;
+    overflow-wrap: anywhere;
+}
+
+.opcaoEscolha span {
+    display: block;
+    margin-top: 2px;
+    font-family: var(--font-primary);
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+.mensagemLista {
+    grid-column: 1 / -1;
+    margin-top: 10px;
+    font-family: var(--font-primary);
+    color: var(--color-light-gray);
+}
+
+/* ---------- Situação do inventário ---------- */
+.resumoInventario {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 24px;
+    margin-bottom: 18px;
+    padding: 12px 16px;
+    background-color: var(--color-input-bg);
+    border-radius: 8px;
+    font-family: var(--font-primary);
+    color: var(--color-light-gray);
+}
+
+.parteResumo,
+.parteResumo strong {
+    font-family: var(--font-primary);
+}
+
+.parteResumo strong {
+    color: var(--color-white);
+}
+
+/* Mesmas cores do inventário da ficha */
+.parteResumo.cargaOk { color: var(--color-success); }
+.parteResumo.cargaAlerta { color: var(--color-warning); }
+.parteResumo.cargaExcesso { color: var(--color-danger); }
+
+.avisoInventarioCheio {
+    flex-basis: 100%;
+    font-family: var(--font-primary);
+    font-weight: 600;
+    color: var(--color-danger);
+}
+
+/* ---------- Abas: Enviar Itens | UpGrade | Habilidades ---------- */
+.abasEnvio {
+    display: flex;
+    gap: 6px;
+    border-bottom: 2px solid var(--color-input-border);
+    margin-bottom: 18px;
+}
+
+.abaEnvio {
+    width: auto;
+    flex: 1;
+    margin: 0 0 -2px;
+    padding: 10px 12px;
+    background: transparent;
+    border: none;
+    border-bottom: 3px solid transparent;
+    border-radius: 8px 8px 0 0;
+    color: var(--color-light-gray);
+    font-family: var(--font-secondary);
+    font-weight: normal;
+    font-size: 17px;
+}
+
+.abaEnvio:hover {
+    color: var(--color-white);
+    background-color: var(--color-input-bg);
+}
+
+.abaEnvio[aria-selected="true"] {
+    color: var(--color-link);
+    border-bottom-color: var(--color-input-focus);
+    background-color: var(--color-input-bg);
+}
+
+.abaEnvio:focus-visible {
+    outline: 2px solid var(--color-input-focus);
+    outline-offset: -2px;
+}
+
+/* ---------- Formulários ---------- */
+/* Só o painel da aba escolhida (o display: grid abaixo não pode vencer o hidden) */
+#formEnvio [hidden] {
+    display: none;
+}
+
+/* Item: as mesmas colunas do inventário (Item, Detalhes, Espaço, Peso) */
+.camposItem {
+    display: grid;
+    grid-template-columns: 2fr 2fr 1fr 1fr;
+    gap: 12px;
+}
+
+#envioTexto {
+    min-height: 160px;
+    resize: vertical;
+    line-height: 1.5;
+}
+
+.notaEnvio {
+    margin-top: 8px;
+    font-family: var(--font-primary);
+    font-size: 14px;
+    color: var(--color-muted);
+}
+
+#formEnvio .boxButtom {
+    margin: 24px 0 4px;
+}
+
+#formEnvio .boxButtom button {
+    width: auto;
+    margin: 0;
+}
+
+/* ---------- Responsivo ---------- */
+@media (max-width: 700px) {
+    .camposItem {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .campoItemNome,
+    .campoItemDetalhes {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 500px) {
+    .abaEnvio {
+        padding: 10px 6px;
+        font-size: 15px;
+    }
+
+    #formEnvio .boxButtom button {
+        width: 100%;
+    }
+}

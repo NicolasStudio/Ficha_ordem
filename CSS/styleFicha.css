@@ -194,54 +194,7 @@ body {
 }
 
 /* ------------------ Auto-complete dos campos Origem e Classe ------------------ */
-/* Envolve só o campo (criado pelo scriptAutoComplete.js): a lista e o "i" ficam presos a ele */
-.campoComLista {
-    position: relative;
-    display: inline-block;
-}
-
-.listaOpcoes {
-    display: none;
-    position: absolute;
-    top: calc(100% + 4px);
-    left: 0;
-    min-width: 100%; /* pelo menos a largura do campo */
-    z-index: 1002; /* acima da aba, dos "i" e do painel de Perícias; abaixo dos modais */
-    width: max-content;
-    max-height: 260px;
-    overflow-y: auto;
-    margin: 0;
-    padding: 6px 0;
-    list-style: none;
-    background: var(--color-box-bg);
-    border: 1px solid var(--color-input-border);
-    border-radius: 8px;
-    box-shadow: 0 8px 16px var(--color-box-shadow);
-}
-
-.listaOpcoes.aberta {
-    display: block;
-}
-
-/* Quando não cabe à direita da tela, alinha pela direita do campo */
-.listaOpcoes.alinhadaDireita {
-    left: auto;
-    right: 0;
-}
-
-.listaOpcoes li {
-    padding: 8px 14px;
-    font-family: var(--font-primary);
-    font-size: 16px;
-    color: var(--color-white);
-    cursor: pointer;
-}
-
-.listaOpcoes li:hover,
-.listaOpcoes li.ativa {
-    background: var(--color-input-focus);
-    color: var(--color-button-text);
-}
+/* Campo e lista de opções: CSS/styleAutoComplete.css */
 
 /* Botão "i" dentro do campo (aparece quando o valor está na lista) */
 .boxDados input.comInfo {

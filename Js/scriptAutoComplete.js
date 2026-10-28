@@ -7,7 +7,7 @@
 //       campo: document.getElementById('origem'),
 //       itens: origensInfo,              // objetos com "name"
 //       tipo: 'origem',                  // usado no texto de acessibilidade do "i"
-//       detalhes: item => elementoDOM,   // conteúdo do modal
+//       detalhes: item => elementoDOM,   // opcional: conteúdo do modal do "i" (sem ele, não há "i")
 //       aoEscolher: item => { ... }      // opcional: o jogador escolheu um item da lista
 //   });
 import { modalInformacao } from "./scriptModal.js";
@@ -121,6 +121,7 @@ export function autoComplete({ campo, itens, tipo, detalhes, aoEscolher = () => 
     }
 
     function atualizarBotaoInfo() {
+        if (!detalhes) return;
         const item = itemDoCampo();
         botaoInfo.hidden = !item;
         campo.classList.toggle('comInfo', !!item); // abre espaço para o "i" dentro do campo
