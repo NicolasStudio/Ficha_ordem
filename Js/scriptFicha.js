@@ -109,3 +109,31 @@ document.querySelector('.excluir').addEventListener('click', async function () {
         avisar('Ocorreu um erro ao excluir a ficha.', 'erro');
     }
 });
+
+// Limpar: apaga todos os campos da tela. Numa ficha salva, só vale depois de Salvar.
+document.querySelector('.btnLimpar').addEventListener('click', async function () {
+    const campos = [...form.elements].filter(campo => campo.name && campo.type !== 'submit' && campo.type !== 'button');
+
+    if (!campos.some(campo => !campo.disabled && campo.value.trim() !== '')) {
+        avisar('A ficha já está vazia.');
+        return;
+    }
+
+    const texto = idFicha
+        ? 'Todos os campos serão apagados. A ficha salva só muda quando você clicar em Salvar.'
+        : 'Todos os campos preenchidos serão apagados.';
+    if (!await confirmarModal('Deseja realmente limpar a ficha?', texto)) return;
+
+    for (const campo of campos) {
+        campo.value = '';
+        delete campo.dataset.automatico; // valores automáticos (PV, PE, SAN...) recomeçam do zero
+    }
+    calcularEspacoTotal();
+    calcularPesoTotal();
+    // Mesmo aviso de quando a ficha é carregada: atributos, "i" e regras recomeçam dos campos vazios
+    document.dispatchEvent(new Event('fichaCarregada'));
+
+    alterado = true; // sair sem salvar ainda pergunta
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    avisar('Ficha limpa.');
+});
