@@ -11,7 +11,8 @@
 }
 
 .sair {
-    width: auto; /* stylePadrao.css deixa todo button com 100% */
+    width: auto;   /* stylePadrao.css deixa todo button com 100%... */
+    margin-top: 0; /* ...e com margem em cima: o botão ficaria mais baixo na home */
     background-color: #ff0000;
     color: var(--color-white);
     font-family: var(--font-primary);

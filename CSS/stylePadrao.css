@@ -37,12 +37,12 @@ body {
     align-items: center;
 }
 
-/* Home: o "Sair" fica numa linha própria acima da lista, para não cobrir as fichas */
-body > .boxSair {
-    position: static;
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto -30px;
+/* Home: o "Sair" fica no canto superior (como na ficha);
+   a lista desce o suficiente para o botão não cobrir as fichas */
+@media (min-width: 769px) {
+    .boxSair + .containerFichas {
+        margin-top: 120px;
+    }
 }
 
 .containerInitial {

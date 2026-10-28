@@ -10,6 +10,7 @@
     <!-- Estilos -->
     <link rel="stylesheet" href="CSS/stylePadrao.css"> <!-- Básico -->
     <link rel="stylesheet" href="CSS/styleErro.css"> <!-- erros -->
+    <link rel="stylesheet" href="CSS/styleModal.css"> <!-- avisos -->
     <!-- Script -->
     <script src="Js/scriptPadrao.js"></script>
 
@@ -74,6 +75,7 @@
 
     <script type="module">
         import { auth, db } from "./Js/scriptFirebase.js";
+        import "./Js/scriptModal.js"; // mostra o aviso vindo da recuperação de senha
         import { signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged }
             from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
         import { doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";

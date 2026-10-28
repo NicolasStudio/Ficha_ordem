@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="CSS/stylePadrao.css"> <!-- Básico -->
     <link rel="stylesheet" href="CSS/styleSair.css"> <!-- sair -->
     <link rel="stylesheet" href="CSS/styleErro.css"> <!-- erros -->
+    <link rel="stylesheet" href="CSS/styleModal.css"> <!-- modal de confirmação -->
     <!-- Scripts -->
     <script src="Js/scriptPadrao.js"></script>
 </head>
@@ -40,6 +41,7 @@
 
     <script type="module">
         import { db, exigirLogin } from "./Js/scriptFirebase.js";
+        import { confirmarModal, avisar } from "./Js/scriptModal.js";
         import { collection, query, where, getDocs, doc, deleteDoc }
             from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
@@ -95,14 +97,14 @@
                 botao.addEventListener('click', async (event) => {
                     event.stopPropagation(); // não abre a ficha ao clicar no X
 
-                    if (confirm("Você tem certeza que deseja excluir esta ficha?")) {
+                    if (await confirmarModal('Deseja realmente excluir esta ficha?', 'Essa ação não pode ser desfeita.')) {
                         try {
                             await deleteDoc(doc(db, 'fichas', ficha.id_ficha));
-                            alert('Ficha excluída com sucesso!');
+                            avisar('Ficha excluída com sucesso!');
                             carregarFichas();
                         } catch (error) {
                             console.error(error);
-                            alert('Ocorreu um erro ao excluir a ficha.');
+                            avisar('Ocorreu um erro ao excluir a ficha.', 'erro');
                         }
                     }
                 });
