@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Nicolas de Almeida Sousa">
+    <meta name="description" content="Ficha de RPG Ordem Paranormal, Nicolas de Almeida Sousa">
+    <title>Ficha Ordem Paranormal</title>
+
+    <!-- Tema de cores (antes dos outros estilos) -->
+    <script src="Js/scriptTemaInicial.js"></script>
+    <link rel="stylesheet" href="CSS/styleTema.css">
+
+    <!-- Estilos -->
+    <link rel="stylesheet" href="CSS/styleCriatura.css"> <!-- ficha de criatura -->
+    <link rel="stylesheet" href="CSS/styleHexagono.css"> <!-- atributos em hexágono e tooltip -->
+    <link rel="stylesheet" href="CSS/styleDetalhes.css"> <!-- botões Salvar/Voltar/Limpar/Excluir -->
+    <link rel="stylesheet" href="CSS/styleSair.css"> <!-- menu ☰ -->
+    <link rel="stylesheet" href="CSS/styleModal.css"> <!-- avisos e confirmação -->
+
+    <script src="Js/scriptPadrao.js"></script>
+</head>
+<body style="visibility: hidden"> <!-- aparece depois de confirmar que é o mestre -->
+    <div class="boxSair"></div> <!-- menu ☰ (Js/scriptMenu.js) -->
+
+    <form id="formCriatura" class="containerCriatura" autocomplete="off">
+        <h1 class="tituloCriatura">Ficha de criatura</h1>
+
+        <!-- Nome, elementos e atributos | história -->
+        <div class="topoCriatura">
+            <div>
+                <div class="grupoCampo">
+                    <label class="rotuloCriatura" for="nomeCriatura">Nome da criatura</label>
+                    <input type="text" class="campoCriatura" id="nomeCriatura" name="nomeCriatura" maxlength="60">
+                </div>
+
+                <div class="grupoCampo">
+                    <label class="rotuloCriatura" for="elementoPrincipal">Elemento principal e secundário</label>
+                    <div class="elementosCriatura">
+                        <select id="elementoPrincipal" name="elementoPrincipal" aria-label="Elemento principal">
+                            <option value="">Principal...</option>
+                            <option>Sangue</option>
+                            <option>Morte</option>
+                            <option>Conhecimento</option>
+                            <option>Energia</option>
+                            <option>Medo</option>
+                        </select>
+                        <select id="elementoSecundario" name="elementoSecundario" aria-label="Elemento secundário">
+                            <option value="">Secundário (nenhum)</option>
+                            <option>Sangue</option>
+                            <option>Morte</option>
+                            <option>Conhecimento</option>
+                            <option>Energia</option>
+                            <option>Medo</option>
+                        </select>
+                    </div>
+                </div>
+
+                <section class="secaoCriatura">
+                    <h2>Atributos</h2>
+                    <div class="atributosCriatura">
+                        <div class="atributoCriatura atributoInt temDica">
+                            <label for="inteligencia">INT</label>
+                            <p class="dicaAtributo" role="tooltip" id="dica-inteligencia">Inteligência</p>
+                            <div class="hexagono"><input type="text" id="inteligencia" name="inteligencia" maxlength="3" aria-describedby="dica-inteligencia"></div>
+                        </div>
+                        <div class="atributoCriatura atributoFor temDica">
+                            <label for="forca">FOR</label>
+                            <p class="dicaAtributo" role="tooltip" id="dica-forca">Força</p>
+                            <div class="hexagono"><input type="text" id="forca" name="forca" maxlength="3" aria-describedby="dica-forca"></div>
+                        </div>
+                        <div class="atributoCriatura atributoAgi temDica">
+                            <label for="agilidade">AGI</label>
+                            <p class="dicaAtributo" role="tooltip" id="dica-agilidade">Agilidade</p>
+                            <div class="hexagono"><input type="text" id="agilidade" name="agilidade" maxlength="3" aria-describedby="dica-agilidade"></div>
+                        </div>
+                        <div class="atributoCriatura atributoVig temDica">
+                            <label for="vigor">VIG</label>
+                            <p class="dicaAtributo" role="tooltip" id="dica-vigor">Vigor</p>
+                            <div class="hexagono"><input type="text" id="vigor" name="vigor" maxlength="3" aria-describedby="dica-vigor"></div>
+                        </div>
+                        <div class="atributoCriatura atributoPre temDica">
+                            <label for="presenca">PRE</label>
+                            <p class="dicaAtributo" role="tooltip" id="dica-presenca">Presença</p>
+                            <div class="hexagono"><input type="text" id="presenca" name="presenca" maxlength="3" aria-describedby="dica-presenca"></div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div class="historiaCriatura">
+                <label class="rotuloCriatura" for="historia">História e Informações</label>
+                <textarea id="historia" name="historia" maxlength="3000" placeholder="Origem, comportamento, aparência, fraquezas..."></textarea>
+            </div>
+        </div>
+
+        <!-- Defesas | Resistência | Vida -->
+        <div class="blocosCriatura">
+            <section class="secaoCriatura">
+                <h2>Defesas</h2>
+                <div class="grupoCampo">
+                    <label class="rotuloPequeno" for="defesaPassiva">Passiva</label>
+                    <input type="text" class="campoCriatura campoNumero" id="defesaPassiva" name="defesaPassiva" maxlength="3">
+                </div>
+                <div class="grupoCampo">
+                    <label class="rotuloPequeno" for="defesaReflexo">Reflexo</label>
+                    <input type="text" class="campoCriatura campoNumero" id="defesaReflexo" name="defesaReflexo" maxlength="3">
+                </div>
+            </section>
+
+            <section class="secaoCriatura">
+                <h2>Resistência</h2>
+                <div class="grupoCampo">
+                    <label class="rotuloPequeno" for="resistenciaFisica">Física</label>
+                    <input type="text" class="campoCriatura campoNumero" id="resistenciaFisica" name="resistenciaFisica" maxlength="3">
+                </div>
+                <div class="grupoCampo">
+                    <label class="rotuloPequeno" for="resistenciaBalistica">Balística</label>
+                    <input type="text" class="campoCriatura campoNumero" id="resistenciaBalistica" name="resistenciaBalistica" maxlength="3">
+                </div>
+                <div class="grupoCampo">
+                    <label class="rotuloPequeno" for="resistenciaSanidade">Sanidade</label>
+                    <input type="text" class="campoCriatura campoNumero" id="resistenciaSanidade" name="resistenciaSanidade" maxlength="3">
+                </div>
+            </section>
+
+            <section class="secaoCriatura">
+                <h2>Vida</h2>
+                <div class="grupoCampo">
+                    <label class="rotuloPequeno" for="pv_atual">Pontos de vida (atual / máximo)</label>
+                    <div class="parPontos">
+                        <input type="text" class="campoCriatura campoNumero" id="pv_atual" name="pv_atual" maxlength="4" placeholder="Atual">
+                        <span>/</span>
+                        <input type="text" class="campoCriatura campoNumero" id="pv_total" name="pv_total" maxlength="4" placeholder="Máx" aria-label="Pontos de vida máximos">
+                    </div>
+                </div>
+                <div class="grupoCampo">
+                    <label class="rotuloPequeno" for="pe_atual">Pontos de esforço (atual / máximo)</label>
+                    <div class="parPontos">
+                        <input type="text" class="campoCriatura campoNumero" id="pe_atual" name="pe_atual" maxlength="4" placeholder="Atual">
+                        <span>/</span>
+                        <input type="text" class="campoCriatura campoNumero" id="pe_total" name="pe_total" maxlength="4" placeholder="Máx" aria-label="Pontos de esforço máximos">
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Ataques -->
+        <section class="secaoCriatura ataquesCriatura">
+            <h2>Ataques</h2>
+            <textarea id="ataques" name="ataques" maxlength="2000" aria-label="Ataques"
+                placeholder="Ex.: Garras — corpo a corpo, 2d6+5 corte"></textarea>
+        </section>
+
+        <div class="boxButtom">
+            <button type="submit" class="btnSalvar">Salvar</button>
+            <button type="button" class="btnVoltar">Voltar</button>
+            <button type="button" class="btnLimpar">Limpar</button>
+            <button type="button" class="excluir">Excluir</button>
+        </div>
+    </form>
+
+    <script src="Js/scriptCriatura.js" type="module"></script>
+    <script src="Js/scriptMenu.js" type="module"></script>
+</body>
+</html>

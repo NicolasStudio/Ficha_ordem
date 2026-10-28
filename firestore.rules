@@ -1,7 +1,8 @@
 rules_version = '2';
 
 // Cada usuário só lê e altera os próprios dados e as próprias fichas.
-// O mestre também pode LER as fichas e os cadastros de todos (sem alterar nem excluir).
+// O mestre também pode LER as fichas e os cadastros de todos (sem alterar nem excluir)
+// e é o único com acesso às criaturas.
 service cloud.firestore {
   match /databases/{database}/documents {
 
@@ -25,6 +26,17 @@ service cloud.firestore {
       allow create: if request.auth != null
                     && request.resource.data.uid == request.auth.uid;
       allow update: if request.auth != null
+                    && resource.data.uid == request.auth.uid
+                    && request.resource.data.uid == request.auth.uid;
+    }
+
+    // Criaturas: só o mestre, e só as dele. Jogadores não têm acesso.
+    match /criaturas/{id} {
+      allow read, delete: if ehMestre()
+                          && resource.data.uid == request.auth.uid;
+      allow create: if ehMestre()
+                    && request.resource.data.uid == request.auth.uid;
+      allow update: if ehMestre()
                     && resource.data.uid == request.auth.uid
                     && request.resource.data.uid == request.auth.uid;
     }

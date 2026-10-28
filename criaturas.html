@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Nicolas de Almeida Sousa">
+    <meta name="description" content="Ficha de RPG Ordem Paranormal, Nicolas de Almeida Sousa">
+    <title>Ficha Ordem Paranormal</title>
+
+    <!-- Tema de cores (antes dos outros estilos) -->
+    <script src="Js/scriptTemaInicial.js"></script>
+    <link rel="stylesheet" href="CSS/styleTema.css">
+
+    <!-- Estilos -->
+    <link rel="stylesheet" href="CSS/stylePadrao.css"> <!-- Básico -->
+    <link rel="stylesheet" href="CSS/styleSair.css"> <!-- menu ☰ -->
+    <link rel="stylesheet" href="CSS/styleModal.css"> <!-- avisos e confirmação -->
+    <link rel="stylesheet" href="CSS/styleMestre.css"> <!-- área do mestre -->
+</head>
+<body style="visibility: hidden"> <!-- aparece depois de confirmar que é o mestre -->
+    <div class="boxSair"></div> <!-- menu ☰ (Js/scriptMenu.js) -->
+    <div class="containerFichas">
+        <h1 class="tituloPagina">Fichas das criaturas</h1>
+
+        <div class="boxTitle">
+            <div class="ficha-titulo2 colunasCriaturas">
+                <span>Criatura</span>
+                <span>Elementos</span>
+                <span>PV</span>
+                <span>PE</span>
+            </div>
+        </div>
+
+        <!-- Criaturas do mestre -->
+        <div class="boxFichas"></div>
+
+        <!-- Nova criatura -->
+        <div class="imgWrapper">
+            <img src="Img/add.png" alt="Nova criatura" title="Nova criatura" onclick="window.location.href = 'criatura.html'" />
+        </div>
+    </div>
+
+    <script type="module">
+        import { db } from "./Js/scriptFirebase.js";
+        import { exigirMestre } from "./Js/mestres.js";
+        import { confirmarModal, avisar } from "./Js/scriptModal.js";
+        import { collection, query, where, getDocs, doc, deleteDoc }
+            from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+        const mestre = await exigirMestre();
+        document.body.style.visibility = '';
+
+        function criarSpan(classe, texto) {
+            const span = document.createElement('span');
+            span.className = classe;
+            span.textContent = texto ?? '';
+            return span;
+        }
+
+        function mensagem(texto) {
+            document.querySelector('.boxFichas').innerHTML =
+                `<center><p style='color: var(--color-white); margin-top: 30px'>${texto}</p></center>`;
+        }
+
+        // "12 / 30", ou vazio se não preenchido
+        const pontos = (atual, total) => (atual || total) ? `${atual || '–'} / ${total || '–'}` : '';
+
+        async function carregarCriaturas() {
+            let snap;
+            try {
+                snap = await getDocs(query(collection(db, 'criaturas'), where('uid', '==', mestre.uid)));
+            } catch (error) {
+                console.error(error);
+                mensagem('Não foi possível carregar as criaturas. Recarregue a página.');
+                return;
+            }
+
+            const criaturas = snap.docs
+                .map(d => ({ id: d.id, ...d.data() }))
+                .sort((a, b) => (a.nomeCriatura || '').localeCompare(b.nomeCriatura || '', 'pt-BR'));
+
+            if (criaturas.length === 0) {
+                mensagem('Você ainda não tem criaturas cadastradas.');
+                return;
+            }
+
+            const box = document.querySelector('.boxFichas');
+            box.innerHTML = '';
+            for (const criatura of criaturas) {
+                const div = document.createElement('div');
+                div.className = 'ficha colunasCriaturas';
+                div.style.cursor = 'pointer';
+                div.onclick = () => window.location.href = 'criatura.html?id=' + encodeURIComponent(criatura.id);
+
+                const elementos = [criatura.elementoPrincipal, criatura.elementoSecundario].filter(Boolean).join(' / ');
+                div.append(
+                    criarSpan('nomePersonagem', criatura.nomeCriatura || 'Sem nome'),
+                    criarSpan('elementoCriatura', elementos),
+                    criarSpan('pontosCriatura', pontos(criatura.pv_atual, criatura.pv_total)),
+                    criarSpan('pontosCriatura', pontos(criatura.pe_atual, criatura.pe_total))
+                );
+
+                // Excluir pela lista
+                const botao = document.createElement('button');
+                botao.className = 'excluirLinha';
+                botao.textContent = 'X';
+                botao.title = 'Excluir criatura';
+                botao.addEventListener('click', async event => {
+                    event.stopPropagation(); // não abre a criatura ao clicar no X
+                    if (!await confirmarModal('Deseja realmente excluir esta criatura?', 'Essa ação não pode ser desfeita.')) return;
+                    try {
+                        await deleteDoc(doc(db, 'criaturas', criatura.id));
+                        avisar('Criatura excluída com sucesso!');
+                        carregarCriaturas();
+                    } catch (error) {
+                        console.error(error);
+                        avisar('Ocorreu um erro ao excluir a criatura.', 'erro');
+                    }
+                });
+                const spanBotao = document.createElement('span');
+                spanBotao.appendChild(botao);
+                div.appendChild(spanBotao);
+
+                box.appendChild(div);
+            }
+        }
+
+        carregarCriaturas();
+    </script>
+    <script src="Js/scriptMenu.js" type="module"></script>
+</body>
+</html>

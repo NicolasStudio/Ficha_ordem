@@ -66,7 +66,7 @@
                 snap = await getDocs(query(collection(db, 'fichas'), where('uid', '==', usuario.uid)));
             } catch (error) {
                 console.error(error);
-                box.innerHTML = "<center><p style='color: white; margin-top: 30px'>Não foi possível carregar as fichas. Recarregue a página.</p></center>";
+                box.innerHTML = "<center><p style='color: var(--color-white); margin-top: 30px'>Não foi possível carregar as fichas. Recarregue a página.</p></center>";
                 return;
             }
 
@@ -78,7 +78,7 @@
             box.innerHTML = '';
 
             if (fichas.length === 0) {
-                box.innerHTML = "<center><p style='color: white; margin-top: 30px'>Você ainda não tem fichas cadastradas. </p></center>";
+                box.innerHTML = "<center><p style='color: var(--color-white); margin-top: 30px'>Você ainda não tem fichas cadastradas. </p></center>";
                 return;
             }
 
