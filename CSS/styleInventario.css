@@ -70,9 +70,44 @@
     box-shadow: 0 0 5px var(--color-input-focus);
 }
 
+/* Totais: a cor mostra quanto da capacidade de carga está ocupada (scriptInventario.js) */
 #espacoTotal, #pesoTotal{
-    border: 1px solid #f74949;
+    border: 1px solid #3ecf6a;
     background-color: var(--color-input-bg);
+    color: #3ecf6a;
+    transition: color 0.3s, border-color 0.3s;
+}
+
+#espacoTotal.cargaAlerta, #pesoTotal.cargaAlerta {
+    border-color: #f5c542;
+    color: #f5c542;
+}
+
+#espacoTotal.cargaExcesso, #pesoTotal.cargaExcesso {
+    border-color: #f74949;
+    color: #f74949;
+}
+
+/* Capacidade e alerta de sobrepeso, abaixo do inventário */
+.boxCarga {
+    margin-top: 16px;
+    text-align: right;
+}
+
+.capacidadeCarga,
+.avisoSobrepeso {
+    font-family: var(--font-primary); /* a ficha aplica a fonte decorativa em todo elemento */
+}
+
+.capacidadeCarga {
+    font-size: 14px;
+    color: var(--color-light-gray);
+}
+
+.avisoSobrepeso {
+    margin-top: 6px;
+    font-size: 16px;
+    font-weight: bold;
     color: #f74949;
 }
 

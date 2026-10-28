@@ -42,19 +42,19 @@ const infoGeral = [
         campo: 'defesa_passiva',
         name: 'Passiva',
         description: 'Defesa padrão para ataques comuns, surpresa ou oportunidade.',
-        formula: 'Defesa = 10 + AGI'
+        formula: 'Defesa = 10 + AGI (5 + AGI se estiver sobrecarregado)'
     },
     {
         campo: 'defesa_bloquear',
         name: 'Bloqueio',
         description: 'Se for treinado em Fortitude, quando for alvo de um ataque corpo a corpo, você pode usar uma reação para bloquear. Se fizer isso, você recebe resistência a dano igual ao seu modificador de Fortitude contra este ataque.',
-        formula: 'Defesa = 10 + Fortitude'
+        formula: 'Defesa = 10 + Fortitude (5 + Fortitude se estiver sobrecarregado)'
     },
     {
         campo: 'defesa_esquiva',
         name: 'Esquiva',
         description: 'Se for treinado em Reflexos, quando for alvo de um ataque, você pode usar uma reação para esquivar. Se fizer isso, você adiciona seu modificador de Reflexos em sua Defesa contra este ataque.',
-        formula: 'Defesa = 10 + Reflexos'
+        formula: 'Defesa = 10 + Reflexos (5 + Reflexos se estiver sobrecarregado)'
     },
 
     // ---------- Resistências ----------

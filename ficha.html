@@ -24,6 +24,7 @@
     <script src="Js/scriptFicha.js" type="module"></script>
     <script src="Js/scriptOrigensClasses.js" type="module"></script>
     <script src="Js/scriptInfoGeral.js" type="module"></script>
+    <script src="Js/scriptInventario.js" type="module"></script>
 
 </head>
 <body>
@@ -495,6 +496,12 @@
                         <input type="text" maxlength="4" id="peso8" name="peso8" class="bxP" oninput="calcularPesoTotal()"><br>
                         <input type="text" maxlength="4" id="pesoTotal" name="pesoTotal" class="bxP" disabled><br>
                     </div>
+                </div>
+
+                <!-- Carga: preenchido pelo scriptInventario.js -->
+                <div class="boxCarga">
+                    <p class="capacidadeCarga"></p>
+                    <p class="avisoSobrepeso" role="alert" hidden></p>
                 </div>
             </div>
             
