@@ -205,7 +205,7 @@
     font-family: var(--font-primary);
     color: var(--color-white);
     cursor: pointer;
-    z-index: 997; /* abaixo dos "i" dos campos (998); some quando o painel abre */
+    z-index: 997; /* na frente dos campos e dos "i"; some quando o painel abre */
     text-align: center;
     transition: background 0.3s;
 }

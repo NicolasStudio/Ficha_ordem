@@ -269,10 +269,10 @@ body {
     top: 50%;
     right: 9px; /* 1px da borda + 8px de respiro, dentro do campo */
     transform: translateY(-50%);
-    /* Camadas: aba Perícias (997) < "i" (998) < fundo desfocado (999) < painel (1000)
-       O "i" fica na frente da aba (que cobre o fim do campo Classe no desktop),
-       mas atrás do painel de Perícias quando ele está aberto */
-    z-index: 998;
+    /* Camadas: "i" (1, só acima do próprio campo) < aba Perícias (997) < fundo desfocado (999)
+       < painel (1000). A aba é fixa e passa por cima dos campos ao rolar a página:
+       ela fica sempre na frente dos "i" */
+    z-index: 1;
     width: 22px;
     height: 22px;
     padding: 0;
