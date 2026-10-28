@@ -170,7 +170,7 @@ const origensInfo = [
             'Tática': true
         },
         habilitiesName: 'Para Bellum.',
-        habilities: 'Para Bellum. Você recebe +1 em rolagens de dano com armas de fogo.'
+        habilities: 'Para Bellum. Você recebe +2 em rolagens de dano com armas de fogo.'
     },
     {
         name: 'Operário',

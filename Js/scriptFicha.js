@@ -41,6 +41,8 @@ function preencherFicha(ficha) {
     }
     calcularEspacoTotal();
     calcularPesoTotal();
+    // Avisa quem depende dos valores carregados (ex.: o "i" do campo Origem)
+    document.dispatchEvent(new Event('fichaCarregada'));
 }
 
 if (idFicha) {

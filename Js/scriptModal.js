@@ -81,3 +81,44 @@ export function confirmarModal(titulo, texto) {
         fundo.querySelector('.modalNao').focus(); // Enter sem pensar não apaga nada
     });
 }
+
+// ================= Modal de informação =================
+// Mostra um conteúdo só para leitura. Fecha em "Fechar", Esc ou clique fora da caixa.
+// Uso: modalInformacao('Título', elementoComOConteudo)
+export function modalInformacao(titulo, conteudo) {
+    const fundo = document.createElement('div');
+    fundo.className = 'modalFundo';
+    fundo.innerHTML = `
+        <div class="modalCaixa modalInfo" role="dialog" aria-modal="true" aria-labelledby="modalTitulo">
+            <p class="modalInfoTitulo" id="modalTitulo"></p>
+            <div class="modalInfoConteudo"></div>
+            <div class="modalBotoes">
+                <button type="button" class="modalNao">Fechar</button>
+            </div>
+        </div>`;
+    fundo.querySelector('.modalInfoTitulo').textContent = titulo;
+    fundo.querySelector('.modalInfoConteudo').appendChild(conteudo);
+
+    const focoAnterior = document.activeElement;
+
+    function fechar() {
+        document.removeEventListener('keydown', teclado);
+        fundo.classList.remove('aberto');
+        setTimeout(() => fundo.remove(), 200); // espera a animação de saída
+        if (focoAnterior) focoAnterior.focus();
+    }
+
+    function teclado(event) {
+        if (event.key === 'Escape') fechar();
+    }
+
+    fundo.querySelector('.modalNao').addEventListener('click', fechar);
+    fundo.addEventListener('click', event => {
+        if (event.target === fundo) fechar(); // clique fora da caixa
+    });
+    document.addEventListener('keydown', teclado);
+
+    document.body.appendChild(fundo);
+    requestAnimationFrame(() => fundo.classList.add('aberto'));
+    fundo.querySelector('.modalNao').focus();
+}

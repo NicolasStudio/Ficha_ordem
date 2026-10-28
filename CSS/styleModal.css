@@ -142,3 +142,55 @@
     content: "!  ";
     color: #dc3545;
 }
+
+/* ------------------ Modal de informação (ex.: detalhes da origem e da classe) ------------------ */
+.modalInfo {
+    max-width: 600px;
+    max-height: calc(100vh - 32px);
+    overflow-y: auto;
+    text-align: left;
+}
+
+/* Título no estilo do livro: letras espaçadas com um traço embaixo */
+.modalInfoTitulo {
+    font-family: var(--font-secondary);
+    font-size: clamp(18px, 4vw, 22px);
+    letter-spacing: 0.3em;
+    color: var(--color-white, #fff);
+    padding-bottom: 6px;
+    margin-bottom: 14px;
+    border-bottom: 1px solid var(--color-light-gray, #ccc);
+}
+
+.modalInfoConteudo p {
+    font-family: var(--font-primary);
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--color-light-gray, #ccc);
+    margin-bottom: 12px;
+}
+
+/* "Perícias Treinadas." e o nome da habilidade em vermelho, como no livro */
+.rotuloDestaque {
+    color: #e5484d;
+    font-variant: small-caps;
+    font-size: 1.1em;
+}
+
+.modalInfo .modalBotoes {
+    margin-top: 8px;
+}
+
+/* Classe: resumo de abertura em destaque, como a introdução no livro */
+.modalInfoConteudo .resumoClasse {
+    font-style: italic;
+    color: var(--color-white, #fff);
+}
+
+/* Progressão por NEX embaixo dos pontos iniciais */
+.detalhePontos {
+    display: block;
+    font-family: var(--font-primary); /* a ficha aplica a fonte decorativa em todo elemento */
+    font-size: 14px;
+    color: #999;
+}

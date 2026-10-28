@@ -22,6 +22,7 @@
     <script src="Js/scriptFirebase.js" type="module"></script>
     <script src="Js/scriptRegrasBasicas.js" defer></script>
     <script src="Js/scriptFicha.js" type="module"></script>
+    <script src="Js/scriptOrigensClasses.js" type="module"></script>
 
 </head>
 <body>
@@ -54,11 +55,11 @@
                         </div>
                         <div>
                             <label for="origem">Origem:</label>
-                            <input type="text" id="origem" name="origem" maxlength="20">
+                            <input type="text" id="origem" name="origem" maxlength="30" autocomplete="off">
                         </div>
                         <div>
                             <label for="classe">Classe:</label>
-                            <input type="text" id="classe" name="classe" maxlength="20">
+                            <input type="text" id="classe" name="classe" maxlength="20" autocomplete="off">
                         </div>
                     </div>
                 </div>
@@ -208,13 +209,19 @@
                         document.addEventListener('DOMContentLoaded', () => {
                             const box = document.querySelector('.boxPericias');
                             const esconder = document.querySelector('.boxPericiasEsconder');
-                        
+
+                            // Fundo escuro e desfocado atrás do painel, igual ao dos modais
+                            const fundo = document.createElement('div');
+                            fundo.className = 'fundoPericias';
+                            document.body.appendChild(fundo);
+
                             // Ao clicar no botão de abrir
                             esconder.addEventListener('click', () => {
                                 esconder.style.display = 'none';
                                 box.style.display = 'block';
                                 setTimeout(() => {
                                     box.classList.add('aberta');
+                                    fundo.classList.add('aberto');
                                 }, 10);
                             });
                         
@@ -225,6 +232,7 @@
                         
                                 if (!isClickInsideBox && !isClickOnToggle && box.classList.contains('aberta')) {
                                     box.classList.remove('aberta');
+                                    fundo.classList.remove('aberto');
                                     setTimeout(() => {
                                         box.style.display = 'none';
                                         esconder.style.display = 'block';

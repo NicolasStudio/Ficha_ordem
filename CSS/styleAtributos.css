@@ -111,6 +111,23 @@
 }
 
 /* Estilo para a seção de Perícias */
+/* Fundo escuro e desfocado atrás do painel aberto (igual ao dos modais) */
+.fundoPericias {
+    position: fixed;
+    inset: 0;
+    z-index: 999; /* logo abaixo do painel de Perícias */
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(3px);
+    opacity: 0;
+    pointer-events: none; /* fechado, não bloqueia cliques na ficha */
+    transition: opacity 0.5s ease;
+}
+
+.fundoPericias.aberto {
+    opacity: 1;
+    pointer-events: auto; /* clicar no fundo fecha o painel */
+}
+
 /* Estilo principal da boxPericias */
 .boxPericias {
     position: fixed;
