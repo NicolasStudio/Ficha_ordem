@@ -3,27 +3,50 @@
 /* ---------- Menu (mestre.html) ---------- */
 .menuMestre {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 16px;
 }
 
+/* Cartão com a figura da página (a mesma que aparece acima do título dela) */
 .opcaoMestre {
-    display: block;
-    padding: 24px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 0;
+    padding: 24px 18px 22px;
     background-color: var(--color-input-bg);
     border: 1px solid var(--color-input-border);
-    border-radius: 10px;
+    border-radius: 12px;
     color: var(--color-white);
     text-decoration: none;
-    text-align: left;
-    transition: background-color 0.3s, transform 0.2s, border-color 0.3s;
+    text-align: center;
+    transition: border-color 0.3s, box-shadow 0.3s;
 }
 
 .opcaoMestre:hover,
 .opcaoMestre:focus-visible {
     border-color: var(--color-input-focus);
-    transform: translateY(-2px);
+    box-shadow: 0 0 12px var(--color-input-focus);
     outline: none;
+    text-decoration: none;
+}
+
+.figuraMestre {
+    width: auto;
+    height: 120px;
+    margin-bottom: 18px;
+    transition: transform 0.25s ease;
+}
+
+.opcaoMestre:hover .figuraMestre,
+.opcaoMestre:focus-visible .figuraMestre {
+    transform: translateY(-6px) scale(1.05);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .figuraMestre {
+        transition: none;
+    }
 }
 
 .opcaoMestre strong {
@@ -55,9 +78,43 @@
     color: var(--color-light-gray);
 }
 
+@media (max-width: 1000px) {
+    .menuMestre {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Celular: um por linha, com a figura ao lado do texto para não ficar muito comprido */
 @media (max-width: 600px) {
     .menuMestre {
         grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .opcaoMestre {
+        display: grid;
+        grid-template-columns: 76px 1fr;
+        grid-template-rows: auto auto;
+        column-gap: 14px;
+        align-items: center;
+        padding: 14px 16px;
+        text-align: left;
+    }
+
+    .figuraMestre {
+        grid-row: 1 / 3;
+        width: 100%;
+        height: auto;
+        margin: 0;
+    }
+
+    .opcaoMestre strong {
+        align-self: end;
+        margin-bottom: 2px;
+    }
+
+    .opcaoMestre span {
+        align-self: start;
     }
 }
 
