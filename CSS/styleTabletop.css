@@ -1,0 +1,79 @@
+/* ------------------ Entrada no Tabletop (tabletop.html) ------------------
+   Cores: CSS/styleTema.css */
+
+.containerTabletop {
+    max-width: 560px;
+    text-align: center;
+}
+
+.estadoTabletop {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 28px 20px;
+    background-color: var(--color-input-bg);
+    border: 1px solid var(--color-input-border);
+    border-radius: 12px;
+}
+
+/* Luz de status: amarela procurando, vermelha offline, verde entrando */
+.luzTabletop {
+    width: 18px;
+    height: 18px;
+    margin-bottom: 6px;
+    border-radius: 50%;
+    background-color: var(--color-warning);
+    box-shadow: 0 0 12px var(--color-warning);
+    animation: piscarTabletop 1.2s ease-in-out infinite;
+}
+
+.estadoTabletop[data-estado="offline"] .luzTabletop,
+.estadoTabletop[data-estado="erro"] .luzTabletop {
+    background-color: var(--color-danger);
+    box-shadow: 0 0 12px var(--color-danger);
+    animation: none;
+}
+
+.estadoTabletop[data-estado="entrando"] .luzTabletop {
+    background-color: var(--color-success);
+    box-shadow: 0 0 12px var(--color-success);
+}
+
+@keyframes piscarTabletop {
+    50% { opacity: 0.35; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .luzTabletop {
+        animation: none;
+    }
+}
+
+.tituloEstado {
+    font-family: var(--font-secondary);
+    font-size: 22px;
+    color: var(--color-link);
+}
+
+.textoEstado {
+    font-family: var(--font-primary);
+    font-size: 16px;
+    color: var(--color-light-gray);
+}
+
+.textoEstado:empty {
+    display: none;
+}
+
+.btnTentar {
+    width: auto;
+    padding: 12px 28px;
+    background-color: var(--color-button-bg);
+    color: var(--color-button-text);
+    font-family: var(--font-primary);
+}
+
+.btnTentar:hover {
+    background-color: var(--color-button-hover);
+}

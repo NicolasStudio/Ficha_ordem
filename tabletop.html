@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Nicolas de Almeida Sousa">
+    <meta name="description" content="Ficha de RPG Ordem Paranormal, Nicolas de Almeida Sousa">
+    <title>Tabletop</title>
+
+    <!-- Tema de cores (antes dos outros estilos) -->
+    <script src="Js/scriptTemaInicial.js"></script>
+    <link rel="stylesheet" href="CSS/styleTema.css">
+
+    <!-- Estilos -->
+    <link rel="stylesheet" href="CSS/stylePadrao.css"> <!-- Básico -->
+    <link rel="stylesheet" href="CSS/styleSair.css"> <!-- menu ☰ -->
+    <link rel="stylesheet" href="CSS/styleModal.css"> <!-- avisos -->
+    <link rel="stylesheet" href="CSS/styleTabletop.css"> <!-- entrada no Tabletop -->
+</head>
+<body>
+    <div class="boxSair"></div> <!-- menu ☰ (Js/scriptMenu.js) -->
+
+    <!-- Abre numa guia própria: confere se o Tabletop está ligado e entra com a conta da Ficha -->
+    <div class="containerFichas containerTabletop">
+        <h1 class="tituloPagina">Tabletop</h1>
+
+        <div class="estadoTabletop" data-estado="verificando" role="status" aria-live="polite">
+            <span class="luzTabletop" aria-hidden="true"></span>
+            <p class="tituloEstado">Procurando o Tabletop...</p>
+            <p class="textoEstado"></p>
+        </div>
+
+        <button type="button" class="btnTentar" hidden>Tentar agora</button>
+    </div>
+
+    <script src="Js/scriptTabletop.js" type="module"></script>
+    <script src="Js/scriptMenu.js" type="module"></script>
+</body>
+</html>
