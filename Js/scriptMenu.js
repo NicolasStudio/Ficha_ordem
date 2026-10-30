@@ -1,4 +1,4 @@
-// Menu do topo (☰): Menu do mestre (só para o mestre), Tema e Sair.
+// Menu do topo (☰): Menu do mestre (só para o mestre), Tabletop, Tema e Sair.
 // Monta o menu dentro do <div class="boxSair"> da página.
 import { exigirLogin } from "./scriptFirebase.js";
 import { ehMestre } from "./mestres.js";
@@ -32,6 +32,10 @@ function item(texto, acao, classe = '') {
 
 if (ehMestre(usuario) && !location.pathname.endsWith('mestre.html')) {
     item('Menu do mestre', () => window.location.href = 'mestre.html');
+}
+// Tabletop numa guia própria: a ficha continua aberta nesta (tabletop.html faz a entrada)
+if (!location.pathname.endsWith('tabletop.html')) {
+    item('Tabletop', () => window.open('tabletop.html', '_blank'));
 }
 item('Tema', abrirTemas);
 item('Sair', () => window.sair(), 'itemSair'); // na ficha, sair() pergunta antes se há alterações
