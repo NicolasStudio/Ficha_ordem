@@ -8,6 +8,7 @@ export const TEMAS = [
     { id: 'classico', nome: 'Clássico', descricao: 'Azul e ciano: o visual original.' },
     { id: 'sangue', nome: 'Sangue', descricao: 'Vermelho-sangue, preto e branco.' },
     { id: 'morte', nome: 'Morte', descricao: 'Preto e branco.' },
+    { id: 'medo', nome: 'Medo', descricao: 'Claro: branco e preto.' },
     { id: 'conhecimento', nome: 'Conhecimento', descricao: 'Claro: branco e dourado.' },
     { id: 'energia', nome: 'Energia', descricao: 'Escuro, puxado para o roxo.' }
 ];
