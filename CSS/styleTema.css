@@ -203,6 +203,45 @@
     --color-info-btn-text: #ffffff;
 }
 
+/* ---------- Medo: branco e preto (o oposto de Morte) ---------- */
+/* Página e caixas brancas, texto e destaques pretos. */
+[data-tema="medo"] {
+    --color-background: linear-gradient(135deg, #ffffff, #f4f4f4 60%, #e6e6e6);
+    --color-box-bg: #ffffff;
+    --color-input-bg: #f2f2f2;
+    --color-input-border: #c4c4c4;
+    --color-box-shadow: rgba(0, 0, 0, 0.18);
+    --color-overlay: rgba(0, 0, 0, 0.45);
+    --color-white: #000000;                /* texto principal preto */
+    --color-light-gray: #3d3d3d;
+    --color-muted: #6b6b6b;
+
+    --color-input-focus: #000000;
+    --color-link: #000000;
+    --color-button-bg: #000000;
+    --color-button-hover: #2e2e2e;
+    --color-button-text: #ffffff;
+    --color-nex: #000000;
+    --logo-filtro: brightness(0);          /* logo branco vira preto */
+
+    /* sucesso/alerta/perigo continuam coloridos, em tons escuros para ler no branco */
+    --color-success: #1a7a43;
+    --color-success-btn: #000000;          /* Salvar preto */
+    --color-success-btn-hover: #2e2e2e;
+    --color-success-btn-text: #ffffff;
+    --color-warning: #8a5500;
+    --color-warning-btn: #5c5c5c;          /* Limpar cinza */
+    --color-warning-btn-hover: #474747;
+    --color-warning-btn-text: #ffffff;
+    --color-danger: #b3232a;
+    --color-danger-btn: #8f1d22;           /* Excluir: o único botão com cor */
+    --color-danger-btn-hover: #761419;
+    --color-danger-btn-text: #ffffff;
+    --color-info-btn: #e6e6e6;             /* Voltar claro */
+    --color-info-btn-hover: #d4d4d4;
+    --color-info-btn-text: #000000;
+}
+
 /* Logo branco (Ordo Realitas): no tema claro fica escuro */
 .box-top-img img {
     filter: var(--logo-filtro);
