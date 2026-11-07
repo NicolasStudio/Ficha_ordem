@@ -1,6 +1,7 @@
 // Ficha: sem ?id na URL cria uma nova, com ?id=... edita a existente
 import { db, exigirLogin } from "./scriptFirebase.js";
 import { confirmarModal, avisar, avisarNaProximaPagina } from "./scriptModal.js";
+import { armasComErro } from "./scriptArmas.js"; // formato travado e rolagem das armas
 import { collection, doc, getDoc, addDoc, setDoc, deleteDoc, writeBatch, serverTimestamp }
     from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
@@ -112,6 +113,14 @@ export async function salvarFichaAberta(apagarJunto) {
 form.addEventListener('submit', async function (event) {
     event.preventDefault();
     if (somenteLeitura) return; // ex.: Enter num campo da ficha de outro jogador
+
+    // Armas fora do formato ficam em vermelho, com o motivo ao passar o mouse
+    const armasErradas = armasComErro();
+    if (armasErradas.length) {
+        avisar('Corrija as armas marcadas em vermelho antes de salvar.', 'erro');
+        document.getElementById(armasErradas[0]).focus();
+        return;
+    }
 
     // Trava o botão para um clique duplo não criar a mesma ficha duas vezes
     const botao = form.querySelector('button[type="submit"]');

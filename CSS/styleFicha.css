@@ -113,8 +113,43 @@ body {
     background-color: var(--color-input-bg);
     color: var(--color-white);
     width: 500px;
-    max-width: 90vw;
+    max-width: calc(90vw - 60px); /* sobra espaço para o "i" ao lado */
     font-size: clamp(8px, 4vw, 18px);
+    text-align: center;
+}
+
+/* Campo do nome + "i" da imagem do personagem (scriptRetrato.js), do lado de fora.
+   O ::before tem a largura do "i": equilibra a linha e o campo fica no centro */
+.linhaNome {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.linhaNome::before {
+    content: '';
+    width: 22px;
+    flex-shrink: 0;
+}
+
+.infoCampo.infoRetrato {
+    position: static;
+    transform: none;
+    flex-shrink: 0;
+}
+
+.infoRetrato:disabled {
+    cursor: wait;
+    opacity: 0.6;
+}
+
+/* Imagem no modal */
+.retratoPersonagem {
+    display: block;
+    max-width: 100%;
+    max-height: 65vh;
+    margin: 0 auto;
+    border-radius: 8px;
 }
 
 /* Demais Dados */
