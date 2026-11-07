@@ -2,13 +2,28 @@
    Armas da ficha e ataques da criatura: campo + botões 🎲 Base e 💥 Crítico na mesma linha */
 .linhaRolagem {
     display: flex;
-    align-items: flex-start;
+    align-items: stretch; /* os botões ficam da altura do campo */
     gap: 6px;
+}
+
+/* sem as margens gerais de campo e botão (stylePadrao.css): desalinhavam a linha */
+.linhaRolagem > * {
+    margin: 0;
 }
 
 .linhaRolagem input {
     flex: 1;
     min-width: 0;
+}
+
+/* Armas: a margem de baixo era do campo; passa para a linha, senão os botões
+   esticariam também por ela e ficariam mais altos que o campo */
+.titleArmas .linhaRolagem {
+    margin-bottom: 10px;
+}
+
+.titleArmas .linhaRolagem input {
+    margin-bottom: 0;
 }
 
 /* fora do formato: borda vermelha (o motivo aparece ao passar o mouse) */
@@ -21,8 +36,13 @@
 .botaoRolagem {
     position: relative;
     flex-shrink: 0;
-    width: 38px;
-    height: 38px;
+    width: 44px;
+    min-height: 38px; /* a altura acompanha o campo (.linhaRolagem) */
+    padding: 2px 0 0; /* compensa o espaço que a fonte de emoji deixa embaixo do ícone */
+    /* ícone no centro, qualquer que seja a altura do botão */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     border: 1px solid var(--color-input-border);
     border-radius: 8px;
     background-color: var(--color-input-bg);
