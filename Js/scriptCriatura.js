@@ -2,6 +2,7 @@
 import { db } from "./scriptFirebase.js";
 import { exigirMestre } from "./mestres.js";
 import { confirmarModal, avisar, avisarNaProximaPagina } from "./scriptModal.js";
+import { ataquesComErro } from "./scriptAtaquesCriatura.js"; // formato travado e rolagem dos ataques
 import { collection, doc, getDoc, addDoc, setDoc, deleteDoc, serverTimestamp }
     from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
@@ -47,6 +48,8 @@ if (idCriatura) {
         for (const campo of campos()) {
             if (criatura[campo.name] !== undefined) campo.value = criatura[campo.name];
         }
+        // Avisa quem depende dos valores carregados (ex.: as linhas de ataque)
+        document.dispatchEvent(new Event('fichaCarregada'));
     } catch (error) {
         console.error('Erro ao carregar a criatura:', error);
         avisarNaProximaPagina('Criatura não encontrada.', 'erro');
@@ -57,6 +60,14 @@ if (idCriatura) {
 // ================= Salvar =================
 form.addEventListener('submit', async event => {
     event.preventDefault();
+
+    // Ataques fora do formato ficam em vermelho, com o motivo ao passar o mouse
+    const ataquesErrados = ataquesComErro();
+    if (ataquesErrados.length) {
+        avisar('Corrija os ataques marcados em vermelho antes de salvar.', 'erro');
+        ataquesErrados[0].focus();
+        return;
+    }
 
     // Trava o botão para um clique duplo não criar a mesma criatura duas vezes
     const botao = form.querySelector('.btnSalvar');
@@ -117,6 +128,7 @@ form.querySelector('.btnLimpar').addEventListener('click', async () => {
     if (!await confirmarModal('Deseja realmente limpar a ficha?', texto)) return;
 
     for (const campo of campos()) campo.value = '';
+    document.dispatchEvent(new Event('fichaCarregada')); // as linhas de ataque recomeçam vazias
     alterado = true; // sair sem salvar ainda pergunta
     window.scrollTo({ top: 0, behavior: 'smooth' });
     avisar('Ficha limpa.');
