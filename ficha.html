@@ -32,6 +32,7 @@
     <script src="Js/scriptFicha.js" type="module"></script>
     <script src="Js/scriptOrigensClasses.js" type="module"></script>
     <script src="Js/scriptInfoGeral.js" type="module"></script>
+    <script src="Js/scriptRetrato.js" type="module"></script> <!-- "i" do nome: imagem do personagem -->
     <script src="Js/scriptInventario.js" type="module"></script>
     <script src="Js/scriptRecebimentos.js" type="module"></script> <!-- itens, UpGrades e habilidades enviados pelo mestre -->
     <script src="Js/scriptMenu.js" type="module"></script>
@@ -51,7 +52,11 @@
                 <div class="box-top-personagem">
                     <div class="boxNome">
                         <label for="nomePersonagem">Nome do Personagem:</label>
-                        <input type="text" id="nomePersonagem" name="nomePersonagem" maxlength="80">
+                        <div class="linhaNome">
+                            <input type="text" id="nomePersonagem" name="nomePersonagem" maxlength="80">
+                            <!-- imagem do personagem: Img/players/<nome do personagem>.png (Js/scriptRetrato.js) -->
+                            <button type="button" class="infoCampo infoRetrato" id="verRetrato" aria-label="Ver a imagem do personagem">i</button>
+                        </div>
                     </div>
         
                     <div class="boxDados">
