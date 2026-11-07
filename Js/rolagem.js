@@ -140,9 +140,10 @@ function rolarAqui(formula) {
     return { total, dados };
 }
 
-function rolar({ formula, rotulo, expressao, personagem }) {
+function rolar({ formula, rotulo, expressao, personagem, tipo }) {
     if (dentroDaMesa) {
-        const mensagem = { type: 'ficha:rolar', formula, label: rotulo, character: personagem, expression: expressao };
+        // tipo: 'creature' (ficha de criatura) ou 'character' (ficha de jogador): muda o ícone no histórico
+        const mensagem = { type: 'ficha:rolar', formula, label: rotulo, character: personagem, characterKind: tipo, expression: expressao };
         for (const origem of ORIGENS_DA_MESA) window.parent.postMessage(mensagem, origem);
         return;
     }
@@ -171,10 +172,11 @@ function criarBotao(icone, classe) {
 
 /**
  * Põe os botões 🎲 Base e 💥 Crítico ao lado do campo (que já precisa estar na página).
- * ler(texto) -> { nome, dano, critico } ou { erro }; personagem() -> nome para o histórico da mesa.
+ * ler(texto) -> { nome, dano, critico } ou { erro }; personagem() -> nome para o histórico da mesa;
+ * tipo: 'character' (ficha de jogador) ou 'creature' (ficha de criatura).
  * Devolve { campo, atualizar(), comErro() }: comErro marca em vermelho se estiver fora do formato.
  */
-export function ligarRolagem(campo, { ler, personagem, semCritico = 'Sem crítico' }) {
+export function ligarRolagem(campo, { ler, personagem, tipo = 'character', semCritico = 'Sem crítico' }) {
     const linha = document.createElement('div');
     linha.className = 'linhaRolagem';
     campo.before(linha);
@@ -204,11 +206,11 @@ export function ligarRolagem(campo, { ler, personagem, semCritico = 'Sem crític
     }
 
     botaoBase.addEventListener('click', () => {
-        if (item) rolar({ formula: montarFormula(item.dano), rotulo: `${item.nome} — Dano`, expressao: textoFormula(item.dano), personagem: personagem() });
+        if (item) rolar({ formula: montarFormula(item.dano), rotulo: `${item.nome} — Dano`, expressao: textoFormula(item.dano), personagem: personagem(), tipo });
     });
     botaoCritico.addEventListener('click', () => {
         const formula = item && formulaDoCritico(item);
-        if (formula) rolar({ formula, rotulo: `${item.nome} — Crítico`, expressao: textoDoCritico(item), personagem: personagem() });
+        if (formula) rolar({ formula, rotulo: `${item.nome} — Crítico`, expressao: textoDoCritico(item), personagem: personagem(), tipo });
     });
     campo.addEventListener('input', atualizar);
     // a dica mostra a fórmula já com o valor atual dos atributos

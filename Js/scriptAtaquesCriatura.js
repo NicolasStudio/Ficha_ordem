@@ -46,7 +46,12 @@ function criarLinha(valor = '') {
     campo.placeholder = numero === 1 ? 'Ex.: Garra --- 1d6+FOR --- x2 --- 2 PE' : `Ataque ${numero}`;
     campo.setAttribute('aria-label', `Ataque ${numero}`);
     lista.append(campo);
-    linhas.push(ligarRolagem(campo, { ler: lerAtaque, personagem: criatura, semCritico: 'Este ataque não tem crítico' }));
+    linhas.push(ligarRolagem(campo, {
+        ler: lerAtaque,
+        personagem: criatura,
+        tipo: 'creature', // diabinho no histórico da mesa
+        semCritico: 'Este ataque não tem crítico'
+    }));
     campo.addEventListener('input', () => {
         guardar();
         sempreUmaLinhaVazia();
