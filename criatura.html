@@ -14,6 +14,7 @@
 
     <!-- Estilos -->
     <link rel="stylesheet" href="CSS/styleCriatura.css"> <!-- ficha de criatura -->
+    <link rel="stylesheet" href="CSS/styleRolagem.css"> <!-- botões 🎲 Base / 💥 Crítico dos ataques -->
     <link rel="stylesheet" href="CSS/styleHexagono.css"> <!-- atributos em hexágono e tooltip -->
     <link rel="stylesheet" href="CSS/styleDetalhes.css"> <!-- botões Salvar/Voltar/Limpar/Excluir -->
     <link rel="stylesheet" href="CSS/styleSair.css"> <!-- menu ☰ -->
@@ -149,8 +150,9 @@
         <!-- Ataques -->
         <section class="secaoCriatura ataquesCriatura">
             <h2>Ataques</h2>
-            <textarea id="ataques" name="ataques" maxlength="2000" aria-label="Ataques"
-                placeholder="Ex.: Garras — corpo a corpo, 2d6+5 corte"></textarea>
+            <p class="formatoAtaques">Nome --- Dano --- Crítico --- Especial</p>
+            <!-- o texto salvo; na tela, cada linha vira um campo com 🎲 Base / 💥 Crítico (Js/scriptAtaquesCriatura.js) -->
+            <textarea id="ataques" name="ataques" maxlength="2000" aria-label="Ataques"></textarea>
         </section>
 
         <div class="boxButtom">

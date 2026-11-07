@@ -203,6 +203,20 @@ body {
     background-attachment: local;
 }
 
+/* Ataques em linhas com 🎲 Base / 💥 Crítico (scriptAtaquesCriatura.js; botões em styleRolagem.css) */
+.formatoAtaques {
+    margin: -4px 0 12px;
+    font-family: var(--font-primary);
+    font-size: 15px;
+    color: var(--color-link);
+}
+
+.listaAtaques {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
 /* ---------- Responsivo ---------- */
 @media (max-width: 860px) {
     .topoCriatura {
