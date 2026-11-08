@@ -5,10 +5,20 @@
    usa isso para mostrar cada opção com as próprias cores.
    Carregar este arquivo ANTES dos outros CSS. */
 
+/* Na Yatra One o "z" minúsculo é um "ʒ" com perna para baixo ("Aʒul"): só essa
+   letra vem da Winky Rough (arquivo com apenas o "z"). O resto é Yatra One. */
+@font-face {
+    font-family: 'Yatra z';
+    src: url('fonts/winky-rough-z.woff2') format('woff2');
+    font-weight: 100 900; /* um só peso para tudo: o navegador não engrossa a letra */
+    unicode-range: U+007A; /* z */
+    font-display: swap;
+}
+
 :root,
 [data-tema="classico"] {
     --font-primary: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    --font-secondary: 'Yatra One', system-ui;
+    --font-secondary: 'Yatra z', 'Yatra One', system-ui;
 
     /* ---------- Clássico (padrão) ---------- */
     --color-background: linear-gradient(120deg, #0f2027, #203a43, #2c5364);
