@@ -94,10 +94,73 @@
     transform: translateY(0);
 }
 
-/* resultado da rolagem fora da mesa */
-.resultadoRolagem {
-    font-size: 40px !important;
-    font-weight: 800;
+/* ---------- Resultado da rolagem fora da mesa (modal) ----------
+   Como o cartão do histórico da mesa: a conta, cada dado e o total */
+.resultadoRolagemLocal {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.modalInfoConteudo .contaRolagem {
+    margin: 0;
+    padding: 6px 12px;
+    border: 1px solid var(--color-input-border);
+    border-radius: 8px;
+    background: var(--color-input-bg);
+    color: var(--color-white);
     text-align: center;
-    color: var(--color-link) !important;
+    font-size: 17px;
+}
+
+.dadosRolagem {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+}
+
+.dadoRolagem {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 4px;
+    padding: 3px 10px;
+    border: 1px solid var(--color-input-border);
+    border-radius: 6px;
+    background: var(--color-input-bg);
+    color: var(--color-white);
+    font-family: var(--font-primary);
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.dadoRolagem small {
+    color: var(--color-muted);
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* valor máximo do dado em destaque, 1 em vermelho */
+.dadoRolagem.max { border-color: var(--color-input-focus); color: var(--color-link); }
+.dadoRolagem.min { border-color: var(--color-danger); color: var(--color-danger); }
+
+.modRolagem {
+    color: var(--color-light-gray);
+    font-family: var(--font-primary);
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.modalInfoConteudo .resultadoRolagem {
+    margin: 0;
+    padding: 6px 12px;
+    border: 1px solid var(--color-input-border);
+    border-radius: 8px;
+    background: var(--color-input-bg);
+    font-size: 40px;
+    font-weight: 800;
+    line-height: 1.2;
+    text-align: center;
+    color: var(--color-link);
 }
