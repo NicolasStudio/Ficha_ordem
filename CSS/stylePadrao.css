@@ -195,6 +195,13 @@ a:hover {
     margin-bottom: 20px;
 }
 
+/* Listas de fichas (Suas fichas, Fichas dos jogadores, Criaturas): espaço entre uma e outra */
+.boxFichas {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 .ficha {
     display: grid;
     grid-template-columns: 2fr 1fr 2fr 2fr auto;
