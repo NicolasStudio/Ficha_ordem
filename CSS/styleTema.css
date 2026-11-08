@@ -6,7 +6,8 @@
    Carregar este arquivo ANTES dos outros CSS. */
 
 /* Na Yatra One o "z" minúsculo é um "ʒ" com perna para baixo ("Aʒul"): só essa
-   letra vem da Winky Rough (arquivo com apenas o "z"). O resto é Yatra One. */
+   letra vem da Winky Rough, peso 500, o de traço mais parecido com o da Yatra
+   (arquivo com apenas o "z"). O resto é Yatra One. */
 @font-face {
     font-family: 'Yatra z';
     src: url('fonts/winky-rough-z.woff2') format('woff2');
