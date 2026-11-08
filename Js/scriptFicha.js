@@ -6,7 +6,8 @@ import { collection, doc, getDoc, addDoc, setDoc, deleteDoc, writeBatch, serverT
     from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const form = document.getElementById('characterForm');
-export const idFicha = new URLSearchParams(window.location.search).get('id');
+// let: uma ficha nova ganha o id ao ser salva pela primeira vez (e continua aberta)
+export let idFicha = new URLSearchParams(window.location.search).get('id');
 
 // ================= Alterações não salvas =================
 // Qualquer coisa digitada marca a ficha como alterada até ser salva
@@ -133,14 +134,17 @@ form.addEventListener('submit', async function (event) {
         if (idFicha) {
             await setDoc(doc(db, 'fichas', idFicha), dados);
         } else {
-            await addDoc(collection(db, 'fichas'), dados);
+            // Ficha nova: passa a ser esta ficha (o próximo Salvar atualiza, não cria outra)
+            const nova = await addDoc(collection(db, 'fichas'), dados);
+            idFicha = nova.id;
+            history.replaceState(null, '', `ficha.html?id=${encodeURIComponent(idFicha)}`);
         }
         alterado = false;
-        avisarNaProximaPagina('Ficha salva com sucesso!');
-        window.location.replace('home.html');
+        avisar('Ficha salva com sucesso!'); // continua na ficha
     } catch (error) {
         console.error('Erro ao salvar a ficha:', error);
         avisar('Erro ao salvar a ficha.', 'erro');
+    } finally {
         botao.disabled = false;
     }
 });
