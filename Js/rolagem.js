@@ -8,7 +8,7 @@
 // Dentro da mesa (Tabletop) a rolagem vai para a mesa, pública: dados 3D e, no histórico,
 // um cartão com personagem, o que foi rolado, a conta e o total. Fora dela, rola aqui.
 import { ORIGENS_DA_MESA, dentroDaMesa } from "./scriptFirebase.js";
-import { modalInformacao, paragrafo } from "./scriptModal.js";
+import { modalInformacao } from "./scriptModal.js";
 
 const LADOS = new Set([4, 6, 8, 10, 12, 20, 100]);
 
@@ -120,24 +120,56 @@ export function textoDoCritico(item) {
 }
 
 // ================= Rolagem =================
+// fora da mesa: só para consulta (a rolagem que vale na sessão é a da mesa)
+// -> { total, dados: [{ lados, valor, sinal }], modificador }
 function rolarAqui(formula) {
-    // fora da mesa: só para consulta (a rolagem que vale na sessão é a da mesa)
     const dados = [];
-    let total = 0;
+    let modificador = 0;
     for (const parte of formula.match(/[+-]?[^+-]+/g)) {
         const sinal = parte.startsWith('-') ? -1 : 1;
         const dado = parte.replace(/^[+-]/, '').match(/^(\d+)d(\d+)$/);
         if (dado) {
+            const lados = Number(dado[2]);
             for (let i = 0; i < Number(dado[1]); i++) {
-                const valor = Math.floor(Math.random() * Number(dado[2])) + 1;
-                dados.push(`d${dado[2]}: ${valor}`);
-                total += sinal * valor;
+                dados.push({ lados, valor: Math.floor(Math.random() * lados) + 1, sinal });
             }
         } else {
-            total += sinal * Number(parte.replace(/^[+-]/, ''));
+            modificador += sinal * Number(parte.replace(/^[+-]/, ''));
         }
     }
-    return { total, dados };
+    const total = dados.reduce((soma, dado) => soma + dado.sinal * dado.valor, modificador);
+    return { total, dados, modificador };
+}
+
+function elemento(tag, classe, texto) {
+    const el = document.createElement(tag);
+    el.className = classe;
+    if (texto !== undefined) el.textContent = texto;
+    return el;
+}
+
+// Resultado como o cartão do histórico da mesa: a conta, cada dado e o total
+function mostrarResultado(rotulo, formula, expressao) {
+    const { total, dados, modificador } = rolarAqui(formula);
+    const conteudo = elemento('div', 'resultadoRolagemLocal');
+
+    conteudo.append(elemento('p', 'contaRolagem', expressao || formula));
+
+    if (dados.length || modificador) {
+        const linha = elemento('div', 'dadosRolagem');
+        for (const { lados, valor, sinal } of dados) {
+            const classes = ['dadoRolagem', valor === lados && 'max', valor === 1 && 'min'].filter(Boolean).join(' ');
+            const chip = elemento('span', classes);
+            chip.title = `d${lados}`;
+            chip.append(elemento('small', '', `${sinal < 0 ? '−' : ''}d${lados}`), String(valor));
+            linha.append(chip);
+        }
+        if (modificador) linha.append(elemento('span', 'modRolagem', modificador > 0 ? `+${modificador}` : `−${-modificador}`));
+        conteudo.append(linha);
+    }
+
+    conteudo.append(elemento('p', 'resultadoRolagem', String(total)));
+    modalInformacao(rotulo, conteudo);
 }
 
 function rolar({ formula, rotulo, expressao, personagem, tipo }) {
@@ -147,12 +179,7 @@ function rolar({ formula, rotulo, expressao, personagem, tipo }) {
         for (const origem of ORIGENS_DA_MESA) window.parent.postMessage(mensagem, origem);
         return;
     }
-    const { total, dados } = rolarAqui(formula);
-    const conteudo = document.createElement('div');
-    const resultado = paragrafo(`${total}`);
-    resultado.className = 'resultadoRolagem';
-    conteudo.append(resultado, paragrafo(`${formula}  →  ${dados.join(' · ')}`));
-    modalInformacao(rotulo, conteudo);
+    mostrarResultado(rotulo, formula, expressao);
 }
 
 // ================= Botões ao lado do campo =================
