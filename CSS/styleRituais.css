@@ -39,13 +39,9 @@
     display: none;
 }
 
-@media screen and (max-width: 1149px) {
-    .abaRituais { top: calc(20% + 64px); right: 10px; padding: 10px; }
-}
-
-@media screen and (max-width: 767px) {
-    .abaRituais { top: calc(15% + 56px); }
-}
+/* Sem regras próprias para telas menores: a aba de Perícias fica sempre em 25%
+   (as dela em styleAtributos.css vêm antes da regra principal e não valem), então
+   a de Rituais acompanha, para nunca ficar por cima dela */
 
 .painelRituais {
     position: fixed;
