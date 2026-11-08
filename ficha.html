@@ -16,6 +16,7 @@
     <!-- Estilos -->
     <link rel="stylesheet" href="CSS/styleFicha.css"> <!-- Ficha -->
     <link rel="stylesheet" href="CSS/styleAtributos.css"> <!-- Atributos -->
+    <link rel="stylesheet" href="CSS/styleRituais.css"> <!-- painel de rituais -->
     <link rel="stylesheet" href="CSS/styleHexagono.css"> <!-- atributos em hexágono e tooltip -->
     <link rel="stylesheet" href="CSS/styleSaude.css"> <!-- Saude Defesa e Resistência -->
     <link rel="stylesheet" href="CSS/styleArmas.css"> <!-- Armas -->
@@ -34,6 +35,7 @@
     <script src="Js/scriptOrigensClasses.js" type="module"></script>
     <script src="Js/scriptInfoGeral.js" type="module"></script>
     <script src="Js/scriptRetrato.js" type="module"></script> <!-- "i" do nome: imagem do personagem -->
+    <script src="Js/scriptRituais.js" type="module"></script> <!-- painel de rituais -->
     <script src="Js/scriptInventario.js" type="module"></script>
     <script src="Js/scriptRecebimentos.js" type="module"></script> <!-- itens, UpGrades e habilidades enviados pelo mestre -->
     <script src="Js/scriptMenu.js" type="module"></script>
@@ -426,6 +428,18 @@
                         <input type="text" id="sorte" name="sorte" class="teste" maxlength="3">
                     </div>
                 </div>
+            </div>
+
+            <!-- Rituais: aba na lateral (abaixo de Perícias) e painel com um cartão por ritual
+                 (Js/scriptRituais.js). Salvos juntos no campo escondido "rituais" (JSON). -->
+            <button type="button" class="abaRituais" aria-expanded="false" aria-controls="painelRituais">
+                <span class="txtBlackPericia2">RITUAIS</span>
+            </button>
+            <div class="painelRituais" id="painelRituais" role="dialog" aria-label="Rituais" hidden>
+                <p class="txtBlackPericia">RITUAIS</p>
+                <div class="listaRituais"></div>
+                <button type="button" class="novoRitual">+ Novo ritual</button>
+                <input type="hidden" name="rituais" id="rituais">
             </div>
 
             <div class="container-third">
