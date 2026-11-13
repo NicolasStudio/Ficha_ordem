@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="CSS/stylePadrao.css"> <!-- Básico -->
     <link rel="stylesheet" href="CSS/styleSair.css"> <!-- sair -->
     <link rel="stylesheet" href="CSS/styleModal.css"> <!-- modal de confirmação -->
+    <link rel="stylesheet" href="CSS/styleFiltro.css"> <!-- funil de filtro da lista -->
+    <link rel="stylesheet" href="CSS/styleAutoComplete.css"> <!-- sugestões dos campos do filtro -->
     <!-- Scripts -->
     <script src="Js/scriptPadrao.js"></script>
 </head>
@@ -26,13 +28,25 @@
         <h1 class="tituloPagina">Suas fichas</h1>
 
         <!-- Título das fichas -->
-        <div class="boxTitle">
+        <div class="boxTitle boxTitleFiltro">
             <div class="ficha-titulo2">
                 <span>Nome</span>
                 <span>Nível de NEX</span>
                 <span>Origem</span>
                 <span>Classe</span>
+                <span>
+                    <button type="button" class="botaoFiltro" id="botaoFiltro" title="Filtrar fichas"
+                        aria-label="Filtrar fichas" aria-expanded="false" aria-controls="painelFiltro">
+                        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+                            <path d="M3 5h18l-7 8.5V19l-4 2v-7.5L3 5z" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                </span>
             </div>
+
+            <!-- Filtro com auto-complete (campos criados pelo Js/scriptFiltroFichas.js) -->
+            <div class="painelFiltro" id="painelFiltro" hidden></div>
         </div>
 
         <!-- Fichas puxadas do servidor -->
@@ -47,6 +61,7 @@
     <script type="module">
         import { db, exigirLogin } from "./Js/scriptFirebase.js";
         import { confirmarModal, avisar } from "./Js/scriptModal.js";
+        import { criarFiltro, nexDaFicha } from "./Js/scriptFiltroFichas.js";
         import { collection, query, where, getDocs, doc, deleteDoc }
             from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
@@ -58,6 +73,18 @@
             span.textContent = texto ?? '';
             return span;
         }
+
+        // Filtro (funil no título): sugestões tiradas das suas fichas
+        let fichas = [];
+        const filtro = criarFiltro({
+            campos: [
+                { rotulo: 'Nome', placeholder: 'Buscar personagem...', valor: ficha => ficha.nomePersonagem },
+                { rotulo: 'Nível de NEX', placeholder: 'Ex.: 25%', valor: nexDaFicha, numero: true },
+                { rotulo: 'Origem', placeholder: 'Buscar origem...', valor: ficha => ficha.origem },
+                { rotulo: 'Classe', placeholder: 'Buscar classe...', valor: ficha => ficha.classe },
+            ],
+            aoMudar: mostrarFichas,
+        });
 
         async function carregarFichas() {
             const box = document.querySelector('.boxFichas');
@@ -73,7 +100,7 @@
             }
 
             // O Firestore não garante ordem: ordena pelo nome do personagem
-            const fichas = snap.docs
+            fichas = snap.docs
                 .map(d => ({ id_ficha: d.id, ...d.data() }))
                 .sort((a, b) => (a.nomePersonagem || '').localeCompare(b.nomePersonagem || '', 'pt-BR'));
 
@@ -83,15 +110,29 @@
                 box.innerHTML = "<center><p style='color: var(--color-white); margin-top: 30px'>Você ainda não tem fichas cadastradas. </p></center>";
                 return;
             }
+            filtro.prepararSugestoes(fichas);
+            mostrarFichas();
+        }
 
-            fichas.forEach(ficha => {
+        function mostrarFichas() {
+            if (fichas.length === 0) return; // ainda carregando, ou sem fichas
+
+            const box = document.querySelector('.boxFichas');
+            const visiveis = fichas.filter(filtro.passa);
+            if (visiveis.length === 0) {
+                box.innerHTML = "<center><p style='color: var(--color-white); margin-top: 30px'>Nenhuma ficha encontrada com esses filtros.</p></center>";
+                return;
+            }
+
+            box.innerHTML = '';
+            visiveis.forEach(ficha => {
                 const div = document.createElement('div');
                 div.className = 'ficha';
                 div.style.cursor = 'pointer';
                 div.onclick = () => window.location.href = 'ficha.html?id=' + encodeURIComponent(ficha.id_ficha);
 
                 div.appendChild(criarSpan('nomePersonagem', ficha.nomePersonagem));
-                div.appendChild(criarSpan('nextPersonagem', ficha.nivelNext ? ficha.nivelNext + '%' : ''));
+                div.appendChild(criarSpan('nextPersonagem', nexDaFicha(ficha)));
                 div.appendChild(criarSpan('origemPersonagem', ficha.origem));
                 div.appendChild(criarSpan('classePersonagem', ficha.classe));
 

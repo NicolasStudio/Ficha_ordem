@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="CSS/styleSair.css"> <!-- sair -->
     <link rel="stylesheet" href="CSS/styleModal.css"> <!-- avisos -->
     <link rel="stylesheet" href="CSS/styleMestre.css"> <!-- área do mestre -->
+    <link rel="stylesheet" href="CSS/styleFiltro.css"> <!-- funil de filtro da lista -->
+    <link rel="stylesheet" href="CSS/styleAutoComplete.css"> <!-- sugestões dos campos do filtro -->
 </head>
 <body style="visibility: hidden"> <!-- aparece depois de confirmar que é o mestre -->
     <div class="boxSair"></div> <!-- menu ☰ (Js/scriptMenu.js) -->
@@ -24,14 +26,26 @@
         <img class="imgLogoMenu" src="Img/imgMenu/mestre.png" width="198" height="160" alt="" />
         <h1 class="tituloPagina">Fichas dos jogadores</h1>
 
-        <div class="boxTitle">
+        <div class="boxTitle boxTitleFiltro">
             <div class="ficha-titulo2 colunasJogadores">
                 <span>Jogador</span>
                 <span>Personagem</span>
                 <span>Nível de NEX</span>
                 <span>Origem</span>
                 <span>Classe</span>
+                <span>
+                    <button type="button" class="botaoFiltro" id="botaoFiltro" title="Filtrar fichas"
+                        aria-label="Filtrar fichas" aria-expanded="false" aria-controls="painelFiltro">
+                        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+                            <path d="M3 5h18l-7 8.5V19l-4 2v-7.5L3 5z" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                </span>
             </div>
+
+            <!-- Filtro com auto-complete (campos criados pelo Js/scriptFiltroFichas.js) -->
+            <div class="painelFiltro" id="painelFiltro" hidden></div>
         </div>
 
         <!-- Fichas de todos os jogadores (só leitura) -->
@@ -42,6 +56,7 @@
         import { db } from "./Js/scriptFirebase.js";
         import { exigirMestre } from "./Js/mestres.js";
         import "./Js/scriptModal.js"; // avisos vindos de outras páginas
+        import { criarFiltro, nexDaFicha } from "./Js/scriptFiltroFichas.js";
         import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
         const mestre = await exigirMestre();
@@ -58,6 +73,19 @@
             document.querySelector('.boxFichas').innerHTML =
                 `<center><p style='color: var(--color-white); margin-top: 30px'>${texto}</p></center>`;
         }
+
+        // Filtro (funil no título): sugestões tiradas das fichas da lista
+        let fichas = [];
+        const filtro = criarFiltro({
+            campos: [
+                { rotulo: 'Jogador', placeholder: 'Buscar jogador...', valor: ficha => ficha.jogador },
+                { rotulo: 'Personagem', placeholder: 'Buscar personagem...', valor: ficha => ficha.nomePersonagem },
+                { rotulo: 'Nível de NEX', placeholder: 'Ex.: 25%', valor: nexDaFicha, numero: true },
+                { rotulo: 'Origem', placeholder: 'Buscar origem...', valor: ficha => ficha.origem },
+                { rotulo: 'Classe', placeholder: 'Buscar classe...', valor: ficha => ficha.classe },
+            ],
+            aoMudar: mostrarFichas,
+        });
 
         async function carregarFichas() {
             let fichasSnap, usuariosSnap;
@@ -76,7 +104,7 @@
             // Nome de cada jogador pelo uid (cadastro em "usuarios")
             const nomes = Object.fromEntries(usuariosSnap.docs.map(d => [d.id, d.data().nome || d.data().email || '']));
 
-            const fichas = fichasSnap.docs
+            fichas = fichasSnap.docs
                 .map(d => ({ id_ficha: d.id, ...d.data() }))
                 .filter(ficha => ficha.uid !== mestre.uid) // as do mestre ficam em "Suas fichas"
                 .map(ficha => ({ ...ficha, jogador: nomes[ficha.uid] || 'Jogador sem cadastro' }))
@@ -87,10 +115,22 @@
                 mensagem('Nenhum jogador tem fichas cadastradas ainda.');
                 return;
             }
+            filtro.prepararSugestoes(fichas);
+            mostrarFichas();
+        }
+
+        function mostrarFichas() {
+            if (fichas.length === 0) return; // ainda carregando, ou sem fichas
+
+            const visiveis = fichas.filter(filtro.passa);
+            if (visiveis.length === 0) {
+                mensagem('Nenhuma ficha encontrada com esses filtros.');
+                return;
+            }
 
             const box = document.querySelector('.boxFichas');
             box.innerHTML = '';
-            for (const ficha of fichas) {
+            for (const ficha of visiveis) {
                 const div = document.createElement('div');
                 div.className = 'ficha colunasJogadores';
                 div.style.cursor = 'pointer';
@@ -100,9 +140,10 @@
                 div.append(
                     criarSpan('nomeJogador', ficha.jogador),
                     criarSpan('nomePersonagem', ficha.nomePersonagem),
-                    criarSpan('nextPersonagem', ficha.nivelNext ? ficha.nivelNext + '%' : ''),
+                    criarSpan('nextPersonagem', nexDaFicha(ficha)),
                     criarSpan('origemPersonagem', ficha.origem),
-                    criarSpan('classePersonagem', ficha.classe)
+                    criarSpan('classePersonagem', ficha.classe),
+                    criarSpan('colunaFunil', '') // fica embaixo do funil do título
                 );
                 box.appendChild(div);
             }
