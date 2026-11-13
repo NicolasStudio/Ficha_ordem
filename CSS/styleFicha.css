@@ -113,29 +113,17 @@ body {
     background-color: var(--color-input-bg);
     color: var(--color-white);
     width: 500px;
-    max-width: calc(90vw - 60px); /* sobra espaço para o "i" ao lado */
+    max-width: 90vw;
+    padding-left: 36px;  /* espaço do "i" (dentro do campo, à direita)... */
+    padding-right: 36px; /* ...e o mesmo do outro lado: o nome fica no centro de verdade */
     font-size: clamp(8px, 4vw, 18px);
     text-align: center;
 }
 
-/* Campo do nome + "i" da imagem do personagem (scriptRetrato.js), do lado de fora.
-   O ::before tem a largura do "i": equilibra a linha e o campo fica no centro */
+/* Campo do nome + "i" da imagem do personagem (scriptRetrato.js), dentro do campo,
+   à direita, como o "i" da Origem e da Classe (.infoCampo já é posicionado assim) */
 .linhaNome {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.linhaNome::before {
-    content: '';
-    width: 22px;
-    flex-shrink: 0;
-}
-
-.infoCampo.infoRetrato {
-    position: static;
-    transform: none;
-    flex-shrink: 0;
+    position: relative;
 }
 
 .infoRetrato:disabled {

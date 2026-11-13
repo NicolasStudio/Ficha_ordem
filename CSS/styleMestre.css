@@ -122,7 +122,7 @@
 /* Colunas: Jogador, Personagem, NEX, Origem, Classe */
 .ficha-titulo2.colunasJogadores,
 .boxFichas .ficha.colunasJogadores {
-    grid-template-columns: 2fr 2fr 1fr 2fr 2fr;
+    grid-template-columns: 2fr 2fr 1fr 2fr 2fr 36px; /* a última é a do funil (título) */
 }
 
 .nomeJogador {
@@ -131,6 +131,13 @@
 
 .ficha:hover .nomeJogador {
     color: inherit;
+}
+
+/* nas linhas empilhadas (celular) a coluna vazia do funil não ocupa espaço */
+@media (max-width: 768px) {
+    .colunaFunil {
+        display: none;
+    }
 }
 
 @media (max-width: 768px) {
@@ -149,7 +156,7 @@
 /* Colunas: Criatura, Elementos, PV, PE (+ botão de excluir) */
 .ficha-titulo2.colunasCriaturas,
 .boxFichas .ficha.colunasCriaturas {
-    grid-template-columns: 2fr 2fr 1fr 1fr auto;
+    grid-template-columns: 2fr 2fr 1fr 1fr 36px; /* mesma largura para o funil (título) e o X (linhas) */
 }
 
 .elementoCriatura {

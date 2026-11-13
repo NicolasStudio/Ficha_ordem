@@ -15,6 +15,16 @@ let alterado = false;
 form.addEventListener('input', () => alterado = true);
 export const temAlteracoes = () => alterado;
 
+// ================= NEX só com números =================
+// O "%" já aparece no rótulo e nas listas: digitar "3%" virava "3%%" fora da ficha
+const campoNex = document.getElementById('nivelNext');
+const soNumeros = texto => texto.replace(/\D/g, '');
+campoNex.inputMode = 'numeric';
+campoNex.addEventListener('input', () => {
+    const limpo = soNumeros(campoNex.value);
+    if (limpo !== campoNex.value) campoNex.value = limpo;
+});
+
 async function podeSair() {
     if (!alterado) return true;
     if (!await confirmarModal('Deseja realmente sair?', 'Os dados serão perdidos.')) return false;
@@ -42,6 +52,7 @@ function preencherFicha(ficha) {
             campo.value = ficha[campo.name];
         }
     }
+    campoNex.value = soNumeros(campoNex.value); // fichas antigas com "3%" salvo: corrige ao salvar de novo
     calcularEspacoTotal();
     calcularPesoTotal();
     // Avisa quem depende dos valores carregados (ex.: o "i" do campo Origem)

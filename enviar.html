@@ -52,6 +52,7 @@
                 <button type="button" role="tab" class="abaEnvio" data-tipo="item" aria-selected="true" aria-controls="painelItem">Enviar Itens</button>
                 <button type="button" role="tab" class="abaEnvio" data-tipo="upgrade" aria-selected="false" aria-controls="painelTexto">UpGrade</button>
                 <button type="button" role="tab" class="abaEnvio" data-tipo="habilidade" aria-selected="false" aria-controls="painelTexto">Habilidades</button>
+                <button type="button" role="tab" class="abaEnvio" data-tipo="aviso" aria-selected="false" aria-controls="painelTexto">Aviso</button>
             </div>
 
             <form id="formEnvio" autocomplete="off" novalidate>
@@ -75,7 +76,8 @@
                     </div>
                 </div>
 
-                <!-- UpGrade e Habilidade: o texto entra no campo da ficha, abaixo do que já houver -->
+                <!-- UpGrade e Habilidade: o texto entra no campo da ficha, abaixo do que já houver.
+                     Aviso: só uma mensagem para o jogador, a ficha não muda -->
                 <div id="painelTexto" role="tabpanel" hidden>
                     <label for="envioTexto" id="rotuloTexto">O que o personagem ganhou</label>
                     <textarea id="envioTexto" class="campoEnviar" maxlength="500"></textarea>

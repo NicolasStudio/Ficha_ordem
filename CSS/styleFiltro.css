@@ -1,0 +1,159 @@
+/* ------------------ Filtro das listas (funil no título da tabela) ------------------
+   Usado em Fichas das criaturas (criaturas.html) e em Suas fichas (home.html). Cores: CSS/styleTema.css */
+.boxTitleFiltro {
+    position: relative;
+}
+
+.botaoFiltro {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    margin: 0; /* tira a margem e a largura 100% que o stylePadrao dá a todo botão */
+    padding: 0;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--color-white);
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.botaoFiltro:hover,
+.botaoFiltro:focus-visible,
+.botaoFiltro[aria-expanded="true"] {
+    background-color: var(--color-input-border);
+    outline: none;
+}
+
+/* filtro em uso: funil colorido e um pontinho */
+.botaoFiltro.ativo {
+    color: var(--color-link);
+}
+
+.botaoFiltro.ativo::after {
+    content: '';
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background-color: var(--color-link);
+}
+
+.painelFiltro {
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 0;
+    z-index: 50;
+    width: min(320px, calc(100vw - 32px));
+    padding: 16px;
+    background-color: var(--color-input-bg);
+    border: 1px solid var(--color-input-border);
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+    text-align: left;
+}
+
+.rotuloFiltro {
+    display: block;
+    margin: 0 0 6px;
+    font-size: 14px;
+    color: var(--color-light-gray);
+}
+
+.campoFiltro {
+    width: 100%;
+    margin-bottom: 14px;
+    padding: 8px 10px;
+    background-color: transparent;
+    border: 1px solid var(--color-input-border);
+    border-radius: 8px;
+    color: var(--color-white);
+    font-family: inherit;
+    font-size: 15px;
+}
+
+.campoFiltro:focus {
+    outline: none;
+    border-color: var(--color-input-focus);
+    box-shadow: 0 0 5px var(--color-input-focus);
+}
+
+.elementosFiltro {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 14px;
+}
+
+.chipElemento {
+    width: auto;
+    margin: 0;
+    padding: 5px 12px;
+    border: 1px solid var(--color-input-border);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--color-white);
+    font-family: inherit;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.chipElemento:hover,
+.chipElemento:focus-visible {
+    border-color: var(--color-input-focus);
+    outline: none;
+}
+
+.chipElemento[aria-pressed="true"] {
+    background-color: var(--color-link);
+    border-color: var(--color-link);
+    color: var(--color-button-text);
+}
+
+.limparFiltro {
+    width: 100%;
+    margin: 0;
+    padding: 7px;
+    border: 1px solid var(--color-input-border);
+    border-radius: 8px;
+    background: transparent;
+    color: var(--color-link);
+    font-family: inherit;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.limparFiltro:hover,
+.limparFiltro:focus-visible {
+    border-color: var(--color-input-focus);
+    outline: none;
+}
+
+/* No celular os títulos das colunas somem, mas o funil continua, à direita */
+@media (max-width: 768px) {
+    .boxTitle.boxTitleFiltro {
+        display: block;
+        padding: 6px;
+    }
+
+    .boxTitleFiltro .ficha-titulo2 {
+        display: flex;
+        justify-content: flex-end;
+        padding: 0;
+    }
+
+    .boxTitleFiltro .ficha-titulo2 > span:not(:last-child) {
+        display: none;
+    }
+}
+
+/* Campos com auto-complete dentro do painel ocupam a largura toda */
+.painelFiltro .campoComLista {
+    display: block;
+}

@@ -32,11 +32,13 @@ const campos = {
 
 const ROTULOS_TEXTO = {
     upgrade: 'O que o personagem ganhou (UpGrade)',
-    habilidade: 'Habilidade que o personagem ganhou'
+    habilidade: 'Habilidade que o personagem ganhou',
+    aviso: 'Mensagem'
 };
 const NOTAS_TEXTO = {
     upgrade: 'Ao confirmar, o texto entra no campo UpGrade da ficha, abaixo do que já houver.',
-    habilidade: 'Ao confirmar, o texto entra no campo Habilidades da ficha, abaixo do que já houver.'
+    habilidade: 'Ao confirmar, o texto entra no campo Habilidades da ficha, abaixo do que já houver.',
+    aviso: 'O jogador vê a mensagem ao abrir a ficha (ou na hora, se ela estiver aberta). Nada muda na ficha.'
 };
 
 let jogadores = [];          // [{ uid, name, fichas: [...] }] ("name" é o que o auto-complete mostra)
@@ -133,7 +135,8 @@ function escolherJogador(jogador) {
 
     listaPersonagens.innerHTML = '';
     for (const ficha of jogador.fichas) {
-        const detalhe = [ficha.nivelNext ? `NEX ${ficha.nivelNext}%` : '', ficha.classe].filter(Boolean).join(' · ');
+        const nex = String(ficha.nivelNext ?? '').replace(/\D/g, ''); // fichas antigas podem ter "3%" salvo
+        const detalhe = [nex ? `NEX ${nex}%` : '', ficha.classe].filter(Boolean).join(' · ');
         listaPersonagens.appendChild(botaoEscolha(ficha.nomePersonagem || 'Sem nome', detalhe, () => escolherFicha(ficha)));
     }
 
@@ -221,7 +224,7 @@ function escolherFicha(ficha) {
     passoEnvio.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
-// ================= Abas: Item | UpGrade | Habilidade =================
+// ================= Abas: Item | UpGrade | Habilidade | Aviso =================
 function escolherAba(novoTipo) {
     tipo = novoTipo;
     for (const aba of abas) aba.setAttribute('aria-selected', String(aba.dataset.tipo === tipo));
@@ -278,7 +281,7 @@ form.addEventListener('submit', async event => {
         if (!numeroValido(valores.peso)) return erro(campos.peso, 'Peso deve ser um número (ex.: 1 ou 0,5).');
         Object.assign(envio, { item: valores.item, detalhes: valores.detalhes, espaco: valores.espaco, peso: valores.peso });
     } else {
-        if (!valores.texto) return erro(campos.texto, 'Escreva o que o personagem ganhou.');
+        if (!valores.texto) return erro(campos.texto, tipo === 'aviso' ? 'Escreva a mensagem.' : 'Escreva o que o personagem ganhou.');
         envio.texto = valores.texto;
     }
 
@@ -302,7 +305,7 @@ form.addEventListener('submit', async event => {
         }
 
         await addDoc(collection(db, 'envios'), envio);
-        const enviado = { item: `"${envio.item}" enviado`, upgrade: 'UpGrade enviado', habilidade: 'Habilidade enviada' };
+        const enviado = { item: `"${envio.item}" enviado`, upgrade: 'UpGrade enviado', habilidade: 'Habilidade enviada', aviso: 'Aviso enviado' };
         avisar(`${enviado[tipo]} para ${envio.nomePersonagem || 'o personagem'}!`);
         for (const campo of camposDaAba()) campo.value = '';
         atualizarResumo();

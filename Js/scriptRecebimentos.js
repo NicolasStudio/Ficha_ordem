@@ -1,14 +1,15 @@
-// Recebido do mestre: itens, UpGrades e habilidades enviados pela página enviar.html.
+// Recebido do mestre: itens, UpGrades, habilidades e avisos enviados pela página enviar.html.
 // Cada envio fica na coleção "envios" até o jogador confirmar. Com a ficha aberta, o modal aparece na hora.
 // Ao confirmar: a ficha é salva (se tiver alterações), recebe o envio, é salva de novo e a página
 // recarrega para mostrar.
 //   Item: entra na primeira linha vazia do inventário
 //   UpGrade e Habilidade: o texto é incluído no campo UpGrade / Habilidades, abaixo do que já houver
+//   Aviso: só mostra a mensagem; ao confirmar o envio é apagado, sem mexer na ficha
 import { db } from "./scriptFirebase.js";
 import { idFicha, usuario, somenteLeitura, temAlteracoes, salvarFichaAberta } from "./scriptFicha.js";
 import { modalConfirmar, paragrafo, linhaComRotulo, avisar, avisarNaProximaPagina } from "./scriptModal.js";
 import { LINHAS_INVENTARIO, linhaOcupada } from "./regrasInventario.js";
-import { collection, query, where, onSnapshot, doc }
+import { collection, query, where, onSnapshot, doc, deleteDoc }
     from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const TITULO = 'Você recebeu informações do Mestre';
@@ -106,8 +107,28 @@ function incluirTexto(envio) {
     return aviso;
 }
 
+// Aviso: só a mensagem do mestre
+function conteudoAviso(envio) {
+    const conteudo = document.createElement('div');
+    conteudo.append(paragrafo(envio.texto || '', 'textoRecebido'));
+    return conteudo;
+}
+
+// Aviso: a ficha não muda, então não salva nem recarrega; só apaga o envio
+async function receberAviso(envio) {
+    await modalConfirmar('Aviso do Mestre', conteudoAviso(envio), 'Ok, entendi');
+    try {
+        await deleteDoc(doc(db, 'envios', envio.id));
+    } catch (error) {
+        console.error('Erro ao confirmar o aviso:', error);
+        avisar('Não foi possível confirmar o aviso. Ele aparece de novo ao abrir a ficha.', 'erro');
+    }
+    return false;
+}
+
 // Devolve true quando a página vai recarregar
 async function receber(envio) {
+    if (envio.tipo === 'aviso') return receberAviso(envio);
     const ehItem = envio.tipo === 'item';
     if (!ehItem && !TEXTOS[envio.tipo]) return false; // tipo desconhecido: ignora
 
