@@ -41,7 +41,7 @@ export function autoComplete({ campo, itens, tipo, detalhes, aoEscolher = () => 
     campo.setAttribute('aria-controls', lista.id);
     campo.setAttribute('aria-expanded', 'false');
 
-    const nomes = itens.map(item => item.name).sort((a, b) => a.localeCompare(b, 'pt-BR'));
+    const nomes = itens.map(item => item.name).sort((a, b) => a.localeCompare(b, 'pt-BR', { numeric: true }));
 
     let opcoes = [];  // nomes mostrados agora
     let ativa = -1;   // índice destacado pelas setas

@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="CSS/styleSair.css"> <!-- menu ☰ -->
     <link rel="stylesheet" href="CSS/styleModal.css"> <!-- avisos e confirmação -->
     <link rel="stylesheet" href="CSS/styleMestre.css"> <!-- área do mestre -->
+    <link rel="stylesheet" href="CSS/styleFiltro.css"> <!-- funil de filtro da lista -->
 </head>
 <body style="visibility: hidden"> <!-- aparece depois de confirmar que é o mestre -->
     <div class="boxSair"></div> <!-- menu ☰ (Js/scriptMenu.js) -->
@@ -24,12 +25,30 @@
         <img class="imgLogoMenu" src="Img/imgMenu/monstro.png" width="188" height="160" alt="" />
         <h1 class="tituloPagina">Fichas das criaturas</h1>
 
-        <div class="boxTitle">
+        <div class="boxTitle boxTitleFiltro">
             <div class="ficha-titulo2 colunasCriaturas">
                 <span>Criatura</span>
                 <span>Elementos</span>
                 <span>PV</span>
                 <span>PE</span>
+                <span>
+                    <button type="button" class="botaoFiltro" id="botaoFiltro" title="Filtrar criaturas"
+                        aria-label="Filtrar criaturas" aria-expanded="false" aria-controls="painelFiltro">
+                        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+                            <path d="M3 5h18l-7 8.5V19l-4 2v-7.5L3 5z" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                </span>
+            </div>
+
+            <!-- Filtro por nome e elementos (fica só na tela, não é salvo) -->
+            <div class="painelFiltro" id="painelFiltro" hidden>
+                <label class="rotuloFiltro" for="filtroNome">Nome</label>
+                <input type="text" id="filtroNome" class="campoFiltro" placeholder="Buscar criatura..." autocomplete="off">
+                <p class="rotuloFiltro">Elementos</p>
+                <div class="elementosFiltro" id="elementosFiltro"></div>
+                <button type="button" class="limparFiltro" id="limparFiltro">Limpar filtros</button>
             </div>
         </div>
 
@@ -67,6 +86,65 @@
         // "12 / 30", ou vazio se não preenchido
         const pontos = (atual, total) => (atual || total) ? `${atual || '–'} / ${total || '–'}` : '';
 
+        // ---------- Filtro ----------
+        const ELEMENTOS = ['Sangue', 'Morte', 'Conhecimento', 'Energia', 'Medo'];
+        const botaoFiltro = document.getElementById('botaoFiltro');
+        const painelFiltro = document.getElementById('painelFiltro');
+        const filtroNome = document.getElementById('filtroNome');
+        const elementosFiltro = document.getElementById('elementosFiltro');
+        const elementosMarcados = new Set();
+        let criaturas = [];
+
+        // compara sem maiúsculas e sem acentos: "recem" encontra "Recém"
+        const normalizar = texto => (texto || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+
+        for (const elemento of ELEMENTOS) {
+            const chip = document.createElement('button');
+            chip.type = 'button';
+            chip.className = 'chipElemento';
+            chip.textContent = elemento;
+            chip.setAttribute('aria-pressed', 'false');
+            chip.addEventListener('click', () => {
+                if (elementosMarcados.has(elemento)) elementosMarcados.delete(elemento);
+                else elementosMarcados.add(elemento);
+                chip.setAttribute('aria-pressed', String(elementosMarcados.has(elemento)));
+                mostrarCriaturas();
+            });
+            elementosFiltro.appendChild(chip);
+        }
+
+        function abrirFiltro(abrir) {
+            painelFiltro.hidden = !abrir;
+            botaoFiltro.setAttribute('aria-expanded', String(abrir));
+            if (abrir) filtroNome.focus();
+        }
+
+        botaoFiltro.addEventListener('click', () => abrirFiltro(painelFiltro.hidden));
+        filtroNome.addEventListener('input', mostrarCriaturas);
+        document.getElementById('limparFiltro').addEventListener('click', () => {
+            filtroNome.value = '';
+            elementosMarcados.clear();
+            elementosFiltro.querySelectorAll('.chipElemento').forEach(chip => chip.setAttribute('aria-pressed', 'false'));
+            mostrarCriaturas();
+            filtroNome.focus();
+        });
+        // fecha com Esc ou clicando fora do painel
+        document.addEventListener('keydown', event => {
+            if (event.key === 'Escape' && !painelFiltro.hidden) { abrirFiltro(false); botaoFiltro.focus(); }
+        });
+        document.addEventListener('click', event => {
+            if (!painelFiltro.hidden && !painelFiltro.contains(event.target) && !botaoFiltro.contains(event.target)) abrirFiltro(false);
+        });
+
+        // Nome: contém o texto. Elementos: a criatura tem pelo menos um dos marcados
+        // (como principal ou secundário).
+        function passaNoFiltro(criatura) {
+            const busca = normalizar(filtroNome.value.trim());
+            if (busca && !normalizar(criatura.nomeCriatura).includes(busca)) return false;
+            if (elementosMarcados.size === 0) return true;
+            return elementosMarcados.has(criatura.elementoPrincipal) || elementosMarcados.has(criatura.elementoSecundario);
+        }
+
         async function carregarCriaturas() {
             let snap;
             try {
@@ -77,7 +155,7 @@
                 return;
             }
 
-            const criaturas = snap.docs
+            criaturas = snap.docs
                 .map(d => ({ id: d.id, ...d.data() }))
                 .sort((a, b) => (a.nomeCriatura || '').localeCompare(b.nomeCriatura || '', 'pt-BR'));
 
@@ -85,10 +163,23 @@
                 mensagem('Você ainda não tem criaturas cadastradas.');
                 return;
             }
+            mostrarCriaturas();
+        }
+
+        function mostrarCriaturas() {
+            const filtroAtivo = filtroNome.value.trim() !== '' || elementosMarcados.size > 0;
+            botaoFiltro.classList.toggle('ativo', filtroAtivo);
+            if (criaturas.length === 0) return; // ainda carregando, ou sem criaturas
+
+            const visiveis = criaturas.filter(passaNoFiltro);
+            if (visiveis.length === 0) {
+                mensagem('Nenhuma criatura encontrada com esses filtros.');
+                return;
+            }
 
             const box = document.querySelector('.boxFichas');
             box.innerHTML = '';
-            for (const criatura of criaturas) {
+            for (const criatura of visiveis) {
                 const div = document.createElement('div');
                 div.className = 'ficha colunasCriaturas';
                 div.style.cursor = 'pointer';

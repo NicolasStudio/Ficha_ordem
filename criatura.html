@@ -33,7 +33,11 @@
             <div>
                 <div class="grupoCampo">
                     <label class="rotuloCriatura" for="nomeCriatura">Nome da criatura</label>
-                    <input type="text" class="campoCriatura" id="nomeCriatura" name="nomeCriatura" maxlength="60">
+                    <div class="linhaNomeCriatura">
+                        <input type="text" class="campoCriatura" id="nomeCriatura" name="nomeCriatura" maxlength="60">
+                        <!-- imagem: Img/criaturas/<elemento principal>/<nome>.png (Js/scriptImagemCriatura.js) -->
+                        <button type="button" class="infoImagemCriatura" id="verImagemCriatura" aria-label="Ver a imagem da criatura">i</button>
+                    </div>
                 </div>
 
                 <div class="grupoCampo">
@@ -165,5 +169,6 @@
 
     <script src="Js/scriptCriatura.js" type="module"></script>
     <script src="Js/scriptMenu.js" type="module"></script>
+    <script src="Js/scriptImagemCriatura.js" type="module"></script>
 </body>
 </html>
